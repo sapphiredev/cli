@@ -1,3 +1,10 @@
 {
-	"extends": "@sapphire/ts-config"
+	"extends": "@sapphire/ts-config",
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"#prompts": ["src/prompts/index.ts"],
+			"#functions": ["src/functions/index.ts"]
+		}
+	}
 }

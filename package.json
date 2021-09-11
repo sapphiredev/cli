@@ -118,5 +118,9 @@
 		"plugins": [
 			"@oclif/plugin-help"
 		]
+	},
+	"imports": {
+		"#prompts": "./dist/prompts/index.js",
+		"#functions": "./dist/functions/index.js"
 	}
 }
