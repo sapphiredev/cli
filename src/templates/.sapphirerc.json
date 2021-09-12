@@ -8,6 +8,6 @@
   },
   "customFileTemplates": {
     "enabled": false,
-    "locations": {}
+    "location": ""
   }
 }
