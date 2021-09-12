@@ -30,7 +30,7 @@
 		"@oclif/config": "^1",
 		"@oclif/plugin-help": "^3",
 		"chalk": "^4.1.2",
-		"ora": "5.4.1",
+		"ora": "^6.0.0",
 		"prompts": "^2.4.1",
 		"tslib": "^2.3.1"
 	},
@@ -70,7 +70,7 @@
 		"/oclif.manifest.json"
 	],
 	"engines": {
-		"node": ">=16.7.0",
+		"node": ">=12",
 		"npm": ">=6"
 	},
 	"keywords": [

@@ -6,8 +6,5 @@
 		"composite": true,
 		"preserveConstEnums": true
 	},
-	"include": [
-		".",
-		"./templates/.sapphirerc.json",
-	]
+	"include": ["."]
 }
