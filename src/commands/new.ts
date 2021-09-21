@@ -1,6 +1,7 @@
 import { CommandExists, CreateFileFromTemplate } from '#functions';
 import { PromptNew } from '#prompts';
 import { Command, flags } from '@oclif/command';
+import { blueBright, red } from 'chalk';
 import { exec, spawn } from 'child_process';
 import { existsSync } from 'fs';
 import { cp, readFile, rm, writeFile } from 'fs/promises';
@@ -8,7 +9,6 @@ import ora from 'ora';
 import { resolve } from 'path';
 import prompts from 'prompts';
 import { config } from '../config';
-import chalk from 'chalk';
 
 export default class New extends Command {
 	public async run() {
@@ -19,55 +19,43 @@ export default class New extends Command {
 		}
 		const projectName = response.projectName === '.' ? '' : response.projectName;
 
-		const gitSpinner = ora('Cloning the repository').start();
-		await this.cloneRepo(response.projectName, flags.verbose).catch((err) => {
-			gitSpinner.fail('An error occurred while cloning the repository');
-			console.log(chalk.red(err.message));
-			process.exit(1);
-		});
-		gitSpinner.succeed('Cloned the repository');
+		const stpJob = async () => {
+			await cp(`./${response.projectName}/ghr/examples/${response.projectTemplate}/.`, `./${response.projectName}/`, { recursive: true });
 
-		const stpSpinner = ora('Setting up the project').start();
-		const stpSpinnerFail = (err: Error) => {
-			stpSpinner.fail('An error occurred while setting up the project');
-			console.log(chalk.red(err.message));
-			process.exit(1);
+			for (const p of ['.gitignore', '.prettierignore']) {
+				await cp(`./${response.projectName}/ghr/${p}`, `./${response.projectName}/${p}`, { recursive: true });
+			}
+
+			await rm(`./${response.projectName}/ghr`, { recursive: true, force: true });
+
+			await CreateFileFromTemplate('.sapphirerc.json.sapphire', resolve(`./${response.projectName}/.sapphirerc.json`), {
+				language: response.projectLang
+			});
+
+			await this.editPackageJson(response.projectName, projectName);
 		};
 
-		await cp(`./${response.projectName}/ghr/examples/${response.projectTemplate}/.`, `./${response.projectName}/`, { recursive: true }).catch(
-			stpSpinnerFail
-		);
-		await rm(`./${response.projectName}/ghr`, { recursive: true, force: true }).catch(stpSpinnerFail);
-
-		await CreateFileFromTemplate('.sapphirerc.json', resolve(`./${response.projectName}/.sapphirerc.json`), {
-			language: response.projectLang
-		}).catch(stpSpinnerFail);
-		await this.editPackageJson(response.projectName, projectName).catch(stpSpinnerFail);
-
-		stpSpinner.succeed();
-
-		const pmSpinner = ora(`Installing dependencies using ${response.packageManager}`).start();
-		await this.installDeps(response.projectName, response.packageManager, flags.verbose).catch((err) => {
-			pmSpinner.fail('An error occurred while installing the dependencies.');
-			console.log(chalk.red(err.message));
-			process.exit(1);
-		});
-		await pmSpinner.succeed();
+		const jobs: [() => any, string][] = [
+			[() => this.cloneRepo(response.projectName, flags.verbose), 'Cloning the repository'],
+			[stpJob, 'Setting up the project'],
+			[
+				() => this.installDeps(response.projectName, response.packageManager, flags.verbose),
+				`Installing dependencies using ${response.packageManager}`
+			]
+		];
 
 		if (response.git) {
-			const gitSpinner = ora('Initializing git repo').start();
-			await this.initializeGitRepo(response.projectName).catch((err) => {
-				gitSpinner.fail('An error occurred while initializing the git repo');
-				console.log(chalk.red(err.message));
-				process.exit(1);
-			});
-			gitSpinner.succeed();
+			jobs.push([() => this.initializeGitRepo(response.projectName), 'Initializing git repo']);
 		}
 
-		console.log(chalk.blueBright('Done!'));
+		for (const [job, name] of jobs) {
+			await this.runJob(job, name).catch(() => process.exit(1));
+		}
+
+		console.log(blueBright('Done!'));
 	}
 
-	public cloneRepo(location: string, verbose: boolean) {
+	private cloneRepo(location: string, verbose: boolean) {
 		const git = spawn('git', ['clone', config.repoUrl, `${location}/ghr`], {
 			stdio: verbose ? 'inherit' : undefined
 		});
@@ -83,7 +71,7 @@ export default class New extends Command {
 		});
 	}
 
-	public editPackageJson(location: string, name: string) {
+	private editPackageJson(location: string, name: string) {
 		return new Promise(async (resolve, reject) => {
 			const pjLocation = `./${location}/package.json`;
 			const output = JSON.parse(await readFile(pjLocation, 'utf8'));
@@ -95,7 +83,7 @@ export default class New extends Command {
 		});
 	}
 
-	public installDeps(location: string, pm: string, verbose: boolean) {
+	private installDeps(location: string, pm: string, verbose: boolean) {
 		const pmp = spawn(pm.toLowerCase(), ['install'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
@@ -116,12 +104,28 @@ export default class New extends Command {
 		});
 	}
 
-	public initializeGitRepo(location: string) {
+	private initializeGitRepo(location: string) {
 		return new Promise((resolve, reject) => {
 			return exec('git init', { cwd: `./${location}/` }, (e) => {
 				if (!e) return resolve(true);
 				return reject(e);
 			});
+		});
+	}
+
+	private runJob(job: () => Promise<any>, name: string) {
+		return new Promise((resolve, reject) => {
+			const spinner = ora(name).start();
+			return job()
+				.then(() => {
+					spinner.succeed();
+					resolve(true);
+				})
+				.catch((e: Error) => {
+					spinner.fail(red(e.message));
+					console.log(red(e));
+					reject(e);
+				});
 		});
 	}
 
