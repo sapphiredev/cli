@@ -21,11 +21,6 @@ When writing guides there are some rules to follow:
 5. File names that consist of multiple words should be PascalCased.
 6. Information in a guide page should be generally useful to the majority of people.
     - The single exception to this goes to guides in the "Advanced" folder, which can cover any kind of advanced or complex usage topic.
-7. There are several variables that will be replaced when parsing the `.md` file for the documentation website. Variables are denoted by the pattern `{@variableName (parameter)}`. The supported variables are:
-    - `{@branch}` - for the current branch name.
-    - `{@link <TSDoc symbol name>}` - wherein `<TSDoc symbol name>` is a reference to some TypeScript interface / class / function etc parsed from TSDoc. This will link the API page of that symbol.
-    - `{@typedef <TSDoc interface/type/class name>}` - wherein `<TSDoc interface/type/class name>` is the name of a TypeScript interface, class or type. This will inline all the properties of that interface/type/class as a table, with links back to their API documentation page.
-    - `{@guide <Guide file name>}` - wherein `<Guide file name>` is the name of another guide file in this same project _without file extension_. For example linking to `CreatingArguments.md` would be `{@guide CreatingArguments}`.
 
 ## Contributing to the code
 
@@ -42,10 +37,8 @@ in your text editor or IDE of your choice to ensure builds from GitHub Actions d
 There are a number of guidelines considered when reviewing Pull Requests to be merged. _This is by no means an exhaustive list, but here are some things to consider before/while submitting your ideas._
 
 -   Everything in @sapphire/cli should be generally useful for the majority of users. Don't let that stop you if you've got a good concept though, as your idea still might be a great addition.
--   Everything should be shard compliant. If code you put in a pull request would break when sharding, break other things from supporting sharding, or is incompatible with sharding; then you will need to think of a way to make it work with sharding in mind before the pull request will be accepted and merged.
 -   Everything should follow [OOP paradigms][oop paradigms] and generally rely on behaviour over state where possible. This generally helps methods be predictable, keeps the codebase simple and understandable, reduces code duplication through abstraction, and leads to efficiency and therefore scalability.
 -   Everything should follow our ESLint rules as closely as possible, and should pass lint tests even if you must disable a rule for a single line.
--   Scripts that are to be ran outside of the scope of the bot should be added to [scripts] directory and should be in the `.mjs` file format.
 
 <!-- Link Dump -->
 
