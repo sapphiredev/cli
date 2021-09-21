@@ -1,0 +1,14 @@
+{ "category": "commands" }
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
+import { Message } from 'discord.js';
+
+@ApplyOptions<SubCommandPluginCommandOptions>({
+	description: 'A basic command'
+})
+export class UserCommand extends SubCommandPluginCommand {
+	public async run(message: Message) {
+		return message.channel.send('Hello world!');
+	}
+}

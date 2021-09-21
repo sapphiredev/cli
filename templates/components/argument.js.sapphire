@@ -1,0 +1,15 @@
+{ "category": "arguments" }
+---
+import { Argument } from "@sapphire/framework";
+
+export class UserArgument extends Argument {
+    constructor(context, options) {
+        super(context, {
+            ...options
+        });
+    }
+
+    async run(parameter) {
+        return this.ok(parameter);
+    }
+}

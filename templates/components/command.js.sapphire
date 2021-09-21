@@ -1,0 +1,17 @@
+{ "category": "commands" }
+---
+const { SubCommandPluginCommand } = require('@sapphire/plugin-subcommands');
+
+class UserCommand extends SubCommandPluginCommand {
+    constructor(context, options) {
+        super(context, {
+            ...options
+        });
+    }
+
+    async run(message) {
+        return msg.channel.send('Hello world!');
+    }
+}
+
+exports.UserCommand = UserCommand;

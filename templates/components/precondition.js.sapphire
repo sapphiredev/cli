@@ -1,0 +1,11 @@
+{ "category": "preconditions" }
+---
+const { Precondition } = require('@sapphire/framework');
+
+class UserPrecondition extends Precondition {
+	run(message) {
+		return this.ok();
+	}
+}
+
+module.exports.UserPrecondition = UserPrecondition;
