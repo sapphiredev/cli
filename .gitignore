@@ -6,8 +6,9 @@ node_modules/
 coverage/
 docs/
 
-# Ignore tsc dist folder
+# Ignore generated files
 dist/
+oclif.manifest.json
 
 # Ignore JavaScript files
 **/*.js
@@ -17,6 +18,8 @@ dist/
 !src/**/*.d.ts
 **/*.tsbuildinfo
 !jest.config.ts
+!scripts/*.mjs
+!bin/*.js
 
 # Ignore heapsnapshot and log files
 *.heapsnapshot
@@ -27,6 +30,3 @@ package-lock.json
 
 # Ignore the GH cli downloaded by workflows
 gh
-
-# Ignore the "wiki" folder so we can checkout the wiki inside the same folder
-wiki/
