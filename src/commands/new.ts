@@ -28,7 +28,7 @@ export default class New extends Command {
 
 			await rm(`./${response.projectName}/ghr`, { recursive: true, force: true });
 
-			await CreateFileFromTemplate('.sapphirerc.json.sapphire', resolve(`./${response.projectName}/.sapphirerc.json`), {
+			await CreateFileFromTemplate('.sapphirerc.json.sapphire', resolve(`./${response.projectName}/.sapphirerc.json`), null, {
 				language: response.projectLang
 			});
 
