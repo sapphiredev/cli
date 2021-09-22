@@ -12,11 +12,12 @@
 	},
 	"scripts": {
 		"lint": "eslint src --ext ts --fix",
-		"format": "prettier --write {src}/**/*.ts",
+		"format": "prettier --write src/**/*.ts",
 		"update": "yarn upgrade-interactive --latest",
 		"build": "tsc -b src",
 		"clean": "tsc -b src --clean",
 		"watch": "tsc -b src -w",
+		"prerelease": "oclif-dev readme && git add README.md",
 		"sversion": "standard-version",
 		"commit": "git-cz",
 		"cz": "git-cz",
