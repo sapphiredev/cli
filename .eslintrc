@@ -1,3 +1,11 @@
 {
-	"extends": "@sapphire"
+	"extends": "@sapphire",
+	"overrides": [
+		{
+			"files": ["bin/run.js"],
+			"rules": {
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		}
+	]
 }
