@@ -22,26 +22,39 @@
 ## Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g @sapphire/cli
 $ sapphire COMMAND
 running command...
 $ sapphire (-v|--version|version)
-@sapphire/cli/0.0.1 win32-x64 node-v16.7.0
+@sapphire/cli/0.0.1 linux-x64 node-v16.9.1
 $ sapphire --help [COMMAND]
 USAGE
   $ sapphire COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
+* [`sapphire generate COMPONENT NAME`](#sapphire-generate-component-name)
+* [`sapphire help [COMMAND]`](#sapphire-help-command)
+* [`sapphire new [PROJECTNAME]`](#sapphire-new-projectname)
 
--   [`sapphire help [COMMAND]`](#sapphire-help-command)
+## `sapphire generate COMPONENT NAME`
+
+generate a component (command, listener, etc.)
+
+```
+USAGE
+  $ sapphire generate COMPONENT NAME
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [dist/commands/generate.ts](https://github.com/sapphiredev/cli/blob/v0.0.1/dist/commands/generate.ts)_
 
 ## `sapphire help [COMMAND]`
 
@@ -60,6 +73,20 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
+## `sapphire new [PROJECTNAME]`
+
+create a new Sapphire project
+
+```
+USAGE
+  $ sapphire new [PROJECTNAME]
+
+OPTIONS
+  -h, --help     show CLI help
+  -v, --verbose
+```
+
+_See code: [dist/commands/new.ts](https://github.com/sapphiredev/cli/blob/v0.0.1/dist/commands/new.ts)_
 <!-- commandsstop -->
 
 ## Component Templates
