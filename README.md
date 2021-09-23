@@ -20,51 +20,62 @@
 -   Create your own templates for components
 
 ## Usage
+
 <!-- usage -->
 <!-- usagestop -->
 
 ## Commands
+
 <!-- commands -->
 <!-- commandsstop -->
 
 ## Component Templates
+
 Default component templates are:
-- command 
-- listener 
-- argument 
-- precondition
+
+-   command
+-   listener
+-   argument
+-   precondition
 
 If you want to make your own templates, or want to override the default ones, read the next section.
 
 ## Custom component templates
+
 ### Enable custom component templates
+
 In the `.sapphirerc.json` file:
-- Set `customFileTemplates.enabled` to `true`
-- Set `customFileTemplates.location` to the name of the directory you want to store your templates in.
+
+-   Set `customFileTemplates.enabled` to `true`
+-   Set `customFileTemplates.location` to the name of the directory you want to store your templates in.
 
 Example:
+
 ```json
 {
-  "customFileTemplates": {
-    "enabled": true,
-    "location": "templates"
-  }
+	"customFileTemplates": {
+		"enabled": true,
+		"location": "templates"
+	}
 }
 ```
 
 ### Create custom component templates
-- Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make its name same as one of the default template's, your template will override the default one.
-- Template's have 2 parts, config and the template, separated with `---`.
-- We first need to type the config:
+
+-   Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make its name same as one of the default template's, your template will override the default one.
+-   Template's have 2 parts, config and the template, separated with `---`.
+-   We first need to type the config:
 
 ```json
 {
-  "category": "commands"
+	"category": "commands"
 }
 ```
+
 `category` is the category of that template, CLI uses it to know where to create the component by finding that category's location from the `locations` field in `.sapphirerc.json`. You can create your own categories. Default categories are: `commands`, `listeners`, `arguments`, `preconditions`. This example uses the `commands` category.
 
-- Now we add the separator.
+-   Now we add the separator.
+
 ```
 {
   "category": "commands"
@@ -72,7 +83,8 @@ Example:
 ---
 ```
 
-- And the last part, we add the template.
+-   And the last part, we add the template.
+
 ```
 {
   "category": "commands"
@@ -92,9 +104,11 @@ export class {{name}}Command extends MyExtendedCommand {
 }
 
 ```
+
 If you look at the name of the class, you will see it includes `{{name}}`, this is the component's name and it is replaced with that name when creating the component. For example: if we created this component with the name `HelloWorld`, the name of the exported class would be `HelloWorldCommand`. It is not required but if you need it, this is how it's done.
 
-- And now you can create component with your template 
+-   And now you can create component with your template
+
 ```
 sapphire generate <templateName> <componentName>
 ```
