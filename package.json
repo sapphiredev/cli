@@ -7,7 +7,7 @@
 	"author": "@sapphire",
 	"license": "MIT",
 	"bin": {
-		"sapphire": "./bin/run"
+		"sapphire": "./dist/cli.js"
 	},
 	"imports": {
 		"#prompts": "./dist/prompts/index.js",
@@ -63,7 +63,6 @@
 	"files": [
 		"dist",
 		"!dist/*.tsbuildinfo",
-		"bin",
 		"oclif.manifest.json"
 	],
 	"engines": {

@@ -19,7 +19,6 @@ oclif.manifest.json
 **/*.tsbuildinfo
 !jest.config.ts
 !scripts/*.mjs
-!bin/*.js
 
 # Ignore heapsnapshot and log files
 *.heapsnapshot
