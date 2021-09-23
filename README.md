@@ -53,7 +53,7 @@ Example:
 ```
 
 ### Create custom component templates
-- Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make it's name same as one of the default template's, your template will override the default one.
+- Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make its name same as one of the default template's, your template will override the default one.
 - Template's have 2 parts, config and the template, separated with `---`.
 - We first need to type the config:
 
