@@ -7,7 +7,22 @@
 	"imageSize": 100,
 	"commit": true,
 	"commitConvention": "angular",
-	"contributors": [],
+	"contributors": [
+		{
+			"login": "Favna",
+			"name": "Jeroen Claassens",
+			"avatar_url": "https://avatars3.githubusercontent.com/u/4019718?v=4",
+			"profile": "https://favware.tech/",
+			"contributions": ["code", "doc", "infra", "projectManagement", "plugin"]
+		},
+		{
+			"login": "enxg",
+			"name": "Enes Genç",
+			"avatar_url": "https://avatars.githubusercontent.com/u/61084101?v=4",
+			"profile": "https://github.com/enxg",
+			"contributions": ["code", "doc", "infra", "ideas"]
+		}
+	],
 	"contributorsPerLine": 7,
 	"skipCi": true
 }
