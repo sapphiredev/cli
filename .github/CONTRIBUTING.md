@@ -8,20 +8,6 @@
 4. Commit your changes, and push them.
 5. Submit a Pull Request [here]!
 
-## Contributing to the guides
-
-All guides for the Sapphire Community use Markdown formatting.
-
-When writing guides there are some rules to follow:
-
-1. All files should have the `.md` file extension.
-2. Folder names are allowed to have spaces.
-3. All folder names should be in lower case and different words should be split by hyphens (e.g., `hello-world` or `getting-started`).
-4. File names should _never_ have spaces.
-5. File names that consist of multiple words should be PascalCased.
-6. Information in a guide page should be generally useful to the majority of people.
-    - The single exception to this goes to guides in the "Advanced" folder, which can cover any kind of advanced or complex usage topic.
-
 ## Contributing to the code
 
 **The issue tracker is only for issue reporting or proposals/suggestions. If you have a question, you can find us in our [Discord Server][discord server]**.
