@@ -4,38 +4,101 @@
 
 # @sapphire/cli
 
-**Template for Sapphire Repositories.**
+**CLI for Sapphire Framework.**
 
-[![GitHub](https://img.shields.io/github/license/sapphiredev/template)](https://github.com/sapphiredev/template/blob/main/LICENSE.md)
-[![codecov](https://codecov.io/gh/sapphiredev/sapphire-template/branch/main/graph/badge.svg?token=0MSAyoZNxz)](https://codecov.io/gh/sapphiredev/sapphire-template)
-[![npm](https://img.shields.io/npm/v/@sapphire/template?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/@sapphire/template)
+[![GitHub](https://img.shields.io/github/license/sapphiredev/cli)](https://github.com/sapphiredev/cli/blob/main/LICENSE.md)
+[![codecov](https://codecov.io/gh/sapphiredev/cli/branch/main/graph/badge.svg?token=0MSAyoZNxz)](https://codecov.io/gh/sapphiredev/cli)
+[![npm](https://img.shields.io/npm/v/@sapphire/cli?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/@sapphire/cli)
 [![Depfu](https://badges.depfu.com/badges/template/count.svg)](https://depfu.com/github/sapphiredev/e?project_id=template)
 
 </div>
 
-# Steps after creating a repo with this template
-
-1. Find and replace all instances of `template` with the proper word / ID / etc
-2. Ensure the primary branch is called `main`
-3. Ensure branch protection is on
-4. Disable `Packages` from being included in the repository homepage
-5. Enable Depfu for the repository
-6. Enable Codecov for the repository
-7. Remove `--dry-run` from line 47 in [`continuous-delivery.yml`](.github/workflows/continuous-delivery.yml) to enable publishing to NPM
-8. Remove this section from the README
-
 ## Features
 
--   This
--   Needs
--   Some
--   More
--   Filling
--   In
+-   Written in TypeScript
+-   Generate Sapphire projects easily
+-   Generate components (commands, listeners, etc.)
+-   Create your own templates for components
 
-## API Documentation
+## Usage
+<!-- usage -->
+<!-- usagestop -->
 
-For the full API documentation please refer to the TypeDoc generated [documentation](https://sapphiredev.github.io/template).
+## Commands
+<!-- commands -->
+<!-- commandsstop -->
+
+## Component Templates
+Default component templates are:
+- command 
+- listener 
+- argument 
+- precondition
+
+If you want to make your own templates, or want to override the default ones, read the next section.
+
+## Custom component templates
+### Enable custom component templates
+In the `.sapphirerc.json` file:
+- Set `customFileTemplates.enabled` to `true`
+- Set `customFileTemplates.location` to the name of the directory you want to store your templates in.
+
+Example:
+```json
+{
+  "customFileTemplates": {
+    "enabled": true,
+    "location": "templates"
+  }
+}
+```
+
+### Create custom component templates
+- Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make it's name same as one of the default template's, your template will override the default one.
+- Template's have 2 parts, config and the template, seperated with `---`.
+- We first need to type the config:
+
+```json
+{
+  "category": "commands"
+}
+```
+`category` is the category of that template, CLI uses it to know where to create the component by finding that category's location from the `locations` field in `.sapphirerc.json`. You can create your own categories. Default categories are: `commands`, `listeners`, `arguments`, `preconditions`. This example uses the `commands` category.
+
+- Now we add the seperator.
+```
+{
+  "category": "commands"
+}
+---
+```
+
+- And the last part, we add the template.
+```
+{
+  "category": "commands"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { MyExtendedCommand } from './somewhere';
+import { Message } from 'discord.js';
+
+@ApplyOptions<MyExtendedCommand.Options>({
+	description: 'A basic command'
+})
+export class {{name}}Command extends MyExtendedCommand {
+	public async run(message: Message) {
+		return message.channel.send('Hello world!');
+	}
+}
+
+```
+If you look at the name of the class, you will see it includes `{{name}}`, this is the component's name and it is replaced with that name when creating the component. For example: if we created this component with the name `HelloWorld`, the name of the exported class would be `HelloWorldCommand`. It is not required but if you need it, this is how it's done.
+
+- And now you can create component with your template 
+```
+sapphire generate <templateName> <componentName>
+```
 
 ## Buy us some doughnuts
 
