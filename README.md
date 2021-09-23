@@ -7,9 +7,8 @@
 **CLI for Sapphire Framework.**
 
 [![GitHub](https://img.shields.io/github/license/sapphiredev/cli)](https://github.com/sapphiredev/cli/blob/main/LICENSE.md)
-[![codecov](https://codecov.io/gh/sapphiredev/cli/branch/main/graph/badge.svg?token=0MSAyoZNxz)](https://codecov.io/gh/sapphiredev/cli)
 [![npm](https://img.shields.io/npm/v/@sapphire/cli?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/@sapphire/cli)
-[![Depfu](https://badges.depfu.com/badges/template/count.svg)](https://depfu.com/github/sapphiredev/e?project_id=template)
+[![Depfu](https://badges.depfu.com/badges/template/count.svg)](https://depfu.com/github/sapphiredev/cli?project_id=template)
 
 </div>
 
@@ -55,7 +54,7 @@ Example:
 
 ### Create custom component templates
 - Create a file like this in your custom template directory `<templateName>.<language>.sapphire` (e.g `command.ts.sapphire`). If you make it's name same as one of the default template's, your template will override the default one.
-- Template's have 2 parts, config and the template, seperated with `---`.
+- Template's have 2 parts, config and the template, separated with `---`.
 - We first need to type the config:
 
 ```json
@@ -65,7 +64,7 @@ Example:
 ```
 `category` is the category of that template, CLI uses it to know where to create the component by finding that category's location from the `locations` field in `.sapphirerc.json`. You can create your own categories. Default categories are: `commands`, `listeners`, `arguments`, `preconditions`. This example uses the `commands` category.
 
-- Now we add the seperator.
+- Now we add the separator.
 ```
 {
   "category": "commands"
