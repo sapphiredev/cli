@@ -22,11 +22,44 @@
 ## Usage
 
 <!-- usage -->
+
+```sh-session
+$ npm install -g @sapphire/cli
+$ sapphire COMMAND
+running command...
+$ sapphire (-v|--version|version)
+@sapphire/cli/0.0.1 win32-x64 node-v16.7.0
+$ sapphire --help [COMMAND]
+USAGE
+  $ sapphire COMMAND
+...
+```
+
 <!-- usagestop -->
 
 ## Commands
 
 <!-- commands -->
+
+-   [`sapphire help [COMMAND]`](#sapphire-help-command)
+
+## `sapphire help [COMMAND]`
+
+display help for sapphire
+
+```
+USAGE
+  $ sapphire help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
+
 <!-- commandsstop -->
 
 ## Component Templates
