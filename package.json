@@ -125,7 +125,7 @@
 	},
 	"standard-version": {
 		"scripts": {
-			"prerelease": "oclif-dev readme && git add README.md"
+			"prerelease": "oclif-dev readme && prettier --write README.md && git add README.md"
 		}
 	}
 }
