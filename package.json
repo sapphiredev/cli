@@ -1,11 +1,11 @@
 {
 	"name": "@sapphire/cli",
 	"version": "0.0.1",
-	"description": "cli",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"description": "CLI for Sapphire Framework",
 	"author": "@sapphire",
 	"license": "MIT",
+	"type": "commonjs",
+	"main": "dist/cli.js",
 	"bin": {
 		"sapphire": "./dist/cli.js"
 	},
@@ -13,6 +13,15 @@
 		"#prompts": "./dist/prompts/index.js",
 		"#functions": "./dist/functions/index.js"
 	},
+	"sideEffects": "false",
+	"files": [
+		"dist",
+		"!dist/*.tsbuildinfo",
+		"!dist/**/*.js.map",
+		"!dist/**/*.d.ts",
+		"!dist/**/*.d.ts.map",
+		"oclif.manifest.json"
+	],
 	"scripts": {
 		"lint": "eslint src --ext ts --fix",
 		"format": "prettier --write src/**/*.ts",
@@ -24,22 +33,23 @@
 		"commit": "git-cz",
 		"cz": "git-cz",
 		"prepublishOnly": "yarn build && oclif-dev manifest",
-		"postpublish": "node scripts/clean-oclif-manifest.mjs"
+		"postpublish": "node scripts/clean-oclif-manifest.mjs",
+		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
-		"@oclif/command": "^1",
-		"@oclif/config": "^1",
-		"@oclif/plugin-help": "^3",
+		"@oclif/command": "^1.8.0",
+		"@oclif/config": "^1.17.0",
+		"@oclif/plugin-help": "^3.2.3",
 		"chalk": "^4.1.2",
-		"find-up": "5.0.0",
-		"ora": "5.4.1",
+		"find-up": "^5.0.0",
+		"ora": "^5.4.1",
 		"prompts": "^2.4.1",
 		"tslib": "^2.3.1"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^13.1.0",
 		"@commitlint/config-conventional": "^13.1.0",
-		"@oclif/dev-cli": "^1",
+		"@oclif/dev-cli": "^1.26.0",
 		"@sapphire/eslint-config": "^3.2.3",
 		"@sapphire/prettier-config": "^1.1.6",
 		"@sapphire/ts-config": "^3.0.0",
@@ -60,11 +70,6 @@
 		"ts-node": "^10.2.0",
 		"typescript": "^4.4.2"
 	},
-	"files": [
-		"dist",
-		"!dist/*.tsbuildinfo",
-		"oclif.manifest.json"
-	],
 	"engines": {
 		"node": ">=16.7.0",
 		"npm": ">=7"
