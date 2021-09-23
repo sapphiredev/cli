@@ -8,7 +8,7 @@
 
 [![GitHub](https://img.shields.io/github/license/sapphiredev/cli)](https://github.com/sapphiredev/cli/blob/main/LICENSE.md)
 [![npm](https://img.shields.io/npm/v/@sapphire/cli?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/@sapphire/cli)
-[![Depfu](https://badges.depfu.com/badges/template/count.svg)](https://depfu.com/github/sapphiredev/cli?project_id=template)
+[![Depfu](https://badges.depfu.com/badges/5086e1d7764d4a0e53b443a9d86cc11b/count.svg)](https://depfu.com/github/sapphiredev/cli?project_id=31779)
 
 </div>
 
