@@ -20,7 +20,8 @@
 		"!dist/**/*.js.map",
 		"!dist/**/*.d.ts",
 		"!dist/**/*.d.ts.map",
-		"oclif.manifest.json"
+		"oclif.manifest.json",
+		"templates"
 	],
 	"scripts": {
 		"lint": "eslint src --ext ts --fix",
