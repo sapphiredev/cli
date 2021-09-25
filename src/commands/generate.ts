@@ -5,7 +5,7 @@ import FindUp from 'find-up';
 import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
-import { join } from 'path';
+import { join, basename } from 'path';
 
 export default class Generate extends Command {
 	public async run() {
@@ -36,11 +36,12 @@ export default class Generate extends Command {
 			const corePath = `${__dirname}/../../templates/components/${template}`;
 			const userPath = config.customFileTemplates.enabled ? join(configLoc, config.customFileTemplates.location, template) : null;
 			const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
+			const params = { name: basename(name) };
 
 			if (userPath && existsSync(userPath)) {
-				return CreateFileFromTemplate(userPath, target, config, { name }, true, true).then(resolve).catch(reject);
+				return CreateFileFromTemplate(userPath, target, config, params, true, true).then(resolve).catch(reject);
 			} else if (existsSync(corePath)) {
-				return CreateFileFromTemplate(`components/${template}`, target, config, { name }, false, true).then(resolve).catch(reject);
+				return CreateFileFromTemplate(`components/${template}`, target, config, params, false, true).then(resolve).catch(reject);
 			}
 			return reject(new Error("Can't find the template."));
 		});

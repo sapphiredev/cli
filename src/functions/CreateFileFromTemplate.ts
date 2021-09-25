@@ -1,5 +1,6 @@
 import { existsSync } from 'fs';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
 export function CreateFileFromTemplate(
 	template: string,
@@ -38,7 +39,7 @@ export function CreateFileFromTemplate(
 		const ta = component ? target.replace('%L%', dir) : target;
 
 		if (existsSync(ta)) reject(new Error('Component already exists'));
-		await writeFile(ta, output.f).catch(reject);
+		await writeFileRecursive(ta, output.f).catch(reject);
 
 		return resolve(true);
 	});
@@ -48,5 +49,13 @@ function getComponentTemplateWithConfig(path: string) {
 	return readFile(path, 'utf8').then((file) => {
 		const fa = file.split(/---(\r\n|\r|\n|)/gm);
 		return [JSON.parse(fa[0]), fa[2]];
+	});
+}
+
+function writeFileRecursive(target: string, data: string) {
+	return new Promise(async (resolve, reject) => {
+		const dir = path.dirname(path.resolve(target));
+		await mkdir(dir, { recursive: true }).catch(reject);
+		return writeFile(path.resolve(target), data).then(resolve).catch(reject);
 	});
 }
