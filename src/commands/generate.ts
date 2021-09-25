@@ -6,17 +6,22 @@ import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
 import { join, basename } from 'path';
+import { setTimeout } from 'timers/promises';
 
 export default class Generate extends Command {
 	public async run() {
 		const { args } = this.parse(Generate);
 
 		const spinner = ora(`Creating a ${args.component.toLowerCase()}`).start();
+		const fail = (error: string) => {
+			spinner.fail(error);
+			process.exit(1);
+		};
 
-		const configLoc = await FindUp('.sapphirerc.json', { cwd: '.' });
-		if (!configLoc) return;
+		const configLoc = await this.fetchConfig();
+		if (!configLoc) return fail("Can't find the Sapphire CLI config.");
 		const config = JSON.parse(await readFile(configLoc, 'utf8'));
-		if (!config) return;
+		if (!config) return fail("Can't parse the Sapphire CLI config.");
 
 		await this.createComponent(args.component, args.name, config, configLoc.replace('.sapphirerc.json', '')).catch((err) => {
 			spinner.fail();
@@ -45,6 +50,24 @@ export default class Generate extends Command {
 			}
 			return reject(new Error("Can't find the template."));
 		});
+	}
+
+	private timeout(ms: number): Promise<null> {
+		return new Promise((resolve, reject) => {
+			// false positive
+			// eslint-disable-next-line @typescript-eslint/no-implied-eval
+			return setTimeout(ms)
+				.then(() => {
+					resolve(null);
+				})
+				.catch(reject);
+		});
+	}
+
+	private fetchConfig(): Promise<
+		Promise<string | undefined> | Promise<null> extends PromiseLike<infer U> ? U : Promise<string | undefined> | Promise<null>
+	> {
+		return Promise.race([FindUp('.sapphirerc.json', { cwd: '.' }), this.timeout(5000)]);
 	}
 
 	public static description = 'generate a component (command, listener, etc.)';
