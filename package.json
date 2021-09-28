@@ -42,7 +42,7 @@
 		"@oclif/config": "^1.17.0",
 		"@oclif/plugin-help": "^3.2.3",
 		"chalk": "^4.1.2",
-		"find-up": "^5.0.0",
+		"find-up": "^6.1.0",
 		"ora": "^5.4.1",
 		"prompts": "^2.4.1",
 		"tslib": "^2.3.1"
