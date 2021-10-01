@@ -38,9 +38,6 @@
 		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
-		"@oclif/command": "^1.8.0",
-		"@oclif/config": "^1.17.0",
-		"@oclif/plugin-help": "^3.2.3",
 		"chalk": "^4.1.2",
 		"find-up": "^5.0.0",
 		"ora": "^5.4.1",
@@ -51,7 +48,6 @@
 		"@commitlint/cli": "^13.2.0",
 		"@commitlint/config-conventional": "^13.2.0",
 		"@favware/npm-deprecate": "^1.0.2",
-		"@oclif/dev-cli": "^1.26.0",
 		"@sapphire/eslint-config": "^3.2.3",
 		"@sapphire/prettier-config": "^1.1.6",
 		"@sapphire/ts-config": "^3.0.0",
