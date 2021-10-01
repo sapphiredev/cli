@@ -4,14 +4,15 @@
 	"description": "CLI for Sapphire Framework",
 	"author": "@sapphire",
 	"license": "MIT",
-	"type": "commonjs",
+	"type": "module",
 	"main": "dist/cli.js",
 	"bin": {
 		"sapphire": "./dist/cli.js"
 	},
 	"imports": {
 		"#prompts": "./dist/prompts/index.js",
-		"#functions": "./dist/functions/index.js"
+		"#functions": "./dist/functions/index.js",
+		"#commands/*": "./dist/commands/*"
 	},
 	"sideEffects": "false",
 	"files": [
