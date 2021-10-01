@@ -6,8 +6,10 @@ import { readFile } from 'fs/promises';
 import ora from 'ora';
 import { join, basename } from 'path';
 import { setTimeout } from 'timers/promises';
+import { URL } from 'url';
 
 const { blueBright, red } = chalk;
+const __dirname = new URL('.', import.meta.url).pathname;
 
 function createComponent(component: string, name: string, config: any, configLoc: string) {
 	return new Promise(async (resolve, reject) => {

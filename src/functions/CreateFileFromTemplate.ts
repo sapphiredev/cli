@@ -1,6 +1,9 @@
 import { existsSync } from 'fs';
 import { readFile, writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { URL } from 'url';
+
+const __dirname = new URL('.', import.meta.url).pathname;
 
 export function CreateFileFromTemplate(
 	template: string,

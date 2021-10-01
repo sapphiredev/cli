@@ -2,12 +2,15 @@
 
 import { Command } from 'commander';
 import { readFile } from 'fs/promises';
+import { URL } from 'url';
 
 import newCmd from '#commands/new.js';
 import generateCmd from '#commands/generate.js';
 
+const __dirname = new URL('.', import.meta.url).pathname;
+
 const sapphire = new Command();
-const packageJson = JSON.parse(await readFile(`${process.cwd()}/package.json`, 'utf8'));
+const packageJson = JSON.parse(await readFile(`${__dirname}/../package.json`, 'utf8'));
 
 sapphire.name('sapphire').version(packageJson.version);
 
