@@ -7,10 +7,10 @@ import { URL } from 'url';
 import newCmd from '#commands/new.js';
 import generateCmd from '#commands/generate.js';
 
-const __dirname = new URL('.', import.meta.url).pathname;
-
 const sapphire = new Command();
-const packageJson = JSON.parse(await readFile(`${__dirname}/../package.json`, 'utf8'));
+
+const packageFile = new URL('../package.json', import.meta.url);
+const packageJson = JSON.parse(await readFile(packageFile, 'utf-8'));
 
 sapphire.name('sapphire').version(packageJson.version);
 
