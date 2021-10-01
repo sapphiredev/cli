@@ -1,4 +1,5 @@
 import { CreateFileFromTemplate } from '#functions';
+import { componentsFolder } from '../constants.js';
 import chalk from 'chalk';
 import FindUp from 'find-up';
 import { existsSync } from 'fs';
@@ -6,10 +7,8 @@ import { readFile } from 'fs/promises';
 import ora from 'ora';
 import { join, basename } from 'path';
 import { setTimeout } from 'timers/promises';
-import { URL } from 'url';
 
 const { blueBright, red } = chalk;
-const __dirname = new URL('.', import.meta.url).pathname;
 
 function createComponent(component: string, name: string, config: any, configLoc: string) {
 	return new Promise(async (resolve, reject) => {
@@ -17,7 +16,7 @@ function createComponent(component: string, name: string, config: any, configLoc
 		if (!projectLanguage) return reject(new Error("There is no 'projectLanguage' field in .sapphirerc.json"));
 		const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
 
-		const corePath = `${__dirname}/../../templates/components/${template}`;
+		const corePath = `${componentsFolder}components/${template}`;
 		const userPath = config.customFileTemplates.enabled ? join(configLoc, config.customFileTemplates.location, template) : null;
 		const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
 		const params = { name: basename(name) };

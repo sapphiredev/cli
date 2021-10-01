@@ -7,7 +7,7 @@ import { cp, readFile, rm, writeFile } from 'fs/promises';
 import ora from 'ora';
 import { resolve } from 'path';
 import prompts from 'prompts';
-import { config } from '../config.js';
+import { repoUrl } from '../constants.js';
 
 const { blueBright, red } = chalk;
 
@@ -70,7 +70,7 @@ function runJob(job: () => Promise<any>, name: string) {
 }
 
 function cloneRepo(location: string, verbose: boolean) {
-	const git = spawn('git', ['clone', config.repoUrl, `${location}/ghr`], {
+	const git = spawn('git', ['clone', repoUrl, `${location}/ghr`], {
 		stdio: verbose ? 'inherit' : undefined
 	});
 

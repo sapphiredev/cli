@@ -1,9 +1,7 @@
 import { existsSync } from 'fs';
 import { readFile, writeFile, mkdir } from 'fs/promises';
 import path from 'path';
-import { URL } from 'url';
-
-const __dirname = new URL('.', import.meta.url).pathname;
+import { templatesFolder } from '../constants.js';
 
 export function CreateFileFromTemplate(
 	template: string,
@@ -14,7 +12,7 @@ export function CreateFileFromTemplate(
 	component = false
 ) {
 	return new Promise(async (resolve, reject) => {
-		const location = custom ? template : `${__dirname}/../../templates/${template}`;
+		const location = custom ? template : `${templatesFolder}${template}`;
 
 		const output = {} as {
 			f: string;
