@@ -20,73 +20,74 @@
 
 ## Usage
 
-<!-- usage -->
 ```sh-session
 $ npm install -g @sapphire/cli
-$ sapphire COMMAND
+$ sapphire [command]
 running command...
-$ sapphire (-v|--version|version)
-@sapphire/cli/0.0.1 linux-x64 node-v16.9.1
-$ sapphire --help [COMMAND]
+$ sapphire --version
+0.0.1
+$ sapphire help [command]
 USAGE
   $ sapphire COMMAND
 ...
 ```
-<!-- usagestop -->
 
 ## Commands
 
-<!-- commands -->
-* [`sapphire generate COMPONENT NAME`](#sapphire-generate-component-name)
-* [`sapphire help [COMMAND]`](#sapphire-help-command)
-* [`sapphire new [PROJECTNAME]`](#sapphire-new-projectname)
+* [`sapphire new|n [options] [name]`](#sapphire-newn-options-name)
+* [`sapphire generate|g <component> <name>`](#sapphire-generateg-component-name)
+* [`sapphire help [command]`](#sapphire-help-command)
 
-## `sapphire generate COMPONENT NAME`
+## `sapphire new|n [options] [name]`
+
+creates a new Sapphire project
+
+```
+Usage: $ sapphire new|n [options] [name]
+
+creates a new Sapphire project
+
+Arguments:
+  name           project name
+
+Options:
+  -v, --verbose
+  -h, --help     display help for command
+```
+
+_See code: [src/commands/new.ts](https://github.com/sapphiredev/cli/blob/main/src/commands/new.ts)_
+
+## `sapphire generate|g <component> <name>`
 
 generate a component (command, listener, etc.)
 
 ```
-USAGE
-  $ sapphire generate COMPONENT NAME
+Usage: $ sapphire generate|g [options] <component> <name>
 
-OPTIONS
-  -h, --help  show CLI help
+generates a component/piece
+
+Arguments:
+  component   component/piece name
+  name        file name
+
+Options:
+  -h, --help  display help for command
 ```
 
-_See code: [dist/commands/generate.ts](https://github.com/sapphiredev/cli/blob/v0.0.1/dist/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/sapphiredev/cli/blob/main/src/commands/generate.ts)_
 
-## `sapphire help [COMMAND]`
+## `sapphire help [command]`
 
 display help for sapphire
 
 ```
-USAGE
-  $ sapphire help [COMMAND]
+Usage: $ sapphire help [command]
 
-ARGUMENTS
-  COMMAND  command to show help for
+display help for command
 
-OPTIONS
-  --all  see all commands in CLI
+Arguments:
+  command     command name
 ```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
-
-## `sapphire new [PROJECTNAME]`
-
-create a new Sapphire project
-
-```
-USAGE
-  $ sapphire new [PROJECTNAME]
-
-OPTIONS
-  -h, --help     show CLI help
-  -v, --verbose
-```
-
-_See code: [dist/commands/new.ts](https://github.com/sapphiredev/cli/blob/v0.0.1/dist/commands/new.ts)_
-<!-- commandsstop -->
 
 ## Component Templates
 
