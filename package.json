@@ -33,8 +33,7 @@
 		"sversion": "standard-version -a",
 		"commit": "git-cz",
 		"cz": "git-cz",
-		"prepublishOnly": "yarn build && oclif-dev manifest",
-		"postpublish": "node scripts/clean-oclif-manifest.mjs",
+		"prepublishOnly": "yarn build",
 		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
