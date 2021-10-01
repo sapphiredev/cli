@@ -21,7 +21,7 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 			type: 'text',
 			name: 'projectName',
 			message: "What's the name of your project?",
-			initial: projectName
+			initial: projectName ?? 'NewSapphireProject'
 		},
 		{
 			type: 'select',
