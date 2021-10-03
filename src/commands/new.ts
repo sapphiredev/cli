@@ -7,7 +7,7 @@ import { cp, readFile, rm, writeFile } from 'fs/promises';
 import ora from 'ora';
 import { resolve } from 'path';
 import prompts from 'prompts';
-import { repoUrl } from '../constants.js';
+import { repoUrl } from '#constants';
 
 const { blueBright, red } = chalk;
 

@@ -1,5 +1,5 @@
 import { CreateFileFromTemplate } from '#functions';
-import { componentsFolder } from '../constants.js';
+import { componentsFolder } from '#constants';
 import chalk from 'chalk';
 import FindUp from 'find-up';
 import { existsSync } from 'fs';
@@ -11,7 +11,7 @@ import { setTimeout } from 'timers/promises';
 const { blueBright, red } = chalk;
 
 function createComponent(component: string, name: string, config: any, configLoc: string) {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		const { projectLanguage } = config;
 		if (!projectLanguage) return reject(new Error("There is no 'projectLanguage' field in .sapphirerc.json"));
 		const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;

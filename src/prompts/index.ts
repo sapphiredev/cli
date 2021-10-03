@@ -1,1 +1,1 @@
-export * from './PromptNew.js';
+export * from '#prompts/PromptNew';

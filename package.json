@@ -11,8 +11,11 @@
 	},
 	"imports": {
 		"#prompts": "./dist/prompts/index.js",
+		"#prompts/*": "./dist/prompts/*.js",
 		"#functions": "./dist/functions/index.js",
-		"#commands/*": "./dist/commands/*"
+		"#functions/*": "./dist/functions/*.js",
+		"#commands/*": "./dist/commands/*.js",
+		"#constants": "./dist/constants.js"
 	},
 	"sideEffects": "false",
 	"files": [

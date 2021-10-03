@@ -4,8 +4,8 @@ import { Command } from 'commander';
 import { readFile } from 'fs/promises';
 import { URL } from 'url';
 
-import newCmd from '#commands/new.js';
-import generateCmd from '#commands/generate.js';
+import newCmd from '#commands/new';
+import generateCmd from '#commands/generate';
 
 const sapphire = new Command();
 
