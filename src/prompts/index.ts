@@ -1,1 +1,1 @@
-export * from './PromptNew';
+export * from '#prompts/PromptNew';

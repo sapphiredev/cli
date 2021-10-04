@@ -38,9 +38,11 @@ function clean(input: string) {
 function commandExistsUnix(command: string, cleanCommand: string): Promise<boolean> {
 	return new Promise((res) => {
 		return fileExists(command).then((exists) => {
-			if (!exists) {
+			if (exists) {
+				void executable(command).then((exists) => res(exists));
+			} else {
 				exec(`command -v ${cleanCommand} 2>/dev/null && { echo >&1 ${cleanCommand}; exit 0; }`, (_err, stdout) => res(Boolean(stdout)));
-			} else void executable(command).then((exists) => res(exists));
+			}
 		});
 	});
 }

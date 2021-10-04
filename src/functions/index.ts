@@ -1,2 +1,2 @@
-export * from './CommandExists';
-export * from './CreateFileFromTemplate';
+export * from '#functions/CommandExists';
+export * from '#functions/CreateFileFromTemplate';

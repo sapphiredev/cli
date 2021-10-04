@@ -4,14 +4,18 @@
 	"description": "CLI for Sapphire Framework",
 	"author": "@sapphire",
 	"license": "MIT",
-	"type": "commonjs",
+	"type": "module",
 	"main": "dist/cli.js",
 	"bin": {
 		"sapphire": "./dist/cli.js"
 	},
 	"imports": {
 		"#prompts": "./dist/prompts/index.js",
-		"#functions": "./dist/functions/index.js"
+		"#prompts/*": "./dist/prompts/*.js",
+		"#functions": "./dist/functions/index.js",
+		"#functions/*": "./dist/functions/*.js",
+		"#commands/*": "./dist/commands/*.js",
+		"#constants": "./dist/constants.js"
 	},
 	"sideEffects": "false",
 	"files": [
@@ -33,15 +37,12 @@
 		"sversion": "standard-version -a",
 		"commit": "git-cz",
 		"cz": "git-cz",
-		"prepublishOnly": "yarn build && oclif-dev manifest",
-		"postpublish": "node scripts/clean-oclif-manifest.mjs",
+		"prepublishOnly": "yarn build",
 		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
-		"@oclif/command": "^1.8.0",
-		"@oclif/config": "^1.17.0",
-		"@oclif/plugin-help": "^3.2.3",
 		"chalk": "^4.1.2",
+		"commander": "^8.2.0",
 		"find-up": "^5.0.0",
 		"ora": "^5.4.1",
 		"prompts": "^2.4.1",
@@ -51,7 +52,6 @@
 		"@commitlint/cli": "^13.2.0",
 		"@commitlint/config-conventional": "^13.2.0",
 		"@favware/npm-deprecate": "^1.0.3",
-		"@oclif/dev-cli": "^1.26.0",
 		"@sapphire/eslint-config": "^3.2.3",
 		"@sapphire/prettier-config": "^1.1.6",
 		"@sapphire/ts-config": "^3.0.0",
@@ -122,13 +122,6 @@
 		"trim-newlines": "^3.0.1"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"oclif": {
-		"commands": "./dist/commands",
-		"bin": "sapphire",
-		"plugins": [
-			"@oclif/plugin-help"
-		]
-	},
 	"standard-version": {
 		"scripts": {
 			"prerelease": "oclif-dev readme && prettier --write README.md && git add README.md"

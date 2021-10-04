@@ -4,7 +4,13 @@
 		"baseUrl": "./",
 		"paths": {
 			"#prompts": ["src/prompts/index.ts"],
-			"#functions": ["src/functions/index.ts"]
-		}
+			"#prompts/*": ["src/prompts/*.ts"],
+			"#functions": ["src/functions/index.ts"],
+			"#functions/*": ["src/functions/*.ts"],
+			"#commands/*": ["src/commands/*.ts"],
+			"#constants": ["src/constants.ts"]
+		},
+		"module": "ESNEXT",
+		"target": "ESNext"
 	}
 }
