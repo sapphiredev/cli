@@ -6,7 +6,7 @@
 
 **CLI for Sapphire Framework.**
 
-[![GitHub](https://img.shields.io/github/license/sapphiredev/cli)](https://github.com/sapphiredev/cli/blob/main/LICENSE.md)
+[![GitHub](https://img.shields.io/github/license/sapphiredev/cli?style=flat-square)](https://github.com/sapphiredev/cli/blob/main/LICENSE.md)
 [![npm](https://img.shields.io/npm/v/@sapphire/cli?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/@sapphire/cli)
 
 </div>
