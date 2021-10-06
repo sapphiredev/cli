@@ -121,10 +121,5 @@
 		"trim": "^1.0.1",
 		"trim-newlines": "^3.0.1"
 	},
-	"prettier": "@sapphire/prettier-config",
-	"standard-version": {
-		"scripts": {
-			"prerelease": "oclif-dev readme && prettier --write README.md && git add README.md"
-		}
-	}
+	"prettier": "@sapphire/prettier-config"
 }
