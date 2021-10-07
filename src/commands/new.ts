@@ -101,9 +101,14 @@ export default async (name: string, flags: Record<string, boolean>) => {
 
 		await rm(`./${response.projectName}/ghr`, { recursive: true, force: true });
 
-		await CreateFileFromTemplate('.sapphirerc.json.sapphire', resolve(`./${response.projectName}/.sapphirerc.json`), null, {
-			language: response.projectLang
-		});
+		await CreateFileFromTemplate(
+			`.sapphirerc.${response.configFormat}.sapphire`,
+			resolve(`./${response.projectName}/.sapphirerc.${response.configFormat}`),
+			null,
+			{
+				language: response.projectLang
+			}
+		);
 
 		await editPackageJson(response.projectName, projectName);
 	};
