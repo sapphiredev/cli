@@ -40,6 +40,15 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 		},
 		{
 			type: 'select',
+			name: 'configFormat',
+			message: 'What format do you want your config file to be in?',
+			choices: [
+				{ title: 'JSON', value: 'json' },
+				{ title: 'YAML', value: 'yml' }
+			]
+		},
+		{
+			type: 'select',
 			name: 'packageManager',
 			message: 'What package manager do you want to use?',
 			choices: yarn ? pmChoices : pmChoices.slice().reverse()
