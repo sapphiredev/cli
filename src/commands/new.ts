@@ -24,7 +24,7 @@ function editPackageJson(location: string, name: string) {
 }
 
 function installDeps(location: string, pm: string, verbose: boolean) {
-	const pmp = spawn(pm.toLowerCase(), ['install'], {
+	const pmp = spawn(process.platform === 'win32' ? `${pm.toLowerCase()}.cmd` : pm.toLowerCase(), ['install'], {
 		stdio: verbose ? 'inherit' : undefined,
 		cwd: `./${location}/`
 	});
