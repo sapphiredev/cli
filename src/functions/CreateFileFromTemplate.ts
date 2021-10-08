@@ -12,7 +12,7 @@ export function CreateFileFromTemplate(
 	component = false
 ) {
 	return new Promise(async (resolve, reject) => {
-		const location = custom ? template : `${templatesFolder.pathname}${template}`;
+		const location = custom ? template : `${templatesFolder}${template}`;
 
 		const output = {} as {
 			f: string;

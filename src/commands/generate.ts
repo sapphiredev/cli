@@ -17,7 +17,7 @@ function createComponent(component: string, name: string, config: any, configLoc
 		if (!projectLanguage) return reject(new Error("There is no 'projectLanguage' field in .sapphirerc.json"));
 		const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
 
-		const corePath = `${componentsFolder.pathname}${template}`;
+		const corePath = `${componentsFolder}${template}`;
 		const userPath = config.customFileTemplates.enabled ? join(configLoc, config.customFileTemplates.location, template) : null;
 		const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
 		const params = { name: basename(name) };

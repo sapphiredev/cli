@@ -1,6 +1,10 @@
-import { URL } from 'url';
+import { URL, fileURLToPath } from 'url';
 
-export const rootFolder = new URL('../', import.meta.url);
-export const templatesFolder = new URL('./templates/', rootFolder);
-export const componentsFolder = new URL('./components/', templatesFolder);
+const rootURL = new URL('../', import.meta.url);
+const templatesURL = new URL('./templates/', rootURL);
+const componentsURL = new URL('./components/', templatesURL);
+
+export const rootFolder = fileURLToPath(rootURL);
+export const templatesFolder = fileURLToPath(templatesURL);
+export const componentsFolder = fileURLToPath(componentsURL);
 export const repoUrl = 'https://github.com/sapphiredev/examples.git';
