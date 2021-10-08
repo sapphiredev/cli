@@ -1,28 +1,50 @@
 {
-	"projectName": "sapphire-cli",
-	"projectOwner": "sapphiredev",
-	"repoType": "github",
-	"repoHost": "https://github.com",
-	"files": ["README.md"],
-	"imageSize": 100,
-	"commit": true,
-	"commitConvention": "angular",
-	"contributors": [
-		{
-			"login": "Favna",
-			"name": "Jeroen Claassens",
-			"avatar_url": "https://avatars3.githubusercontent.com/u/4019718?v=4",
-			"profile": "https://favware.tech/",
-			"contributions": ["code", "doc", "infra", "projectManagement", "plugin"]
-		},
-		{
-			"login": "enxg",
-			"name": "Enes Genç",
-			"avatar_url": "https://avatars.githubusercontent.com/u/61084101?v=4",
-			"profile": "https://github.com/enxg",
-			"contributions": ["code", "doc", "infra", "ideas"]
-		}
-	],
-	"contributorsPerLine": 7,
-	"skipCi": true
+  "projectName": "cli",
+  "projectOwner": "sapphiredev",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "Favna",
+      "name": "Jeroen Claassens",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4019718?v=4",
+      "profile": "https://favware.tech/",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "projectManagement",
+        "plugin"
+      ]
+    },
+    {
+      "login": "enxg",
+      "name": "Enes Genç",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61084101?v=4",
+      "profile": "https://github.com/enxg",
+      "contributions": [
+        "code",
+        "doc",
+        "infra",
+        "ideas"
+      ]
+    },
+    {
+      "login": "kaname-png",
+      "name": "Kaname",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56084970?v=4",
+      "profile": "https://kaname.netlify.app",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
