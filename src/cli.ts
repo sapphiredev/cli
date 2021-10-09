@@ -6,6 +6,7 @@ import { URL } from 'url';
 
 import newCmd from '#commands/new';
 import generateCmd from '#commands/generate';
+import initCmd from '#commands/init';
 
 const sapphire = new Command();
 
@@ -29,5 +30,7 @@ sapphire
 	.argument('<component>', 'component/piece name')
 	.argument('<name>', 'file name')
 	.action(generateCmd);
+
+sapphire.command('init').description('creates a config file on an existing Sapphire project').alias('i').action(initCmd);
 
 sapphire.parse(process.argv);
