@@ -36,6 +36,7 @@ USAGE
 
 * [`sapphire new|n [options] [name]`](#sapphire-newn-options-name)
 * [`sapphire generate|g <component> <name>`](#sapphire-generateg-component-name)
+* [`sapphire init|i`](#sapphire-initi)
 * [`sapphire help [command]`](#sapphire-help-command)
 
 ## `sapphire new|n [options] [name]`
@@ -75,6 +76,22 @@ Options:
 ```
 
 _See code: [src/commands/generate.ts](https://github.com/sapphiredev/cli/blob/main/src/commands/generate.ts)_
+
+## `sapphire init|i`
+
+creates a config file on an existing Sapphire project
+
+```
+Usage: $ sapphire init|i [options]
+
+creates a config file on an existing Sapphire project
+
+Options:
+  -h, --help  display help for command
+```
+
+
+_See code: [src/commands/init.ts](https://github.com/sapphiredev/cli/blob/main/src/commands/init.ts)_
 
 ## `sapphire help [command]`
 
