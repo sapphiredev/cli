@@ -33,5 +33,5 @@ export default async () => {
 	};
 
 	const file = response.configFormat === 'json' ? JSON.stringify(config, null, 2) : YAML.stringify(config);
-	return writeFile(`.sapphirerc.${response.configFormat}`, file);
+	return writeFile(packageJson.replace('package.json', `.sapphirerc.${response.configFormat}`), file);
 };
