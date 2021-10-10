@@ -4,6 +4,7 @@ import { sidebar } from './configs';
 
 export default defineUserConfig<DefaultThemeOptions>({
 	lang: 'en-US',
+	base: '/cli/',
 	title: 'Sapphire CLI',
 	description: 'A guide for the Sapphire CLI',
 	themeConfig: {
