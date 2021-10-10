@@ -45,28 +45,28 @@
 		"commander": "^8.2.0",
 		"find-up": "^5.0.0",
 		"ora": "^5.4.1",
-		"prompts": "^2.4.1",
+		"prompts": "^2.4.2",
 		"tslib": "^2.3.1",
 		"yaml": "^1.10.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^13.2.0",
+		"@commitlint/cli": "^13.2.1",
 		"@commitlint/config-conventional": "^13.2.0",
-		"@favware/npm-deprecate": "^1.0.3",
+		"@favware/npm-deprecate": "^1.0.4",
 		"@sapphire/eslint-config": "^3.3.1",
 		"@sapphire/prettier-config": "^1.2.1",
 		"@sapphire/ts-config": "^3.1.0",
 		"@types/node": "^16.10.1",
 		"@types/prompts": "^2.0.14",
-		"@typescript-eslint/eslint-plugin": "^4.32.0",
-		"@typescript-eslint/parser": "^4.32.0",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"globby": "^10",
 		"husky": "^7.0.2",
-		"lint-staged": "^11.1.2",
+		"lint-staged": "^11.2.2",
 		"prettier": "^2.4.1",
 		"pretty-quick": "^3.1.1",
 		"standard-version": "^9.3.1",
@@ -75,7 +75,7 @@
 	},
 	"engines": {
 		"node": ">=16.7.0",
-		"npm": ">=7.24.1"
+		"npm": ">=7.24.2"
 	},
 	"keywords": [
 		"@sapphire/cli",
@@ -117,7 +117,7 @@
 		"kind-of": "^6.0.3",
 		"dot-prop": "^6.0.1",
 		"lodash": "^4.17.21",
-		"marked": "^3.0.4",
+		"marked": "^3.0.7",
 		"merge": "^2.1.1",
 		"trim": "^1.0.1",
 		"trim-newlines": "^3.0.1"
