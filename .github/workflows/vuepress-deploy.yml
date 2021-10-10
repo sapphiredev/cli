@@ -19,10 +19,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: Build & Deploy
-        uses: grasilife/github-pages-deploy-action@master
-        env:
-          BASE_BRANCH: vuepress
-          BRANCH: gh-pages
-          FOLDER: docs/.vuepress/dist
-          BUILD_SCRIPT: "yarn && yarn run docs:build"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: "yarn run docs:build"
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: docs/.vuepress/dist
