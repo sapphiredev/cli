@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - vuepress
+  workflow_dispatch: {}
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout
+        with:
+          ref: vuepress
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Build & Deploy
+        uses: grasilife/github-pages-deploy-action@master
+        env:
+          BASE_BRANCH: vuepress
+          BRANCH: gh-pages
+          FOLDER: docs/.vuepress/dist
+          BUILD_SCRIPT: "yarn && yarn run docs:build"
