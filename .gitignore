@@ -6,19 +6,12 @@ node_modules/
 coverage/
 docs/
 
+# Yarn files
+.yarn/install-state.gz
+.yarn/build-state.yml
+
 # Ignore generated files
 dist/
-oclif.manifest.json
-
-# Ignore JavaScript files
-**/*.js
-**/*.mjs
-**/*.js.map
-**/*.d.ts
-!src/**/*.d.ts
-**/*.tsbuildinfo
-!jest.config.ts
-!scripts/*.mjs
 
 # Ignore heapsnapshot and log files
 *.heapsnapshot

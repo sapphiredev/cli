@@ -1,14 +1,14 @@
 import { PromptInit } from '#prompts';
+import chalk from 'chalk';
+import { findUp } from 'find-up';
+import { writeFile } from 'fs/promises';
 import prompts from 'prompts';
 import YAML from 'yaml';
-import { writeFile } from 'fs/promises';
-import FindUp from 'find-up';
-import chalk from 'chalk';
 
 const { red } = chalk;
 
 export default async () => {
-	const packageJson = await FindUp('package.json');
+	const packageJson = await findUp('package.json');
 	if (!packageJson) {
 		console.log(red("Can't find package.json"));
 		process.exit(1);

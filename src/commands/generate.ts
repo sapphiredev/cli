@@ -1,11 +1,11 @@
-import { CreateFileFromTemplate } from '#functions';
 import { componentsFolder } from '#constants';
+import { CreateFileFromTemplate } from '#functions';
 import chalk from 'chalk';
-import FindUp from 'find-up';
+import { findUp } from 'find-up';
 import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
-import { join, basename } from 'path';
+import { basename, join } from 'path';
 import { setTimeout } from 'timers/promises';
 import YAML from 'yaml';
 
@@ -46,9 +46,9 @@ function timeout(ms: number): Promise<null> {
 function fetchConfig(): Promise<
 	Promise<string | undefined> | Promise<null> extends PromiseLike<infer U> ? U : Promise<string | undefined> | Promise<null>
 > {
-	return Promise.race([FindUp('.sapphirerc.json', { cwd: '.' }), timeout(5000)]).then((a) => {
+	return Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), timeout(5000)]).then((a) => {
 		if (a) return a;
-		return Promise.race([FindUp('.sapphirerc.yml', { cwd: '.' }), timeout(5000)]);
+		return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), timeout(5000)]);
 	});
 }
 
