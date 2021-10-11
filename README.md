@@ -18,21 +18,7 @@
 -   Generate components (commands, listeners, etc.)
 -   Create your own templates for components
 
-## Usage
-
-```sh-session
-$ npm install -g @sapphire/cli
-$ sapphire [command]
-running command...
-$ sapphire --version
-0.0.1
-$ sapphire help [command]
-USAGE
-  $ sapphire COMMAND
-...
-```
-
-[Get Started with the CLI](https://sapphiredev.github.io/cli)
+## [Get Started with the CLI](https://sapphiredev.github.io/cli)
 
 ## Buy us some doughnuts
 
