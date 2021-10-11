@@ -88,9 +88,9 @@ export class {{name}}Command extends MyExtendedCommand {
 
 ```
 
-If you look at the name of the class, you will see it includes `{{name}}`, this is the component's name and it is replaced with that name when creating the component. For example: if we created this component with the name `HelloWorld`, the name of the exported class would be `HelloWorldCommand`. It is not required but if you need it, this is how it's done.
+If you look at the name of the class, you will see it includes <span v-pre>`{{name}}`</span>, this is the component's name and it is replaced with that name when creating the component. For example: if we created this component with the name `HelloWorld`, the name of the exported class would be `HelloWorldCommand`. It is not required but if you need it, this is how it's done.
 
--   And now you can create component with your template
+- And now you can create component with your template
 
 ```
 sapphire generate <component> <name>
