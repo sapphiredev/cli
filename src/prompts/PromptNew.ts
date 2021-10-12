@@ -4,7 +4,7 @@ const tsTemplates: Choice[] = [
 	{ title: 'Default template (Recommended)', value: 'with-typescript-recommended' },
 	{ title: 'with Docker', value: 'with-docker' }
 ];
-const jsTemplates: Choice[] = [{ title: 'Default template (Recommended)', value: 'with-javascript', selected: true }];
+const jsTemplates: Choice[] = [{ title: 'Default template (Recommended)', value: 'with-javascript' }];
 
 export const PromptNew = (projectName: string, yarn: boolean) => {
 	const pmChoices = [
@@ -36,7 +36,7 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 			type: 'select',
 			name: 'projectTemplate',
 			message: 'Choose a template for your project',
-			choices: (prev) => (prev === 'ts' ? tsTemplates : jsTemplates)
+			choices: (prev: string) => (prev === 'ts' ? tsTemplates : jsTemplates)
 		},
 		{
 			type: 'select',
