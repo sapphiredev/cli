@@ -9,7 +9,7 @@ class UserEvent extends Listener {
         });
     }
 
-    messageRun() {}
+    run() {}
 }
 
 exports.UserEvent = UserEvent;
