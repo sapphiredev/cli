@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/sapphiredev/cli/compare/v0.0.1...v0.0.2) (2021-10-16)
+
+
+### Features
+
+* add `init` command ([588e956](https://github.com/sapphiredev/cli/commit/588e956eeb9867be1e16db9bcd962fd72864d8fc))
+* add JSON scheme for CLI config ([1ca569b](https://github.com/sapphiredev/cli/commit/1ca569b8ed89a869af3d5e39c6f1f4cc988edf08))
+* add prompt for `init` command ([67d5a10](https://github.com/sapphiredev/cli/commit/67d5a106c66df3235260810ac6770234a7e7f2fc))
+* category support ([0498b31](https://github.com/sapphiredev/cli/commit/0498b3125767b1b37614e50795402dbb8d72627e))
+* switch to commander ([#15](https://github.com/sapphiredev/cli/issues/15)) ([8f34fa8](https://github.com/sapphiredev/cli/commit/8f34fa8323a6dfdb79abf2ebaf7fdd4d17f3df4b))
+* YAML support ([#17](https://github.com/sapphiredev/cli/issues/17)) ([f69ae95](https://github.com/sapphiredev/cli/commit/f69ae959b664a3aa4342cf67c27802e197505c08))
+
+
+### Bug Fixes
+
+* add timeout when finding the config file ([46e3e21](https://github.com/sapphiredev/cli/commit/46e3e21e2b3e0d431e1eeea612a5da9b636ed34a))
+* create the config file on project root instead of the current folder ([aa3b352](https://github.com/sapphiredev/cli/commit/aa3b352aa22b7cecb2117ced37f8e33202fa492b))
+* include `templates` directory in the npm package ([c85406f](https://github.com/sapphiredev/cli/commit/c85406f9e9ba764a8063f5b7af458eb8b8f23924))
+* path and executable issues on Windows ([f317d7f](https://github.com/sapphiredev/cli/commit/f317d7f35d39d388798e6250d79915e7cfdfa23a))
+* **templates:** typescript types ([3812b34](https://github.com/sapphiredev/cli/commit/3812b34f7467e30624c7993a64366d2cb0821ac9))
+
 ### 0.0.1 (2021-09-23)
 
 
