@@ -9,7 +9,7 @@ class UserCommand extends SubCommandPluginCommand {
         });
     }
 
-    async run(message) {
+    async messageRun(message) {
         return msg.channel.send('Hello world!');
     }
 }
