@@ -8,8 +8,9 @@ desc: Learn to create and use custom component templates
 
 :::: code-group
 ::: code-group-item JSON
-```json{10-13}
+```json{11-14}
 {
+  "$schema": "https://raw.githubusercontent.com/sapphiredev/cli/main/templates/schemas/.sapphirerc.scheme.json",
   "projectLanguage": "ts",
   "locations": {
     "base": "src",
@@ -40,6 +41,10 @@ customFileTemplates:
 ```
 :::
 ::::
+
+:::tip
+If you are using json, you will get intellisense, because of our $schema
+:::
  
 - **customFileTemplates.enabled**: Enables/disables custom component templates
 - **customFileTemplates.location**: The location of your templates
