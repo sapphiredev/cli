@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/sapphiredev/cli/compare/v0.0.2...v0.0.3) (2021-10-16)
+
+
+### Bug Fixes
+
+* **templates:** Overridden run method to messageRun ([#30](https://github.com/sapphiredev/cli/issues/30)) ([07fc1d5](https://github.com/sapphiredev/cli/commit/07fc1d5516f057cd346340de853ded314741335f))
+
 ### [0.0.2](https://github.com/sapphiredev/cli/compare/v0.0.1...v0.0.2) (2021-10-16)
 
 
