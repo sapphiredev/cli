@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97 # renovate: tag=v2
         with:
           ref: vuepress
       - name: Install Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
         with:
           node-version: '16'
       - name: Install dependencies
@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: "yarn run docs:build"
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@0f24da7de3e7e135102609a4c9633b025be8411b # renovate: tag=4.1.5
         with:
           branch: gh-pages
           folder: docs/.vuepress/dist
