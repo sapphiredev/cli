@@ -1,6 +1,6 @@
 import { PromptInit } from '#prompts';
 import chalk from 'chalk';
-import { findUp } from 'find-up';
+import findUp from 'find-up';
 import { writeFile } from 'fs/promises';
 import prompts from 'prompts';
 import YAML from 'yaml';

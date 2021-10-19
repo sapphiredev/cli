@@ -1,7 +1,7 @@
 import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions';
 import chalk from 'chalk';
-import { findUp } from 'find-up';
+import findUp from 'find-up';
 import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
