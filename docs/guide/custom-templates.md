@@ -86,7 +86,7 @@ import { Message } from 'discord.js';
 	description: 'A basic command'
 })
 export class {{name}}Command extends MyExtendedCommand {
-	public async run(message: Message) {
+	public async messageRun(message: Message) {
 		return message.channel.send('Hello world!');
 	}
 }
