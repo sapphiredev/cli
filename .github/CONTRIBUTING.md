@@ -28,14 +28,10 @@ There are a number of guidelines considered when reviewing Pull Requests to be m
 
 <!-- Link Dump -->
 
-<!-- Guides -->
-
-<!-- Code -->
-
 [discord server]: https://sapphirejs.dev/discord
 [here]: https://github.com/sapphiredev/cli/pulls
 [eslint]: https://eslint.org/
 [node.js]: https://nodejs.org/en/download/
-[yarn]: https://classic.yarnpkg.com/en/docs/install
+[yarn]: https://yarnpkg.com/getting-started/install
 [oop paradigms]: https://en.wikipedia.org/wiki/Object-oriented_programming
 [scripts]: /scripts

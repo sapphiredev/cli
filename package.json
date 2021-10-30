@@ -94,7 +94,7 @@
 	"bugs": {
 		"url": "https://github.com/sapphiredev/cli/issues"
 	},
-	"homepage": "https://sapphiredev.github.io/cli",
+	"homepage": "https://www.sapphirejs.dev",
 	"commitlint": {
 		"extends": [
 			"@commitlint/config-conventional"
