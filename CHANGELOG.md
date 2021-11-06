@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/sapphiredev/cli/compare/v1.0.0...v1.0.1) (2021-11-06)
+
+
+### Bug Fixes
+
+* allow more node & npm versions in engines field ([ce6c97f](https://github.com/sapphiredev/cli/commit/ce6c97f8c2934796e9d6ab159195f2c0fa05188a))
+* **deps:** update all non-major dependencies ([#36](https://github.com/sapphiredev/cli/issues/36)) ([1a9e791](https://github.com/sapphiredev/cli/commit/1a9e791768ebbe5edd11875ac07c31b9d3cec50e))
+* typo `msg` -> `message` ([#39](https://github.com/sapphiredev/cli/issues/39)) ([0f8933b](https://github.com/sapphiredev/cli/commit/0f8933b1af3927c96a79a1f4d9b1bcc46727dd24))
+
 ## [1.0.0](https://github.com/sapphiredev/cli/compare/v0.0.3...v1.0.0) (2021-10-16)
 
 ### [0.0.3](https://github.com/sapphiredev/cli/compare/v0.0.2...v0.0.3) (2021-10-16)
