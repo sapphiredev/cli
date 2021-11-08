@@ -18,7 +18,7 @@
 -   Generate components (commands, listeners, etc.)
 -   Create your own templates for components
 
-## [Get Started with the CLI](https://sapphiredev.github.io/cli)
+## [Get Started with the CLI](https://www.sapphirejs.dev/docs/Guide/CLI/introduction)
 
 ## Buy us some doughnuts
 
