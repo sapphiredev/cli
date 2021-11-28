@@ -40,7 +40,7 @@
 		"prepare": "husky install .github/husky"
 	},
 	"dependencies": {
-		"chalk": "^4.1.2",
+		"chalk": "^5.0.0",
 		"commander": "^8.3.0",
 		"find-up": "^5.0.0",
 		"ora": "^6.0.1",
