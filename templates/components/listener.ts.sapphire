@@ -1,7 +1,7 @@
 { "category": "listeners" }
 ---
 import { ApplyOptions } from '@sapphire/decorators';
-import type { Listener, ListenerOptions } from '@sapphire/framework';
+import { Listener, ListenerOptions } from '@sapphire/framework';
 
 @ApplyOptions<ListenerOptions>({})
 export class UserEvent extends Listener {
