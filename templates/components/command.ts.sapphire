@@ -2,7 +2,7 @@
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
 	description: 'A basic command'
