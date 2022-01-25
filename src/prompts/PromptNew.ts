@@ -2,7 +2,9 @@ import type { Choice, PromptObject } from 'prompts';
 
 const tsTemplates: Choice[] = [
 	{ title: 'Default template (Recommended)', value: 'with-typescript-recommended' },
-	{ title: 'with Docker', value: 'with-docker' }
+	{ title: 'with Docker', value: 'with-docker' },
+	{ title: 'with tsup', value: 'with-tsup' },
+	{ title: 'with SWC', value: 'with-swc' }
 ];
 const jsTemplates: Choice[] = [{ title: 'Default template (Recommended)', value: 'with-javascript' }];
 
