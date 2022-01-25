@@ -55,6 +55,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/apps/allcontributors"><img src="https://avatars.githubusercontent.com/in/23186?v=4?s=100" width="100px;" alt=""/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="https://github.com/sapphiredev/cli/commits?author=allcontributors[bot]" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/apps/depfu"><img src="https://avatars.githubusercontent.com/in/715?v=4?s=100" width="100px;" alt=""/><br /><sub><b>depfu[bot]</b></sub></a><br /><a href="#maintenance-depfu[bot]" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://allianaab2m.github.io/"><img src="https://avatars.githubusercontent.com/u/56180684?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alliana</b></sub></a><br /><a href="https://github.com/sapphiredev/cli/commits?author=Allianaab2m" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/MajesticString"><img src="https://avatars.githubusercontent.com/u/66224939?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Harry Allen</b></sub></a><br /><a href="https://github.com/sapphiredev/cli/commits?author=MajesticString" title="Code">💻</a></td>
   </tr>
 </table>
 
