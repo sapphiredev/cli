@@ -6,7 +6,10 @@ const tsTemplates: Choice[] = [
 	{ title: 'with tsup', value: 'with-tsup' },
 	{ title: 'with SWC', value: 'with-swc' }
 ];
-const jsTemplates: Choice[] = [{ title: 'Default template (Recommended)', value: 'with-javascript' }];
+const jsTemplates: Choice[] = [
+	{ title: 'with ESM (Recommended)', value: 'with-esm' },
+	{ title: 'with CommonJS', value: 'with-javascript' }
+];
 
 export const PromptNew = (projectName: string, yarn: boolean) => {
 	const pmChoices = [
