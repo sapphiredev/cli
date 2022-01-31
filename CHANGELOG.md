@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/sapphiredev/cli/compare/v1.0.2...v1.1.0) (2022-01-31)
+
+### Features
+
+-   add tsup and swc template options ([#71](https://github.com/sapphiredev/cli/issues/71)) ([625dd8e](https://github.com/sapphiredev/cli/commit/625dd8ea9d43f7005c72212fb5a65bf0b8aa7492))
+
+### Bug Fixes
+
+-   **deps:** update dependency commander to v9 ([#76](https://github.com/sapphiredev/cli/issues/76)) ([d75ea1b](https://github.com/sapphiredev/cli/commit/d75ea1b1542490fd67a14630ee67e3223dc3b6e7))
+-   Generated command comportnent code has error ([#67](https://github.com/sapphiredev/cli/issues/67)) ([9901517](https://github.com/sapphiredev/cli/commit/990151771e3d1da09dee34c9995d70abc241a769))
+
 ### [1.0.2](https://github.com/sapphiredev/cli/compare/v1.0.1...v1.0.2) (2021-11-08)
 
 ### Bug Fixes
