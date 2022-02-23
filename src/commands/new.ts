@@ -44,16 +44,15 @@ function installDeps(location: string, pm: string, verbose: boolean) {
 	});
 }
 
-function modifyYarnRc(location: string) {
-	const yarnrc = `./${location}/.yarnrc.yml`;
-
-	return new Promise(async (resolve, reject) => {
-		if (!existsSync(yarnrc)) return reject(new Error('.yarnrc.yml file not found. Did  you install Yarn v3 correctly?'));
-		const originalContent = await readFile(yarnrc, 'utf8');
-
-		await writeFile(yarnrc, ['enableGlobalCache: true', 'nodeLinker: node-modules', originalContent].join('\n')).catch(reject);
-		resolve(true);
-	});
+function configureYarnRc(location: string) {
+	return (name: string, value: string) => {
+		return new Promise((resolve, reject) => {
+			return exec(`yarn config set ${name} ${value}`, { cwd: `./${location}/` }, (e) => {
+				if (e) return reject(e);
+				return resolve(true);
+			});
+		});
+	};
 }
 
 function installYarnV3(location: string, verbose: boolean) {
@@ -67,7 +66,9 @@ function installYarnV3(location: string, verbose: boolean) {
 
 		yarnProcess.on('exit', async (code) => {
 			if (code === 0) {
-				await modifyYarnRc(location).catch(reject);
+				const configure = configureYarnRc(location);
+				await Promise.all([configure('enableGlobalCache', 'true'), configure('nodeLinker', 'node-modules')]).catch(reject);
+
 				resolve(true);
 			} else {
 				reject(new Error('An unknown error occured while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.'));
