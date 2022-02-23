@@ -23,7 +23,6 @@ function editPackageJson(location: string, name: string) {
 	});
 }
 
-// @ts-ignore lolo
 function installDeps(location: string, pm: string, verbose: boolean) {
 	const pmp = spawn(process.platform === 'win32' ? `${pm.toLowerCase()}.cmd` : pm.toLowerCase(), ['install'], {
 		stdio: verbose ? 'inherit' : undefined,
