@@ -6,6 +6,7 @@ const tsTemplates: Choice[] = [
 	{ title: 'with tsup', value: 'with-tsup' },
 	{ title: 'with SWC', value: 'with-swc' }
 ];
+
 const jsTemplates: Choice[] = [
 	{ title: 'with ESM (Recommended)', value: 'with-esm' },
 	{ title: 'with CommonJS', value: 'with-javascript' }
@@ -68,5 +69,5 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 			name: 'git',
 			message: 'Do you want to create a git repository for this project?'
 		}
-	] as PromptObject<any>[];
+	] as PromptObject[];
 };

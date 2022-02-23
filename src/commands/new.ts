@@ -1,130 +1,142 @@
+import { repoUrl } from '#constants';
 import { CommandExists, CreateFileFromTemplate } from '#functions';
 import { PromptNew } from '#prompts';
-import chalk from 'chalk';
-import { exec, spawn } from 'child_process';
-import { existsSync } from 'fs';
-import { cp, readFile, rm, writeFile } from 'fs/promises';
+import { fromAsync, isErr } from '@sapphire/result';
+import { blueBright, red } from 'colorette';
+import { execa } from 'execa';
+import { existsSync } from 'node:fs';
+import { cp, readFile, rm, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import ora from 'ora';
-import { resolve } from 'path';
 import prompts from 'prompts';
-import { repoUrl } from '#constants';
 
-const { blueBright, red } = chalk;
+async function editPackageJson(location: string, name: string) {
+	const pjLocation = `./${location}/package.json`;
+	const output = JSON.parse(await readFile(pjLocation, 'utf8'));
+	if (!output) throw new Error("Can't read file.");
 
-function editPackageJson(location: string, name: string) {
-	return new Promise(async (resolve, reject) => {
-		const pjLocation = `./${location}/package.json`;
-		const output = JSON.parse(await readFile(pjLocation, 'utf8'));
-		if (!output) return reject(new Error("Can't read file."));
+	output.name = name;
 
-		output.name = name;
-		await writeFile(pjLocation, JSON.stringify(output, null, 2)).catch(reject);
-		return resolve(true);
-	});
+	const result = await fromAsync(async () => writeFile(pjLocation, JSON.stringify(output, null, 2)));
+
+	if (isErr(result)) {
+		return false;
+	}
+
+	return true;
 }
 
-function installDeps(location: string, pm: string, verbose: boolean) {
-	const pmp = spawn(process.platform === 'win32' ? `${pm.toLowerCase()}.cmd` : pm.toLowerCase(), ['install'], {
-		stdio: verbose ? 'inherit' : undefined,
-		cwd: `./${location}/`
-	});
+async function installDeps(location: string, pm: string, verbose: boolean) {
+	const result = await fromAsync(async () =>
+		execa(process.platform === 'win32' ? `${pm.toLowerCase()}.cmd` : pm.toLowerCase(), ['install'], {
+			stdio: verbose ? 'inherit' : undefined,
+			cwd: `./${location}/`
+		})
+	);
 
-	return new Promise((resolve, reject) => {
-		pmp.on('error', reject);
+	if (isErr(result)) {
+		throw result.error;
+	}
 
-		pmp.on('exit', async (code) => {
-			if (code === 0) {
-				const lockfile = `./${location}/${pm === 'npm' ? 'yarn.lock' : 'package-lock.json'}`;
-				if (existsSync(lockfile)) await rm(lockfile);
-				resolve(true);
-			} else {
-				reject(new Error('An unknown error occured while installing the dependencies. Try running Sapphire CLI with "--verbose" flag.'));
-			}
-		});
-	});
+	if (result.value.exitCode !== 0) {
+		throw new Error('An unknown error occurred while installing the dependencies. Try running Sapphire CLI with "--verbose" flag.');
+	}
+
+	const lockfile = `./${location}/${pm === 'npm' ? 'yarn.lock' : 'package-lock.json'}`;
+
+	if (existsSync(lockfile)) {
+		await rm(lockfile);
+	}
+
+	return true;
 }
 
-function configureYarnRc(location: string) {
-	return (name: string, value: string) => {
-		return new Promise((resolve, reject) => {
-			return exec(`yarn config set ${name} ${value}`, { cwd: `./${location}/` }, (e) => {
-				if (e) return reject(e);
-				return resolve(true);
-			});
-		});
-	};
+async function configureYarnRc(location: string, name: string, value: string) {
+	const result = await fromAsync(async () => execa('yarn', ['config', 'set', name, value], { cwd: `./${location}/` }));
+
+	if (isErr(result)) {
+		throw result.error;
+	}
+
+	return true;
 }
 
-function installYarnV3(location: string, verbose: boolean) {
-	const yarnProcess = spawn('yarn', ['set', 'version', 'berry'], {
-		stdio: verbose ? 'inherit' : undefined,
-		cwd: `./${location}/`
-	});
+async function installYarnV3(location: string, verbose: boolean) {
+	const result = await fromAsync(async () =>
+		execa('yarn', ['set', 'version', 'berry'], {
+			stdio: verbose ? 'inherit' : undefined,
+			cwd: `./${location}/`
+		})
+	);
 
-	return new Promise((resolve, reject) => {
-		yarnProcess.on('error', reject);
+	if (isErr(result)) {
+		throw result.error;
+	}
 
-		yarnProcess.on('exit', async (code) => {
-			if (code === 0) {
-				const configure = configureYarnRc(location);
-				await Promise.all([configure('enableGlobalCache', 'true'), configure('nodeLinker', 'node-modules')]).catch(reject);
+	if (result.value.exitCode !== 0) {
+		throw new Error('An unknown error occurred while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.');
+	}
 
-				resolve(true);
-			} else {
-				reject(new Error('An unknown error occured while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.'));
-			}
-		});
-	});
+	await Promise.all([
+		//
+		configureYarnRc(location, 'enableGlobalCache', 'true'),
+		configureYarnRc(location, 'nodeLinker', 'node-modules')
+	]);
+
+	return true;
 }
 
-function installYarnTypescriptPlugin(location: string) {
-	return new Promise((resolve, reject) => {
-		return exec('yarn plugin import typescript', { cwd: `./${location}/` }, (e) => {
-			if (!e) return resolve(true);
-			return reject(e);
-		});
-	});
+async function installYarnTypescriptPlugin(location: string) {
+	const result = await fromAsync(async () => execa('yarn', ['plugin', 'import', 'typescript'], { cwd: `./${location}/` }));
+
+	if (isErr(result)) {
+		throw result.error;
+	}
+
+	return true;
 }
 
-function initializeGitRepo(location: string) {
-	return new Promise((resolve, reject) => {
-		return exec('git init', { cwd: `./${location}/` }, (e) => {
-			if (!e) return resolve(true);
-			return reject(e);
-		});
-	});
+async function initializeGitRepo(location: string) {
+	const result = await fromAsync(async () => execa('git', ['init'], { cwd: `./${location}/` }));
+
+	if (isErr(result)) {
+		throw result.error;
+	}
+
+	return true;
 }
 
-function runJob(job: () => Promise<any>, name: string) {
-	return new Promise((resolve, reject) => {
-		const spinner = ora(name).start();
-		return job()
-			.then(() => {
-				spinner.succeed();
-				resolve(true);
-			})
-			.catch((e: Error) => {
-				spinner.fail(red(e.message));
-				console.log(red(e));
-				reject(e);
-			});
-	});
+async function runJob(job: () => Promise<any>, name: string) {
+	const spinner = ora(name).start();
+
+	const result = await fromAsync(async () => job());
+
+	if (isErr(result)) {
+		spinner.fail(red((result.error as Error).message));
+		console.error(red((result.error as Error).message));
+		throw result.error;
+	}
+
+	spinner.succeed();
+	return true;
 }
 
-function cloneRepo(location: string, verbose: boolean) {
-	const git = spawn('git', ['clone', repoUrl, `${location}/ghr`], {
-		stdio: verbose ? 'inherit' : undefined
-	});
+async function cloneRepo(location: string, verbose: boolean) {
+	const result = await fromAsync(async () =>
+		execa('git', ['clone', repoUrl, `${location}/ghr`], {
+			stdio: verbose ? 'inherit' : undefined
+		})
+	);
 
-	return new Promise((resolve, reject) => {
-		git.on('error', reject);
+	if (isErr(result)) {
+		throw result.error;
+	}
 
-		git.on('exit', (code) => {
-			code === 0
-				? resolve(true)
-				: reject(new Error('An unknown error occured while cloning the repository. Try running Sapphire CLI with "--verbose" flag.'));
-		});
-	});
+	if (result.value.exitCode !== 0) {
+		throw new Error('An unknown error occurred while cloning the repository. Try running Sapphire CLI with "--verbose" flag.');
+	}
+
+	return true;
 }
 
 export default async (name: string, flags: Record<string, boolean>) => {
@@ -179,4 +191,5 @@ export default async (name: string, flags: Record<string, boolean>) => {
 	}
 
 	console.log(blueBright('Done!'));
+	process.exit(0);
 };

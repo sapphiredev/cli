@@ -60,4 +60,4 @@ export const PromptInit = [
 		message: 'Where do you store your custom file templates?',
 		initial: 'templates'
 	}
-] as PromptObject<any>[];
+] as PromptObject[];
