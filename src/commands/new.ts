@@ -44,6 +44,48 @@ function installDeps(location: string, pm: string, verbose: boolean) {
 	});
 }
 
+function configureYarnRc(location: string) {
+	return (name: string, value: string) => {
+		return new Promise((resolve, reject) => {
+			return exec(`yarn config set ${name} ${value}`, { cwd: `./${location}/` }, (e) => {
+				if (e) return reject(e);
+				return resolve(true);
+			});
+		});
+	};
+}
+
+function installYarnV3(location: string, verbose: boolean) {
+	const yarnProcess = spawn('yarn', ['set', 'version', 'berry'], {
+		stdio: verbose ? 'inherit' : undefined,
+		cwd: `./${location}/`
+	});
+
+	return new Promise((resolve, reject) => {
+		yarnProcess.on('error', reject);
+
+		yarnProcess.on('exit', async (code) => {
+			if (code === 0) {
+				const configure = configureYarnRc(location);
+				await Promise.all([configure('enableGlobalCache', 'true'), configure('nodeLinker', 'node-modules')]).catch(reject);
+
+				resolve(true);
+			} else {
+				reject(new Error('An unknown error occured while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.'));
+			}
+		});
+	});
+}
+
+function installYarnTypescriptPlugin(location: string) {
+	return new Promise((resolve, reject) => {
+		return exec('yarn plugin import typescript', { cwd: `./${location}/` }, (e) => {
+			if (!e) return resolve(true);
+			return reject(e);
+		});
+	});
+}
+
 function initializeGitRepo(location: string) {
 	return new Promise((resolve, reject) => {
 		return exec('git init', { cwd: `./${location}/` }, (e) => {
@@ -115,13 +157,22 @@ export default async (name: string, flags: Record<string, boolean>) => {
 
 	const jobs: [() => any, string][] = [
 		[() => cloneRepo(response.projectName, flags.verbose), 'Cloning the repository'],
-		[stpJob, 'Setting up the project'],
-		[() => installDeps(response.projectName, response.packageManager, flags.verbose), `Installing dependencies using ${response.packageManager}`]
+		[stpJob, 'Setting up the project']
 	];
 
 	if (response.git) {
 		jobs.push([() => initializeGitRepo(response.projectName), 'Initializing git repo']);
 	}
+
+	if (response.yarnV3) {
+		jobs.push([() => installYarnV3(response.projectName, flags.verbose), 'Installing Yarn v3']);
+		if (response.projectLang === 'ts') jobs.push([() => installYarnTypescriptPlugin(response.projectName), 'Installing Yarn Typescript Plugin']);
+	}
+
+	jobs.push([
+		() => installDeps(response.projectName, response.packageManager, flags.verbose),
+		`Installing dependencies using ${response.packageManager}`
+	]);
 
 	for (const [job, name] of jobs) {
 		await runJob(job, name).catch(() => process.exit(1));

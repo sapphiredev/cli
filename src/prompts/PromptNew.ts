@@ -59,6 +59,11 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 			choices: yarn ? pmChoices : pmChoices.slice().reverse()
 		},
 		{
+			type: (prev) => (prev === 'Yarn' ? 'confirm' : false),
+			name: 'yarnV3',
+			message: 'Do you want to use Yarn v3?'
+		},
+		{
 			type: 'confirm',
 			name: 'git',
 			message: 'Do you want to create a git repository for this project?'
