@@ -1,6 +1,7 @@
 import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
+import { Spinner } from '#functions/Spinner';
 import { fromAsync, isErr } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import findUp from 'find-up';
@@ -8,7 +9,6 @@ import { load } from 'js-yaml';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import ora from 'ora';
 
 async function createComponent(component: string, name: string, config: any, configLoc: string) {
 	const { projectLanguage } = config;
@@ -44,10 +44,10 @@ async function fetchConfig() {
 }
 
 export default async (component: string, name: string) => {
-	const spinner = ora(`Creating a ${component.toLowerCase()}`).start();
+	const spinner = new Spinner(`Creating a ${component.toLowerCase()}`).start();
 
 	const fail = (error: string, additionalExecution?: () => void) => {
-		spinner.fail(error);
+		spinner.error({ text: error });
 		if (additionalExecution) additionalExecution();
 		process.exit(1);
 	};
@@ -70,7 +70,7 @@ export default async (component: string, name: string) => {
 		return fail((result.error as Error).message, () => console.log(red((result.error as Error).message)));
 	}
 
-	spinner.succeed();
+	spinner.success();
 
 	console.log(blueBright('Done!'));
 	process.exit(0);

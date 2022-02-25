@@ -2,13 +2,13 @@ import { repoUrl } from '#constants';
 import { CommandExists } from '#functions/CommandExists';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
+import { Spinner } from '#functions/Spinner';
 import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
-import { fromAsync, isErr } from '@sapphire/result';
+import { fromAsync, isErr, isOk } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import { execa } from 'execa';
 import { cp, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import ora from 'ora';
 import prompts from 'prompts';
 
 async function editPackageJson(location: string, name: string) {
@@ -18,17 +18,13 @@ async function editPackageJson(location: string, name: string) {
 
 	output.name = name;
 
-	const result = await fromAsync(async () => writeFile(pjLocation, JSON.stringify(output, null, 2)));
+	const result = await fromAsync(() => writeFile(pjLocation, JSON.stringify(output, null, 2)));
 
-	if (isErr(result)) {
-		return false;
-	}
-
-	return true;
+	return isOk(result);
 }
 
 async function installDeps(location: string, pm: string, verbose: boolean) {
-	const result = await fromAsync(async () =>
+	const result = await fromAsync(() =>
 		execa(pm.toLowerCase(), ['install'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
@@ -53,17 +49,13 @@ async function installDeps(location: string, pm: string, verbose: boolean) {
 }
 
 async function configureYarnRc(location: string, name: string, value: string) {
-	const result = await fromAsync(async () => execa('yarn', ['config', 'set', name, value], { cwd: `./${location}/` }));
-
-	if (isErr(result)) {
-		throw result.error;
-	}
+	await execa('yarn', ['config', 'set', name, value], { cwd: `./${location}/` });
 
 	return true;
 }
 
 async function installYarnV3(location: string, verbose: boolean) {
-	const result = await fromAsync(async () =>
+	const result = await fromAsync(() =>
 		execa('yarn', ['set', 'version', 'berry'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
@@ -88,37 +80,29 @@ async function installYarnV3(location: string, verbose: boolean) {
 }
 
 async function installYarnTypescriptPlugin(location: string) {
-	const result = await fromAsync(async () => execa('yarn', ['plugin', 'import', 'typescript'], { cwd: `./${location}/` }));
-
-	if (isErr(result)) {
-		throw result.error;
-	}
+	await execa('yarn', ['plugin', 'import', 'typescript'], { cwd: `./${location}/` });
 
 	return true;
 }
 
 async function initializeGitRepo(location: string) {
-	const result = await fromAsync(async () => execa('git', ['init'], { cwd: `./${location}/` }));
-
-	if (isErr(result)) {
-		throw result.error;
-	}
+	await execa('git', ['init'], { cwd: `./${location}/` });
 
 	return true;
 }
 
 async function runJob(job: () => Promise<any>, name: string) {
-	const spinner = ora(name).start();
+	const spinner = new Spinner(name).start();
 
 	const result = await fromAsync(async () => job());
 
 	if (isErr(result)) {
-		spinner.fail(red((result.error as Error).message));
+		spinner.error({ text: red((result.error as Error).message) });
 		console.error(red((result.error as Error).message));
 		throw result.error;
 	}
 
-	spinner.succeed();
+	spinner.success();
 	return true;
 }
 

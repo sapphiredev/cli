@@ -1,7 +1,7 @@
 import { templatesFolder } from '#constants';
+import { fileExists } from '#functions/FileExists';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { fileExists } from './FileExists';
 
 export async function CreateFileFromTemplate(
 	template: string,
@@ -60,9 +60,10 @@ async function getComponentTemplateWithConfig(path: string) {
 }
 
 async function writeFileRecursive(target: string, data: string) {
-	const dir = dirname(resolve(target));
+	const resolvedTarget = resolve(target);
+	const dir = dirname(resolvedTarget);
 
 	await mkdir(dir, { recursive: true });
 
-	return writeFile(resolve(target), data);
+	return writeFile(resolvedTarget, data);
 }
