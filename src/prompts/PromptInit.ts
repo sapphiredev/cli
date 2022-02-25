@@ -60,4 +60,15 @@ export const PromptInit = [
 		message: 'Where do you store your custom file templates?',
 		initial: 'templates'
 	}
-] as PromptObject[];
+] as PromptObject<PromptInitObjectKeys>[];
+
+export type PromptInitObjectKeys =
+	| 'configFormat'
+	| 'projectLanguage'
+	| 'base'
+	| 'commands'
+	| 'listeners'
+	| 'arguments'
+	| 'preconditions'
+	| 'cftEnabled'
+	| 'cftLocation';

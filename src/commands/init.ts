@@ -1,4 +1,4 @@
-import { PromptInit } from '#prompts';
+import { PromptInit, PromptInitObjectKeys } from '#prompts/PromptInit';
 import { red } from 'colorette';
 import findUp from 'find-up';
 import { dump } from 'js-yaml';
@@ -13,8 +13,8 @@ export default async () => {
 		process.exit(1);
 	}
 
-	const response = await prompts(PromptInit);
-	if (!response.preconditions) return process.exit(1);
+	const response = await prompts<PromptInitObjectKeys>(PromptInit);
+	if (!response.preconditions) process.exit(1);
 
 	const config = {
 		projectLanguage: response.projectLanguage,
@@ -33,5 +33,5 @@ export default async () => {
 
 	const file = response.configFormat === 'json' ? JSON.stringify(config, null, 2) : dump(config);
 	await writeFile(packageJson.replace('package.json', `.sapphirerc.${response.configFormat}`), file);
-	return process.exit(0);
+	process.exit(0);
 };

@@ -1,10 +1,11 @@
 import { repoUrl } from '#constants';
-import { CommandExists, CreateFileFromTemplate } from '#functions';
-import { PromptNew } from '#prompts';
+import { CommandExists } from '#functions/CommandExists';
+import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
+import { fileExists } from '#functions/FileExists';
+import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
 import { fromAsync, isErr } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import { execa } from 'execa';
-import { existsSync } from 'node:fs';
 import { cp, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import ora from 'ora';
@@ -28,7 +29,7 @@ async function editPackageJson(location: string, name: string) {
 
 async function installDeps(location: string, pm: string, verbose: boolean) {
 	const result = await fromAsync(async () =>
-		execa(process.platform === 'win32' ? `${pm.toLowerCase()}.cmd` : pm.toLowerCase(), ['install'], {
+		execa(pm.toLowerCase(), ['install'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
 		})
@@ -42,10 +43,10 @@ async function installDeps(location: string, pm: string, verbose: boolean) {
 		throw new Error('An unknown error occurred while installing the dependencies. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
-	const lockfile = `./${location}/${pm === 'npm' ? 'yarn.lock' : 'package-lock.json'}`;
+	const oppositeLockfile = `./${location}/${pm === 'npm' ? 'yarn.lock' : 'package-lock.json'}`;
 
-	if (existsSync(lockfile)) {
-		await rm(lockfile);
+	if (await fileExists(oppositeLockfile)) {
+		await rm(oppositeLockfile);
 	}
 
 	return true;
@@ -140,10 +141,12 @@ async function cloneRepo(location: string, verbose: boolean) {
 }
 
 export default async (name: string, flags: Record<string, boolean>) => {
-	const response = await prompts(PromptNew(name, await CommandExists('yarn')));
+	const response = await prompts<PromptNewObjectKeys>(PromptNew(name, await CommandExists('yarn')));
+
 	if (!response.projectName || !response.projectLang || !response.projectTemplate || !response.packageManager) {
 		process.exit(1);
 	}
+
 	const projectName = response.projectName === '.' ? '' : response.projectName;
 
 	const stpJob = async () => {

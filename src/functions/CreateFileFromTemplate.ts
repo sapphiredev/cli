@@ -1,7 +1,7 @@
-import { existsSync } from 'node:fs';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
 import { templatesFolder } from '#constants';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileExists } from './FileExists';
 
 export async function CreateFileFromTemplate(
 	template: string,
@@ -44,7 +44,7 @@ export async function CreateFileFromTemplate(
 	const dir = component ? config.locations[output.c!.category] : null;
 	const ta = component ? target.replace('%L%', dir) : target;
 
-	if (existsSync(ta)) {
+	if (await fileExists(ta)) {
 		throw new Error('Component already exists');
 	}
 

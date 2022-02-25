@@ -1,10 +1,10 @@
 import { componentsFolder } from '#constants';
-import { CreateFileFromTemplate } from '#functions';
+import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
+import { fileExists } from '#functions/FileExists';
 import { fromAsync, isErr } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import findUp from 'find-up';
 import { load } from 'js-yaml';
-import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
@@ -24,9 +24,9 @@ async function createComponent(component: string, name: string, config: any, con
 	const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
 	const params = { name: basename(name) };
 
-	if (userPath && existsSync(userPath)) {
+	if (userPath && (await fileExists(userPath))) {
 		return CreateFileFromTemplate(userPath, target, config, params, true, true);
-	} else if (existsSync(corePath)) {
+	} else if (await fileExists(corePath)) {
 		return CreateFileFromTemplate(`components/${template}`, target, config, params, false, true);
 	}
 

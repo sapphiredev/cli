@@ -12,7 +12,7 @@ const jsTemplates: Choice[] = [
 	{ title: 'with CommonJS', value: 'with-javascript' }
 ];
 
-export const PromptNew = (projectName: string, yarn: boolean) => {
+export const PromptNew = (projectName: string, yarn: boolean): PromptObject<PromptNewObjectKeys>[] => {
 	const pmChoices = [
 		{
 			title: `Yarn (Recommended) ${yarn ? '' : '(Not installed)'}`,
@@ -69,5 +69,7 @@ export const PromptNew = (projectName: string, yarn: boolean) => {
 			name: 'git',
 			message: 'Do you want to create a git repository for this project?'
 		}
-	] as PromptObject[];
+	] as PromptObject<PromptNewObjectKeys>[];
 };
+
+export type PromptNewObjectKeys = 'projectName' | 'projectLang' | 'projectTemplate' | 'packageManager' | 'configFormat' | 'git' | 'yarnV3';

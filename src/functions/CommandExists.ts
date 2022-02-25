@@ -5,20 +5,17 @@
 
 import { fromAsync, isErr, isOk } from '@sapphire/result';
 import { execa } from 'execa';
-import { constants, existsSync } from 'node:fs';
+import { constants } from 'node:fs';
 import { access } from 'node:fs/promises';
 import { basename, dirname } from 'node:path';
+import { fileExists } from './FileExists';
 
 const windows = process.platform === 'win32';
 
 async function isExecutable(command: string): Promise<boolean> {
 	const result = await fromAsync(async () => access(command, constants.X_OK));
 
-	if (isErr(result)) {
-		return false;
-	}
-
-	return true;
+	return isErr(result);
 }
 
 function clean(input: string) {
@@ -41,14 +38,14 @@ function clean(input: string) {
 }
 
 async function commandExistsUnix(command: string, cleanCommand: string): Promise<boolean> {
-	if (existsSync(command)) {
+	if (await fileExists(command)) {
 		if (await isExecutable(command)) {
 			return true;
 		}
 	}
 
 	const result = await fromAsync(async () =>
-		execa('command', ['-v', cleanCommand, '2>/dev/null', '&&', '{', 'echo', '>&1', cleanCommand, ';', 'exit', '0'])
+		execa('command', ['-v', cleanCommand, '2>/dev/null', '&&', '{', 'echo', '>&1', `${cleanCommand};`, 'exit', '0;', '}'])
 	);
 
 	if (isOk(result)) {
@@ -68,7 +65,7 @@ async function commandExistsWindows(command: string, cleanCommand: string): Prom
 	const result = await fromAsync(async () => execa('where', [cleanCommand]));
 
 	if (isErr(result)) {
-		return existsSync(command);
+		return fileExists(command);
 	}
 
 	return true;
