@@ -48,7 +48,6 @@ function cleanWindowsCommand(input: string) {
 async function commandExistsUnix(command: string): Promise<boolean> {
 	if (await fileExists(command)) {
 		if (await isExecutable(command)) {
-			console.groupEnd();
 			return true;
 		}
 	}
