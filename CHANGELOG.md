@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/sapphiredev/cli/compare/v1.1.0...v1.2.0) (2022-02-26)
+
+### Features
+
+-   add yarn v3 support ([#84](https://github.com/sapphiredev/cli/issues/84)) ([4c47d1a](https://github.com/sapphiredev/cli/commit/4c47d1aef07b600c0727106bd8d008213f3c2d04))
+
 ## [1.1.0](https://github.com/sapphiredev/cli/compare/v1.0.2...v1.1.0) (2022-01-31)
 
 ### Features
