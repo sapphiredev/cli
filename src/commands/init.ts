@@ -1,21 +1,20 @@
-import { PromptInit } from '#prompts';
-import chalk from 'chalk';
+import { PromptInit, PromptInitObjectKeys } from '#prompts/PromptInit';
+import { red } from 'colorette';
 import findUp from 'find-up';
-import { writeFile } from 'fs/promises';
+import { dump } from 'js-yaml';
+import { writeFile } from 'node:fs/promises';
 import prompts from 'prompts';
-import YAML from 'yaml';
-
-const { red } = chalk;
 
 export default async () => {
 	const packageJson = await findUp('package.json');
+
 	if (!packageJson) {
 		console.log(red("Can't find package.json"));
 		process.exit(1);
 	}
 
-	const response = await prompts(PromptInit);
-	if (!response.preconditions) return process.exit(1);
+	const response = await prompts<PromptInitObjectKeys>(PromptInit);
+	if (!response.preconditions) process.exit(1);
 
 	const config = {
 		projectLanguage: response.projectLanguage,
@@ -32,6 +31,7 @@ export default async () => {
 		}
 	};
 
-	const file = response.configFormat === 'json' ? JSON.stringify(config, null, 2) : YAML.stringify(config);
-	return writeFile(packageJson.replace('package.json', `.sapphirerc.${response.configFormat}`), file);
+	const file = response.configFormat === 'json' ? JSON.stringify(config, null, 2) : dump(config);
+	await writeFile(packageJson.replace('package.json', `.sapphirerc.${response.configFormat}`), file);
+	process.exit(0);
 };

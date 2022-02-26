@@ -1,65 +1,82 @@
 /*
-	from https://github.com/raftario/command-exists
-	edited for this project
+	The MIT License (MIT)
+
+	Copyright (c) 2019 Raphaël Thériault
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
-import { exec } from 'child_process';
-import fs from 'fs';
-import path from 'path';
+import { fileExists } from '#functions/FileExists';
+import { fromAsync, isErr } from '@sapphire/result';
+import { execa } from 'execa';
+import { constants } from 'node:fs';
+import { access } from 'node:fs/promises';
 
 const windows = process.platform === 'win32';
 
-function fileExists(command: string): Promise<boolean> {
-	return new Promise((res) => fs.access(command, (err) => res(!err)));
+async function isExecutable(command: string): Promise<boolean> {
+	const result = await fromAsync(() => access(command, constants.X_OK));
+
+	return isErr(result);
 }
 
-function executable(command: string): Promise<boolean> {
-	return new Promise((res) => fs.access(command, fs.constants.X_OK, (err) => res(!err)));
+function cleanWindowsCommand(input: string) {
+	if (/[^A-Za-z0-9_\/:=-]/.test(input)) {
+		input = `'${input.replace(/'/g, "'\\''")}'`;
+		input = input.replace(/^(?:'')+/g, '').replace(/\\'''/g, "\\'");
+	}
+
+	return input;
 }
 
-function clean(input: string) {
-	if (windows) {
-		if (/[^A-Za-z0-9_\/:=-]/.test(input)) {
-			input = `'${input.replace(/'/g, "'\\''")}'`;
-			input = input.replace(/^(?:'')+/g, '').replace(/\\'''/g, "\\'");
+async function commandExistsUnix(command: string): Promise<boolean> {
+	if (await fileExists(command)) {
+		if (await isExecutable(command)) {
+			return true;
 		}
-
-		return input;
-	}
-	if (/[\\]/.test(input)) {
-		const dirname = `"${path.dirname(input)}"`;
-		const basename = `"${path.basename(input)}"`;
-		return `${dirname}:${basename}`;
 	}
 
-	return `"${input}"`;
+	const result = await fromAsync(() => execa('which', [command]));
+
+	if (isErr(result)) {
+		return false;
+	}
+
+	return Boolean(result.value.stdout);
 }
 
-function commandExistsUnix(command: string, cleanCommand: string): Promise<boolean> {
-	return new Promise((res) => {
-		return fileExists(command).then((exists) => {
-			if (exists) {
-				void executable(command).then((exists) => res(exists));
-			} else {
-				exec(`command -v ${cleanCommand} 2>/dev/null && { echo >&1 ${cleanCommand}; exit 0; }`, (_err, stdout) => res(Boolean(stdout)));
-			}
-		});
-	});
+const invalidWindowsCommandNameRegex = /[\x00-\x1f<>:"|?*]/;
+
+async function commandExistsWindows(command: string): Promise<boolean> {
+	if (invalidWindowsCommandNameRegex.test(command)) {
+		return false;
+	}
+
+	const result = await fromAsync(async () => execa('where', [cleanWindowsCommand(command)]));
+
+	if (isErr(result)) {
+		return fileExists(command);
+	}
+
+	return true;
 }
 
-function commandExistsWindows(command: string, cleanCommand: string): Promise<boolean> {
-	return new Promise((res) => {
-		if (/[\x00-\x1f<>:"|?*]/.test(command)) res(false);
-		exec(`where ${cleanCommand}`, (err) => {
-			if (err) {
-				void fileExists(command).then((exists) => res(exists));
-			} else res(true);
-		});
-	});
-}
-
-export function CommandExists(command: string) {
-	const cleanCommand = clean(command);
-
-	return windows ? commandExistsWindows(command, cleanCommand) : commandExistsUnix(command, cleanCommand);
+export async function CommandExists(command: string): Promise<boolean> {
+	return windows ? commandExistsWindows(command) : commandExistsUnix(command);
 }
