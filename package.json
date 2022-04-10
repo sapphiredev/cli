@@ -70,6 +70,10 @@
 		"ts-node": "^10.7.0",
 		"typescript": "^4.6.3"
 	},
+	"resolutions": {
+		"ansi-regex": "^5.0.1",
+		"minimist": "^1.2.6"
+	},
 	"engines": {
 		"node": ">=v16.6.0",
 		"npm": ">=7.0.0"
@@ -107,9 +111,6 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"resolutions": {
-		"ansi-regex": "^5.0.1"
 	},
 	"prettier": "@sapphire/prettier-config",
 	"packageManager": "yarn@3.2.0"
