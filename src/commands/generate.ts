@@ -1,7 +1,7 @@
 import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
-import { Spinner } from '#functions/Spinner';
+import { Spinner } from '@favware/colorette-spinner';
 import { fromAsync, isErr } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import findUp from 'find-up';

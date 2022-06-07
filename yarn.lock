@@ -342,6 +342,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@favware/colorette-spinner@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@favware/colorette-spinner@npm:1.0.0"
+  dependencies:
+    colorette: "*"
+  checksum: b7fe7d983f8063bb069c1748a7f8819f59577d9abec16968fcbf9a58461dadfa0188702f528244f5184d5ae93468548da51ec265b71712743d6904ef1e8b59f1
+  languageName: node
+  linkType: hard
+
 "@favware/npm-deprecate@npm:^1.0.4":
   version: 1.0.4
   resolution: "@favware/npm-deprecate@npm:1.0.4"
@@ -464,6 +473,7 @@ __metadata:
     "@commitlint/cli": ^17.0.2
     "@commitlint/config-conventional": ^17.0.2
     "@favware/cliff-jumper": ^1.8.2
+    "@favware/colorette-spinner": ^1.0.0
     "@favware/npm-deprecate": ^1.0.4
     "@sapphire/eslint-config": ^4.3.6
     "@sapphire/prettier-config": ^1.4.3
@@ -1200,17 +1210,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"colorette@npm:*, colorette@npm:^2.0.17":
+  version: 2.0.17
+  resolution: "colorette@npm:2.0.17"
+  checksum: 693a56d816846e0e213f92c8061b65eb5025030b28a113f90c539fe34c860abc41132c03599af26bcbc213170a31bac1bf2d4c535ccad5ac7b5cb3248f9d98a8
+  languageName: node
+  linkType: hard
+
 "colorette@npm:^2.0.14, colorette@npm:^2.0.16":
   version: 2.0.16
   resolution: "colorette@npm:2.0.16"
   checksum: cd55596a3a2d1071c1a28eee7fd8a5387593ff1bd10a3e8d0a6221499311fe34a9f2b9272d77c391e0e003dcdc8934fb2f8d106e7ef1f7516f8060c901d41a27
-  languageName: node
-  linkType: hard
-
-"colorette@npm:^2.0.17":
-  version: 2.0.17
-  resolution: "colorette@npm:2.0.17"
-  checksum: 693a56d816846e0e213f92c8061b65eb5025030b28a113f90c539fe34c860abc41132c03599af26bcbc213170a31bac1bf2d4c535ccad5ac7b5cb3248f9d98a8
   languageName: node
   linkType: hard
 
