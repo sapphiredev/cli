@@ -23,17 +23,18 @@
 */
 
 import { fileExists } from '#functions/FileExists';
-import { fromAsync, isErr } from '@sapphire/result';
-import { execa } from 'execa';
+import { Result } from '@sapphire/result';
+import type { Awaitable } from '@sapphire/result/dist/lib/common/utils';
+import { execa, ExecaReturnValue } from 'execa';
 import { constants } from 'node:fs';
 import { access } from 'node:fs/promises';
 
 const windows = process.platform === 'win32';
 
 async function isExecutable(command: string): Promise<boolean> {
-	const result = await fromAsync(() => access(command, constants.X_OK));
+	const result = await Result.fromAsync(() => access(command, constants.X_OK));
 
-	return isErr(result);
+	return result.isErr();
 }
 
 function cleanWindowsCommand(input: string) {
@@ -52,13 +53,12 @@ async function commandExistsUnix(command: string): Promise<boolean> {
 		}
 	}
 
-	const result = await fromAsync(() => execa('which', [command]));
+	const result = await Result.fromAsync(() => execa('which', [command]));
 
-	if (isErr(result)) {
-		return false;
-	}
-
-	return Boolean(result.value.stdout);
+	return result.match({
+		err: () => false,
+		ok: (value: ExecaReturnValue<string>) => Boolean(value.stdout)
+	});
 }
 
 const invalidWindowsCommandNameRegex = /[\x00-\x1f<>:"|?*]/;
@@ -68,13 +68,12 @@ async function commandExistsWindows(command: string): Promise<boolean> {
 		return false;
 	}
 
-	const result = await fromAsync(async () => execa('where', [cleanWindowsCommand(command)]));
+	const result = await Result.fromAsync(async () => execa('where', [cleanWindowsCommand(command)]));
 
-	if (isErr(result)) {
-		return fileExists(command);
-	}
-
-	return true;
+	return result.match<Awaitable<boolean>>({
+		err: () => fileExists(command),
+		ok: () => true
+	});
 }
 
 export async function CommandExists(command: string): Promise<boolean> {

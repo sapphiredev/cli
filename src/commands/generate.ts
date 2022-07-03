@@ -2,7 +2,7 @@ import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
 import { Spinner } from '@favware/colorette-spinner';
-import { fromAsync, isErr } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import findUp from 'find-up';
 import { load } from 'js-yaml';
@@ -64,11 +64,11 @@ export default async (component: string, name: string) => {
 		return fail("Can't parse the Sapphire CLI config.");
 	}
 
-	const result = await fromAsync(async () => createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, '')));
+	const result = await Result.fromAsync<Promise<boolean>, Error>(async () =>
+		createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, ''))
+	);
 
-	if (isErr(result)) {
-		return fail((result.error as Error).message, () => console.log(red((result.error as Error).message)));
-	}
+	result.orElse((error) => fail(error.message, () => console.log(red(error.message))));
 
 	spinner.success();
 

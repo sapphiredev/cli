@@ -4,9 +4,9 @@ import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
 import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
 import { Spinner } from '@favware/colorette-spinner';
-import { fromAsync, isErr, isOk } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
-import { execa } from 'execa';
+import { execa, ExecaReturnValue } from 'execa';
 import { cp, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import prompts from 'prompts';
@@ -18,24 +18,24 @@ async function editPackageJson(location: string, name: string) {
 
 	output.name = name;
 
-	const result = await fromAsync(() => writeFile(pjLocation, JSON.stringify(output, null, 2)));
+	const result = await Result.fromAsync(() => writeFile(pjLocation, JSON.stringify(output, null, 2)));
 
-	return isOk(result);
+	return result.isOk();
 }
 
 async function installDeps(location: string, pm: string, verbose: boolean) {
-	const result = await fromAsync(() =>
+	const result = await Result.fromAsync<ExecaReturnValue<string>, Error>(() =>
 		execa(pm.toLowerCase(), ['install'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
 		})
 	);
 
-	if (isErr(result)) {
-		throw result.error;
-	}
+	const value = result.unwrapOrElse((op) => {
+		throw op;
+	});
 
-	if (result.value.exitCode !== 0) {
+	if (value.exitCode !== 0) {
 		throw new Error('An unknown error occurred while installing the dependencies. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
@@ -55,18 +55,18 @@ async function configureYarnRc(location: string, name: string, value: string) {
 }
 
 async function installYarnV3(location: string, verbose: boolean) {
-	const result = await fromAsync(() =>
+	const result = await Result.fromAsync(() =>
 		execa('yarn', ['set', 'version', 'berry'], {
 			stdio: verbose ? 'inherit' : undefined,
 			cwd: `./${location}/`
 		})
 	);
 
-	if (isErr(result)) {
-		throw result.error;
-	}
+	const value = result.unwrapOrElse((op) => {
+		throw op;
+	});
 
-	if (result.value.exitCode !== 0) {
+	if (value.exitCode !== 0) {
 		throw new Error('An unknown error occurred while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
@@ -94,12 +94,14 @@ async function initializeGitRepo(location: string) {
 async function runJob(job: () => Promise<any>, name: string) {
 	const spinner = new Spinner(name).start();
 
-	const result = await fromAsync(async () => job());
+	const result = await Result.fromAsync<any, Error>(() => job());
 
-	if (isErr(result)) {
-		spinner.error({ text: red((result.error as Error).message) });
-		console.error(red((result.error as Error).message));
-		throw result.error;
+	if (result.isErr()) {
+		const error = result.unwrapErr();
+
+		spinner.error({ text: red(error.message) });
+		console.error(red(error.message));
+		throw error;
 	}
 
 	spinner.success();
@@ -107,17 +109,17 @@ async function runJob(job: () => Promise<any>, name: string) {
 }
 
 async function cloneRepo(location: string, verbose: boolean) {
-	const result = await fromAsync(async () =>
+	const result = await Result.fromAsync(async () =>
 		execa('git', ['clone', repoUrl, `${location}/ghr`], {
 			stdio: verbose ? 'inherit' : undefined
 		})
 	);
 
-	if (isErr(result)) {
-		throw result.error;
-	}
+	const value = result.unwrapOrElse((op) => {
+		throw op;
+	});
 
-	if (result.value.exitCode !== 0) {
+	if (value.exitCode !== 0) {
 		throw new Error('An unknown error occurred while cloning the repository. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
