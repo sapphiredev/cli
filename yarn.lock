@@ -445,7 +445,7 @@ __metadata:
     "@favware/npm-deprecate": ^1.0.4
     "@sapphire/eslint-config": ^4.3.7
     "@sapphire/prettier-config": ^1.4.3
-    "@sapphire/result": ^1.1.1
+    "@sapphire/result": ^2.0.0
     "@sapphire/ts-config": ^3.3.4
     "@types/js-yaml": ^4.0.5
     "@types/node": ^17.0.33
@@ -506,13 +506,6 @@ __metadata:
   dependencies:
     prettier: ^2.6.2
   checksum: 95ed7d3b67f9a2373936282b47f13f81141ce3a61f26c630feca32f8a711c1b49198673579072310f290dd86c5ddbd39a3ca382ca3800b211318cd19ae226395
-  languageName: node
-  linkType: hard
-
-"@sapphire/result@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@sapphire/result@npm:1.1.1"
-  checksum: ccb3fcd051523f439c5f9871a251273e10ffeebcb5d6817c1c7efb24b60d8866fd5a781e0c77fe15a66a2dd5c5831b00258e70c76b6a82bb43bb150e10598767
   languageName: node
   linkType: hard
 
