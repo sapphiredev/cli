@@ -2,7 +2,7 @@ import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
 import { Spinner } from '@favware/colorette-spinner';
-import { fromAsync, isErr } from '@sapphire/result';
+import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
 import findUp from 'find-up';
 import { load } from 'js-yaml';
@@ -48,7 +48,7 @@ export default async (component: string, name: string) => {
 
 	const fail = (error: string, additionalExecution?: () => void) => {
 		spinner.error({ text: error });
-		if (additionalExecution) additionalExecution();
+		additionalExecution?.();
 		process.exit(1);
 	};
 
@@ -64,14 +64,17 @@ export default async (component: string, name: string) => {
 		return fail("Can't parse the Sapphire CLI config.");
 	}
 
-	const result = await fromAsync(async () => createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, '')));
+	const result = await Result.fromAsync<boolean, Error>(() =>
+		createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, ''))
+	);
 
-	if (isErr(result)) {
-		return fail((result.error as Error).message, () => console.log(red((result.error as Error).message)));
-	}
+	return result.match({
+		ok: () => {
+			spinner.success();
 
-	spinner.success();
-
-	console.log(blueBright('Done!'));
-	process.exit(0);
+			console.log(blueBright('Done!'));
+			process.exit(0);
+		},
+		err: (error) => fail(error.message, () => console.log(red(error.message)))
+	});
 };
