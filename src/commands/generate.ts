@@ -48,7 +48,7 @@ export default async (component: string, name: string) => {
 
 	const fail = (error: string, additionalExecution?: () => void) => {
 		spinner.error({ text: error });
-		if (additionalExecution) additionalExecution();
+		additionalExecution?.();
 		process.exit(1);
 	};
 
@@ -64,14 +64,17 @@ export default async (component: string, name: string) => {
 		return fail("Can't parse the Sapphire CLI config.");
 	}
 
-	const result = await Result.fromAsync<Promise<boolean>, Error>(async () =>
+	const result = await Result.fromAsync<boolean, Error>(() =>
 		createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, ''))
 	);
 
-	result.orElse((error) => fail(error.message, () => console.log(red(error.message))));
+	return result.match({
+		ok: () => {
+			spinner.success();
 
-	spinner.success();
-
-	console.log(blueBright('Done!'));
-	process.exit(0);
+			console.log(blueBright('Done!'));
+			process.exit(0);
+		},
+		err: (error) => fail(error.message, () => console.log(red(error.message)))
+	});
 };

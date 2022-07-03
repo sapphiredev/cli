@@ -24,7 +24,6 @@
 
 import { fileExists } from '#functions/FileExists';
 import { Result } from '@sapphire/result';
-import type { Awaitable } from '@sapphire/result/dist/lib/common/utils';
 import { execa, ExecaReturnValue } from 'execa';
 import { constants } from 'node:fs';
 import { access } from 'node:fs/promises';
@@ -54,7 +53,6 @@ async function commandExistsUnix(command: string): Promise<boolean> {
 	}
 
 	const result = await Result.fromAsync(() => execa('which', [command]));
-
 	return result.match({
 		err: () => false,
 		ok: (value: ExecaReturnValue<string>) => Boolean(value.stdout)
@@ -69,8 +67,7 @@ async function commandExistsWindows(command: string): Promise<boolean> {
 	}
 
 	const result = await Result.fromAsync(async () => execa('where', [cleanWindowsCommand(command)]));
-
-	return result.match<Awaitable<boolean>>({
+	return result.match({
 		err: () => fileExists(command),
 		ok: () => true
 	});

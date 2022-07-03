@@ -6,7 +6,7 @@ import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
-import { execa, ExecaReturnValue } from 'execa';
+import { execa } from 'execa';
 import { cp, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import prompts from 'prompts';
@@ -24,15 +24,9 @@ async function editPackageJson(location: string, name: string) {
 }
 
 async function installDeps(location: string, pm: string, verbose: boolean) {
-	const result = await Result.fromAsync<ExecaReturnValue<string>, Error>(() =>
-		execa(pm.toLowerCase(), ['install'], {
-			stdio: verbose ? 'inherit' : undefined,
-			cwd: `./${location}/`
-		})
-	);
-
-	const value = result.unwrapOrElse((op) => {
-		throw op;
+	const value = await execa(pm.toLowerCase(), ['install'], {
+		stdio: verbose ? 'inherit' : undefined,
+		cwd: `./${location}/`
 	});
 
 	if (value.exitCode !== 0) {
@@ -50,20 +44,13 @@ async function installDeps(location: string, pm: string, verbose: boolean) {
 
 async function configureYarnRc(location: string, name: string, value: string) {
 	await execa('yarn', ['config', 'set', name, value], { cwd: `./${location}/` });
-
 	return true;
 }
 
 async function installYarnV3(location: string, verbose: boolean) {
-	const result = await Result.fromAsync(() =>
-		execa('yarn', ['set', 'version', 'berry'], {
-			stdio: verbose ? 'inherit' : undefined,
-			cwd: `./${location}/`
-		})
-	);
-
-	const value = result.unwrapOrElse((op) => {
-		throw op;
+	const value = await execa('yarn', ['set', 'version', 'berry'], {
+		stdio: verbose ? 'inherit' : undefined,
+		cwd: `./${location}/`
 	});
 
 	if (value.exitCode !== 0) {
@@ -81,13 +68,11 @@ async function installYarnV3(location: string, verbose: boolean) {
 
 async function installYarnTypescriptPlugin(location: string) {
 	await execa('yarn', ['plugin', 'import', 'typescript'], { cwd: `./${location}/` });
-
 	return true;
 }
 
 async function initializeGitRepo(location: string) {
 	await execa('git', ['init'], { cwd: `./${location}/` });
-
 	return true;
 }
 
@@ -95,30 +80,21 @@ async function runJob(job: () => Promise<any>, name: string) {
 	const spinner = new Spinner(name).start();
 
 	const result = await Result.fromAsync<any, Error>(() => job());
-
-	if (result.isErr()) {
-		const error = result.unwrapErr();
-
-		spinner.error({ text: red(error.message) });
-		console.error(red(error.message));
-		throw error;
-	}
-
-	spinner.success();
-	return true;
+	return result.match({
+		ok: () => {
+			spinner.success();
+			return true;
+		},
+		err: (error) => {
+			spinner.error({ text: red(error.message) });
+			console.error(red(error.message));
+			throw error;
+		}
+	});
 }
 
 async function cloneRepo(location: string, verbose: boolean) {
-	const result = await Result.fromAsync(async () =>
-		execa('git', ['clone', repoUrl, `${location}/ghr`], {
-			stdio: verbose ? 'inherit' : undefined
-		})
-	);
-
-	const value = result.unwrapOrElse((op) => {
-		throw op;
-	});
-
+	const value = await execa('git', ['clone', repoUrl, `${location}/ghr`], { stdio: verbose ? 'inherit' : undefined });
 	if (value.exitCode !== 0) {
 		throw new Error('An unknown error occurred while cloning the repository. Try running Sapphire CLI with "--verbose" flag.');
 	}
