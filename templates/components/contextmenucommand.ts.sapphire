@@ -1,0 +1,20 @@
+{ "category": "commands" }
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { Command } from '@sapphire/framework';
+
+@ApplyOptions<Command.Options>({
+	description: 'A basic contextMenu command'
+})
+export class UserCommand extends Command {
+	public override registerApplicationCommands(registry: Command.Registry) {
+		registry.registerContextMenuCommand({
+			name: this.name,
+			type: 'MESSAGE'
+		})
+	}
+
+	public async contextMenuRun(interaction: Command.ContextMenuInteraction) {
+		return await interaction.reply({content: "Hello world!"});
+	}
+}
