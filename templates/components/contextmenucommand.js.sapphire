@@ -1,0 +1,25 @@
+{ "category": "commands" }
+---
+const { Command } = require('@sapphire/framework')
+
+class UserCommand extends Command {
+    constructor(context, options) {
+        super(context, {
+            ...options,
+			name: 'command'
+        });
+    }
+
+    registerApplicationCommands(registry) {
+		registry.registerContextMenuCommand({
+			name: this.name,
+			type: 'MESSAGE'
+		})
+	}
+
+	async contextMenuRun(interaction) {
+		return await interaction.reply({content: "Hello world!"})
+	}
+}
+
+exports.UserCommand = UserCommand;
