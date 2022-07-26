@@ -12,8 +12,5 @@
 		"**/.yarn": true,
 		"**/dist/": true,
 		"**/.git/": true
-	},
-	"snyk.features.openSourceSecurity": false,
-	"snyk.features.codeSecurity": false,
-	"snyk.features.codeQuality": false
+	}
 }
