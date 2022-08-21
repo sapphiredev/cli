@@ -38,7 +38,7 @@
 		"postpack": "pinst --enable"
 	},
 	"dependencies": {
-		"@favware/colorette-spinner": "^1.0.0",
+		"@favware/colorette-spinner": "^1.0.1",
 		"@sapphire/result": "^2.3.3",
 		"colorette": "^2.0.19",
 		"commander": "^9.4.0",
@@ -51,7 +51,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.3",
 		"@commitlint/config-conventional": "^17.0.3",
-		"@favware/cliff-jumper": "^1.8.6",
+		"@favware/cliff-jumper": "^1.8.7",
 		"@favware/npm-deprecate": "^1.0.5",
 		"@sapphire/eslint-config": "^4.3.7",
 		"@sapphire/prettier-config": "^1.4.3",
@@ -59,8 +59,8 @@
 		"@types/js-yaml": "^4.0.5",
 		"@types/node": "^18.0.1",
 		"@types/prompts": "^2.4.0",
-		"@typescript-eslint/eslint-plugin": "^5.33.0",
-		"@typescript-eslint/parser": "^5.33.0",
+		"@typescript-eslint/eslint-plugin": "^5.33.1",
+		"@typescript-eslint/parser": "^5.33.1",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.22.0",
 		"eslint-config-prettier": "^8.5.0",
