@@ -412,8 +412,8 @@ __metadata:
     "@sapphire/result": ^2.4.0
     "@sapphire/ts-config": ^3.3.4
     "@types/js-yaml": ^4.0.5
-    "@types/node": ^18.0.1
-    "@types/prompts": ^2.4.0
+    "@types/node": ^18.7.8
+    "@types/prompts": ^2.0.14
     "@typescript-eslint/eslint-plugin": ^5.33.1
     "@typescript-eslint/parser": ^5.33.1
     colorette: ^2.0.19
@@ -567,10 +567,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:>=12, @types/node@npm:^18.0.1":
+"@types/node@npm:>=12":
   version: 18.0.1
   resolution: "@types/node@npm:18.0.1"
   checksum: be14b251c54cc2b4ca78ac6eadf2fe5e831e487f2e17848f21d576295945b538271dcc674d0bba582b3f8d95b84f6826e99b6ba4710c76f165a8bdd4d4f0618e
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.7.8":
+  version: 18.7.8
+  resolution: "@types/node@npm:18.7.8"
+  checksum: e0125efefa896083c05f549d93166109959ffdd68cb626aad0d660c0ce9de888fe405b4763b4a3c3e0968560409c272413e0ad07204522543c688e162a617ecb
   languageName: node
   linkType: hard
 
@@ -588,7 +595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prompts@npm:^2.4.0":
+"@types/prompts@npm:^2.0.14":
   version: 2.4.0
   resolution: "@types/prompts@npm:2.4.0"
   checksum: ec75655f07fbc3cb2df60a3e3bdd13bfda0554a16f5541285c4b1cc0610756838a2863dccfc911cbb1385492054c07210512164e3dbef272ec638d631783b278
