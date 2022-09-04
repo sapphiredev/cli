@@ -9,6 +9,7 @@ class UserCommand extends Command {
 	 */
 	constructor(context) {
 		super(context, {
+			// Any Command options you want here
 			name: 'command'
 		});
 	}

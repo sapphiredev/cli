@@ -7,7 +7,9 @@ class UserEvent extends Listener {
 	 * @param {Listener.Context} context
 	 */
 	constructor(context) {
-		super(context);
+		super(context, {
+			// Any Listener options you want here
+		});
 	}
 
 	run() {}

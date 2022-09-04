@@ -7,7 +7,9 @@ class UserCommand extends Command {
 	 * @param {Command.Context} context
 	 */
 	constructor(context) {
-		super(context);
+		super(context, {
+			// Any Command options you want here
+		});
 	}
 
 	/**
