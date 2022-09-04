@@ -39,7 +39,7 @@
 	},
 	"dependencies": {
 		"@favware/colorette-spinner": "^1.0.1",
-		"@sapphire/result": "^2.4.0",
+		"@sapphire/result": "^2.4.1",
 		"colorette": "^2.0.19",
 		"commander": "^9.4.0",
 		"execa": "^6.1.0",
