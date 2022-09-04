@@ -1,7 +1,7 @@
 { "category": "commands" }
 ---
 const { Command } = require('@sapphire/framework');
-const { ApplicationCommandType } = require('discord-api-types/v9');
+const { ApplicationCommandType } = require('discord-api-types/v10');
 
 class UserCommand extends Command {
 	/**
