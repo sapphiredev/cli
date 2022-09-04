@@ -1,25 +1,39 @@
 { "category": "commands" }
 ---
-const { Command } = require('@sapphire/framework')
+const { Command } = require('@sapphire/framework');
+const { ApplicationCommandType } = require('discord-api-types/v9');
 
 class UserCommand extends Command {
-    constructor(context, options) {
-        super(context, {
-            ...options,
+	/**
+	 * @param {Command.Context} context
+	 * @param {Command.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
+			...options,
 			name: 'command'
-        });
-    }
-
-    registerApplicationCommands(registry) {
-		registry.registerContextMenuCommand({
-			name: this.name,
-			type: 'MESSAGE'
-		})
+		});
 	}
 
+	/**
+	 * @param {Command.Registry} registry
+	 */
+	registerApplicationCommands(registry) {
+		registry.registerContextMenuCommand((builder) =>
+			builder //
+				.setName(this.name)
+				.setType(ApplicationCommandType.Message)
+		);
+	}
+
+	/**
+	 * @param {Command.ContextMenuInteraction} interaction
+	 */
 	async contextMenuRun(interaction) {
-		return await interaction.reply({content: "Hello world!"})
+		return await interaction.reply({ content: 'Hello world!' });
 	}
 }
 
-exports.UserCommand = UserCommand;
+module.exports = {
+	UserCommand
+};

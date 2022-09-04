@@ -3,9 +3,28 @@
 const { Precondition } = require('@sapphire/framework');
 
 class UserPrecondition extends Precondition {
-	run(message) {
+	/**
+	 * @param {import('discord.js').Message} message
+	 */
+	messageRun(message) {
+		return this.ok();
+	}
+
+	/**
+	 * @param {import('discord.js').CommandInteraction} interaction
+	 */
+	chatInputRun(interaction) {
+		return this.ok();
+	}
+
+	/**
+	 * @param {import('discord.js').ContextMenuInteraction} interaction
+	 */
+	contextMenuRun(interaction) {
 		return this.ok();
 	}
 }
 
-module.exports.UserPrecondition = UserPrecondition;
+module.exports = {
+	UserPrecondition
+};

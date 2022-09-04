@@ -3,13 +3,19 @@
 const { Listener } = require('@sapphire/framework');
 
 class UserEvent extends Listener {
-    constructor(context, options = {}) {
-        super(context, {
-            ...options
-        });
-    }
+	/**
+	 * @param {Listener.Context} context
+	 * @param {Listener.Options} options
+	 */
+	constructor(context, options = {}) {
+		super(context, {
+			...options
+		});
+	}
 
-    run() {}
+	run() {}
 }
 
-exports.UserEvent = UserEvent;
+module.exports = {
+	UserEvent
+}

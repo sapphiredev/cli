@@ -1,10 +1,18 @@
 { "category": "preconditions" }
 ---
 import { Precondition } from '@sapphire/framework';
-import type { Message } from 'discord.js';
+import type { CommandInteraction, ContextMenuInteraction, Message } from 'discord.js';
 
 export class UserPrecondition extends Precondition {
-  public run(message: Message) {
+  public override messageRun(message: Message) {
+    return this.ok();
+  }
+
+  public override chatInputRun(interaction: CommandInteraction) {
+    return this.ok();
+  }
+
+  public override contextMenuRun(interaction: ContextMenuInteraction) {
     return this.ok();
   }
 }
