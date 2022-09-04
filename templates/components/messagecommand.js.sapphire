@@ -3,15 +3,23 @@
 const { Command } = require('@sapphire/framework');
 
 class UserCommand extends Command {
-    constructor(context, options) {
-        super(context, {
-            ...options
-        });
-    }
+	/**
+	 * @param {Command.Context} context
+	 */
+	constructor(context) {
+		super(context, {
+			// Any Command options you want here
+		});
+	}
 
-    async messageRun(message) {
-        return message.channel.send('Hello world!');
-    }
+	/**
+	 * @param {import('discord.js').Message} message
+	 */
+	async messageRun(message) {
+		return message.channel.send('Hello world!');
+	}
 }
 
-exports.UserCommand = UserCommand;
+module.exports = {
+	UserCommand
+};

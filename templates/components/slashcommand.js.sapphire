@@ -3,24 +3,37 @@
 const { Command } = require('@sapphire/framework')
 
 class UserCommand extends Command {
-    constructor(context, options) {
-        super(context, {
-            ...options,
+	/**
+	 * @param {Command.Context} context
+	 */
+	constructor(context) {
+		super(context, {
+			// Any Command options you want here
 			name: 'command',
 			description: 'A basic slash command'
-        });
-    }
-
-    registerApplicationCommands(registry) {
-		registry.registerChatInputCommand({
-			name: this.name,
-			description: this.description
-		})
+		});
 	}
 
+	/**
+	 * @param {Command.Registry} registry
+	 */
+	registerApplicationCommands(registry) {
+		registry.registerChatInputCommand(
+			(builder) =>
+				builder //
+					.setName(this.name)
+					.setDescription(this.description)
+		);
+	}
+
+	/**
+	 * @param {Command.ChatInputInteraction} interaction
+	 */
 	async chatInputRun(interaction) {
-		return await interaction.reply({content: "Hello world!"})
+		return await interaction.reply({ content: 'Hello world!' });
 	}
 }
 
-exports.UserCommand = UserCommand;
+module.exports = {
+	UserCommand
+}

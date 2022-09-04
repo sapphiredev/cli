@@ -1,15 +1,22 @@
 { "category": "arguments" }
 ---
-import { Argument } from "@sapphire/framework";
+const { Argument } = require('@sapphire/framework');
 
-export class UserArgument extends Argument {
-    constructor(context, options) {
-        super(context, {
-            ...options
-        });
-    }
+class UserArgument extends Argument {
+	/**
+	 * @param {Argument.Context} context
+	 */
+	constructor(context) {
+		super(context, {
+			// Any Argument options you want here
+		});
+	}
 
-    async run(parameter) {
-        return this.ok(parameter);
-    }
+	async run(parameter) {
+		return this.ok(parameter);
+	}
 }
+
+module.exports = {
+	UserArgument
+};

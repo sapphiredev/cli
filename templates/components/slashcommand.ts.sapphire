@@ -8,13 +8,14 @@ import { Command } from '@sapphire/framework';
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
-		registry.registerChatInputCommand({
-			name: this.name,
-			description: this.description
-		})
+		registry.registerChatInputCommand((builder) =>
+			builder //
+				.setName(this.name)
+				.setDescription(this.description)
+		);
 	}
 
-	public async chatInputRun(interaction: Command.ChatInputInteraction) {
-		return await interaction.reply({content: "Hello world!"});
+	public override async chatInputRun(interaction: Command.ChatInputInteraction) {
+		return await interaction.reply({ content: 'Hello world!' });
 	}
 }
