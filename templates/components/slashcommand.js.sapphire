@@ -20,9 +20,6 @@ class UserCommand extends Command {
 	 */
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand(
-			/**
-			 * @param {import('@discordjs/builders').SlashCommandBuilder} builder
-			 */
 			(builder) =>
 				builder //
 					.setName(this.name)
