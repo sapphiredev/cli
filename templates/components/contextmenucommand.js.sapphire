@@ -6,11 +6,9 @@ const { ApplicationCommandType } = require('discord-api-types/v10');
 class UserCommand extends Command {
 	/**
 	 * @param {Command.Context} context
-	 * @param {Command.Options} options
 	 */
-	constructor(context, options) {
+	constructor(context) {
 		super(context, {
-			...options,
 			name: 'command'
 		});
 	}

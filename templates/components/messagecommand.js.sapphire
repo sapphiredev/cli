@@ -5,12 +5,9 @@ const { Command } = require('@sapphire/framework');
 class UserCommand extends Command {
 	/**
 	 * @param {Command.Context} context
-	 * @param {Command.Options} options
 	 */
-	constructor(context, options) {
-		super(context, {
-			...options
-		});
+	constructor(context) {
+		super(context);
 	}
 
 	/**

@@ -5,12 +5,9 @@ const { Argument } = require('@sapphire/framework');
 class UserArgument extends Argument {
 	/**
 	 * @param {Argument.Context} context
-	 * @param {Argument.Options} options
 	 */
-	constructor(context, options) {
-		super(context, {
-			...options
-		});
+	constructor(context) {
+		super(context);
 	}
 
 	async run(parameter) {
