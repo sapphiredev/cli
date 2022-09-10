@@ -1,0 +1,22 @@
+{
+	"category": "interaction-handlers",
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { InteractionHandler, InteractionHandlerTypes} from '@sapphire/framework';
+import type { AutocompleteInteraction } from 'discord.js';
+
+@ApplyOptions<InteractionHandler.Options>({
+	type: InteractionHandlerTypes.Autocomplete,
+})
+export default class extends InteractionHandler {
+    public override async run(interaction: AutocompleteInteraction) {
+		// Do Whatever
+        interaction.editReply({content: "Hello World"})
+    }
+	public override async parse(interaction: AutocompleteInteraction) {
+		// Make sure the interaction you want is what you get
+        if (!interaction.customId.startsWith('{{name}}')) return this.none();
+		await interaction.deferReply();
+        return this.some();
+    }

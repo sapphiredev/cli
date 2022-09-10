@@ -26,6 +26,9 @@
 				},
 				"preconditions": {
 					"type": "string"
+				},
+				"interaction-handlers": {
+					"type": "string"
 				}
 			},
 			"required": ["base", "arguments", "commands", "listeners", "preconditions"]
