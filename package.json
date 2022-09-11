@@ -72,7 +72,7 @@
 		"prettier": "^2.7.1",
 		"pretty-quick": "^3.1.3",
 		"ts-node": "^10.9.1",
-		"typescript": "^4.8.2"
+		"typescript": "^4.8.3"
 	},
 	"resolutions": {
 		"ansi-regex": "^5.0.1",
