@@ -103,7 +103,7 @@ async function cloneRepo(location: string, verbose: boolean) {
 }
 
 export default async (name: string, flags: Record<string, boolean>) => {
-	const response = await prompts<PromptNewObjectKeys>(PromptNew(name, await CommandExists('yarn')));
+	const response = await prompts<PromptNewObjectKeys>(PromptNew(name, await CommandExists('yarn'), await CommandExists('pnpm')));
 
 	if (!response.projectName || !response.projectLang || !response.projectTemplate || !response.packageManager) {
 		process.exit(1);
