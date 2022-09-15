@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.4.0](https://github.com/sapphiredev/cli/compare/v1.3.1...v1.4.0) - (2022-09-14)
+
+## 🚀 Features
+
+- Add choice to use pnpm ([cc0d276](https://github.com/sapphiredev/cli/commit/cc0d27653d1a9b4b1b1ee8597702ec8cd92c0020))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [1.3.1](https://github.com/sapphiredev/cli/compare/v1.3.0...v1.3.1) - (2022-09-06)
 
 ## 🐛 Bug Fixes
