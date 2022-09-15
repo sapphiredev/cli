@@ -2,63 +2,53 @@
 
 All notable changes to this project will be documented in this file.
 
-# [1.4.0](https://github.com/sapphiredev/cli/compare/v1.3.1...v1.4.0) - (2022-09-14)
-
-## 🚀 Features
-
-- Add choice to use pnpm ([cc0d276](https://github.com/sapphiredev/cli/commit/cc0d27653d1a9b4b1b1ee8597702ec8cd92c0020))
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
 # [1.3.1](https://github.com/sapphiredev/cli/compare/v1.3.0...v1.3.1) - (2022-09-06)
 
 ## 🐛 Bug Fixes
 
-- Fixed core templates (#159) ([85ea98b](https://github.com/sapphiredev/cli/commit/85ea98babb5197e041367f3d47e12c18f753e4ea))
-- **deps:** Update dependency @sapphire/result to ^2.4.1 ([1960263](https://github.com/sapphiredev/cli/commit/1960263268e38dfc8ccfb91a8b3621d4d0c3bf76))
-- Update messagecommand to v3 and use Command (#152) ([f897118](https://github.com/sapphiredev/cli/commit/f897118b7edd9129068dea71dca865dc5c7b39ab))
+-   Fixed core templates (#159) ([85ea98b](https://github.com/sapphiredev/cli/commit/85ea98babb5197e041367f3d47e12c18f753e4ea))
+-   **deps:** Update dependency @sapphire/result to ^2.4.1 ([1960263](https://github.com/sapphiredev/cli/commit/1960263268e38dfc8ccfb91a8b3621d4d0c3bf76))
+-   Update messagecommand to v3 and use Command (#152) ([f897118](https://github.com/sapphiredev/cli/commit/f897118b7edd9129068dea71dca865dc5c7b39ab))
 
 # [1.3.0](https://github.com/sapphiredev/cli/compare/v1.2.0...v1.3.0) - (2022-08-21)
 
 ## 🏠 Refactor
 
-- Switch to @favware/colorette-spinner ([e52962d](https://github.com/sapphiredev/cli/commit/e52962d53bc11af482c4ba60186f411d94f29b0b))
+-   Switch to @favware/colorette-spinner ([e52962d](https://github.com/sapphiredev/cli/commit/e52962d53bc11af482c4ba60186f411d94f29b0b))
 
 ## 🐛 Bug Fixes
 
-- **deps:** Update dependency @sapphire/result to ^2.3.3 ([4c6891b](https://github.com/sapphiredev/cli/commit/4c6891b28134120969975b00ab474683eaa9cedd))
-- **deps:** Update dependency @sapphire/result to ^2.1.1 ([e42c188](https://github.com/sapphiredev/cli/commit/e42c188b05ec2f4a68403f94cfa6333e9d5421fd))
-- **deps:** Update dependency @sapphire/result to v2 (#135) ([025c7ca](https://github.com/sapphiredev/cli/commit/025c7caed86e17e4b9e20def743e7c33d9b81589))
+-   **deps:** Update dependency @sapphire/result to ^2.3.3 ([4c6891b](https://github.com/sapphiredev/cli/commit/4c6891b28134120969975b00ab474683eaa9cedd))
+-   **deps:** Update dependency @sapphire/result to ^2.1.1 ([e42c188](https://github.com/sapphiredev/cli/commit/e42c188b05ec2f4a68403f94cfa6333e9d5421fd))
+-   **deps:** Update dependency @sapphire/result to v2 (#135) ([025c7ca](https://github.com/sapphiredev/cli/commit/025c7caed86e17e4b9e20def743e7c33d9b81589))
 
 ## 📝 Documentation
 
-- Add @boingtheboeing as a contributor ([ac6088c](https://github.com/sapphiredev/cli/commit/ac6088c557800b25f3da1bd561de3941298e5f22))
+-   Add @boingtheboeing as a contributor ([ac6088c](https://github.com/sapphiredev/cli/commit/ac6088c557800b25f3da1bd561de3941298e5f22))
 
 ## 🚀 Features
 
-- Add templates for slash commands and context menu commands (#141) ([b97aeac](https://github.com/sapphiredev/cli/commit/b97aeac80999e81a3ae80e0dc7c749d6474945a8))
+-   Add templates for slash commands and context menu commands (#141) ([b97aeac](https://github.com/sapphiredev/cli/commit/b97aeac80999e81a3ae80e0dc7c749d6474945a8))
 
 # [1.3.0](https://github.com/sapphiredev/cli/compare/v1.2.0...v1.3.0) - (2022-08-21)
 
 ## 🏠 Refactor
 
-- Switch to @favware/colorette-spinner ([e52962d](https://github.com/sapphiredev/cli/commit/e52962d53bc11af482c4ba60186f411d94f29b0b))
+-   Switch to @favware/colorette-spinner ([e52962d](https://github.com/sapphiredev/cli/commit/e52962d53bc11af482c4ba60186f411d94f29b0b))
 
 ## 🐛 Bug Fixes
 
-- **deps:** Update dependency @sapphire/result to ^2.3.3 ([4c6891b](https://github.com/sapphiredev/cli/commit/4c6891b28134120969975b00ab474683eaa9cedd))
-- **deps:** Update dependency @sapphire/result to ^2.1.1 ([e42c188](https://github.com/sapphiredev/cli/commit/e42c188b05ec2f4a68403f94cfa6333e9d5421fd))
-- **deps:** Update dependency @sapphire/result to v2 (#135) ([025c7ca](https://github.com/sapphiredev/cli/commit/025c7caed86e17e4b9e20def743e7c33d9b81589))
+-   **deps:** Update dependency @sapphire/result to ^2.3.3 ([4c6891b](https://github.com/sapphiredev/cli/commit/4c6891b28134120969975b00ab474683eaa9cedd))
+-   **deps:** Update dependency @sapphire/result to ^2.1.1 ([e42c188](https://github.com/sapphiredev/cli/commit/e42c188b05ec2f4a68403f94cfa6333e9d5421fd))
+-   **deps:** Update dependency @sapphire/result to v2 (#135) ([025c7ca](https://github.com/sapphiredev/cli/commit/025c7caed86e17e4b9e20def743e7c33d9b81589))
 
 ## 📝 Documentation
 
-- Add @boingtheboeing as a contributor ([ac6088c](https://github.com/sapphiredev/cli/commit/ac6088c557800b25f3da1bd561de3941298e5f22))
+-   Add @boingtheboeing as a contributor ([ac6088c](https://github.com/sapphiredev/cli/commit/ac6088c557800b25f3da1bd561de3941298e5f22))
 
 ## 🚀 Features
 
-- Add templates for slash commands and context menu commands (#141) ([b97aeac](https://github.com/sapphiredev/cli/commit/b97aeac80999e81a3ae80e0dc7c749d6474945a8))
+-   Add templates for slash commands and context menu commands (#141) ([b97aeac](https://github.com/sapphiredev/cli/commit/b97aeac80999e81a3ae80e0dc7c749d6474945a8))
 
 ## [1.2.0](https://github.com/sapphiredev/cli/compare/v1.1.0...v1.2.0) (2022-02-26)
 
