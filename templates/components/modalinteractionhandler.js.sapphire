@@ -1,0 +1,26 @@
+{
+	"category": "interaction-handlers",
+}
+---
+const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+class ModalHandler extends InteractionHandler {
+  constructor(ctx, options) {
+    super(ctx, {
+      ...options,
+      interactionHandlerType: InteractionHandlerTypes.ModalSubmit
+    });
+  }
+  parse(interaction) {
+    if (interaction.customId !== 'hello-popup') return this.none();
+    return this.some();
+  }
+  async run(interaction) {
+    await interaction.reply({
+      content: 'Thank you for submitting the form!',
+      ephemeral: true
+    });
+  }
+}
+module.exports = {
+  ModalHandler
+};
