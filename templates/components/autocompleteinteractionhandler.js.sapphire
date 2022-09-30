@@ -10,9 +10,11 @@ class AutocompleteHandler extends InteractionHandler {
       interactionHandlerType: InteractionHandlerTypes.Autocomplete
     });
   }
+
   async run(interaction, result) {
     return interaction.respond(result);
   }
+
   async parse(interaction) {
     // Only run this interaction for the command with ID '1000802763292020737'
     if (interaction.commandId !== '1000802763292020737') return this.none();
@@ -31,6 +33,7 @@ class AutocompleteHandler extends InteractionHandler {
     }
   }
 }
+
 module.exports = {
   AutocompleteHandler
 };

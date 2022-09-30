@@ -10,10 +10,12 @@ class MenuHandler extends InteractionHandler {
       interactionHandlerType: InteractionHandlerTypes.SelectMenu
     });
   }
+  
   parse(interaction) {
     if (interaction.customId !== 'my-echo-select') return this.none();
     return this.some();
   }
+
   async run(interaction) {
     await interaction.reply({
       // Remember how we can have multiple values? Let's get the first one!
@@ -21,6 +23,7 @@ class MenuHandler extends InteractionHandler {
     });
   }
 }
+
 module.exports = {
   MenuHandler
 };

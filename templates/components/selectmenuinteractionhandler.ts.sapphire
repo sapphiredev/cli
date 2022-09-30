@@ -14,9 +14,11 @@ export default class extends InteractionHandler {
 		// Do Whatever
         interaction.editReply({content: "Hello World"})
     }
+
 	public override async parse(interaction: SelectMenuInteraction) {
 		// Make sure the interaction you want is what you get
         if (!interaction.customId.startsWith('{{name}}')) return this.none();
 		await interaction.deferReply();
         return this.some();
     }
+}

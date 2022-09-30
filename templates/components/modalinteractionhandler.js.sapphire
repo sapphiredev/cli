@@ -10,10 +10,12 @@ class ModalHandler extends InteractionHandler {
       interactionHandlerType: InteractionHandlerTypes.ModalSubmit
     });
   }
+
   parse(interaction) {
     if (interaction.customId !== 'hello-popup') return this.none();
     return this.some();
   }
+
   async run(interaction) {
     await interaction.reply({
       content: 'Thank you for submitting the form!',
@@ -21,6 +23,7 @@ class ModalHandler extends InteractionHandler {
     });
   }
 }
+
 module.exports = {
   ModalHandler
 };

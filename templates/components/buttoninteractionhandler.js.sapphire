@@ -10,10 +10,12 @@ class ButtonHandler extends InteractionHandler {
       interactionHandlerType: InteractionHandlerTypes.Button
     });
   }
+
   parse(interaction) {
     if (interaction.customId !== 'my-awesome-button') return this.none();
     return this.some();
   }
+
   async run(interaction) {
     await interaction.reply({
       content: 'Hello from a button interaction handler!',
@@ -22,6 +24,7 @@ class ButtonHandler extends InteractionHandler {
     });
   }
 }
+
 module.exports = {
   ButtonHandler
 };
