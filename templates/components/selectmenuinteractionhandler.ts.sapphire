@@ -12,7 +12,7 @@ import type { SelectMenuInteraction } from 'discord.js';
 export default class extends InteractionHandler {
     public override async run(interaction: SelectMenuInteraction) {
 		// Do Whatever
-        interaction.editReply({content: "Hello World"})
+        await interaction.editReply({content: "Hello World"})
     }
 
 	public override async parse(interaction: SelectMenuInteraction) {

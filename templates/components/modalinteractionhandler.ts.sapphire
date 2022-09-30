@@ -12,7 +12,7 @@ import type { ModalSubmitInteraction } from "discord.js";
 export class UserInteractionHandler extends InteractionHandler {
     public override async run(interaction: ModalSubmitInteraction) {
         // Do Whatever
-        interaction.editReply({ content: "Hello World!" });
+        await interaction.editReply({ content: "Hello World!" });
     }
 
     public override async parse(interaction: ModalSubmitInteraction) {
