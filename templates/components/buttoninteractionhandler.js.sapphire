@@ -4,27 +4,30 @@
 ---
 const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
 class ButtonHandler extends InteractionHandler {
-  constructor(ctx, options) {
-    super(ctx, {
-      ...options,
-      interactionHandlerType: InteractionHandlerTypes.Button
-    });
-  }
+	/**
+		* @param {InteractionHandler.Context} context
+	*/
+	constructor(ctx, options) {
+		super(ctx, {
+			...options,
+			interactionHandlerType: InteractionHandlerTypes.Button
+		});
+	}
 
-  parse(interaction) {
-    if (interaction.customId !== 'my-awesome-button') return this.none();
-    return this.some();
-  }
+	parse(interaction) {
+		if (interaction.customId !== 'my-awesome-button') return this.none();
+		return this.some();
+	}
 
-  async run(interaction) {
-    await interaction.reply({
-      content: 'Hello from a button interaction handler!',
-      // Let's make it so only the person who pressed the button can see this message!
-      ephemeral: true
-    });
-  }
+	async run(interaction) {
+		await interaction.reply({
+			content: 'Hello from a button interaction handler!',
+			// Let's make it so only the person who pressed the button can see this message!
+			ephemeral: true
+		});
+	}
 }
 
 module.exports = {
-  ButtonHandler
+	ButtonHandler
 };

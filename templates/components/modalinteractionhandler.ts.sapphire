@@ -3,22 +3,22 @@
 }
 ---
 import { ApplyOptions } from '@sapphire/decorators';
-import { InteractionHandler, InteractionHandlerTypes } from "@sapphire/framework";
-import type { ModalSubmitInteraction } from "discord.js";
+import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
+import type { ModalSubmitInteraction } from 'discord.js';
 
 @ApplyOptions<InteractionHandler.Options>({
-    interactionHandlerType: InteractionHandlerTypes.ModalSubmit,
+	interactionHandlerType: InteractionHandlerTypes.ModalSubmit
 })
 export class UserInteractionHandler extends InteractionHandler {
-    public override async run(interaction: ModalSubmitInteraction) {
-        // Do Whatever
-        await interaction.editReply({ content: "Hello World!" });
-    }
+	public override async run(interaction: ModalSubmitInteraction) {
+		// Do Whatever
+		await interaction.editReply({ content: 'Hello World!' });
+	}
 
-    public override async parse(interaction: ModalSubmitInteraction) {
-        // Make sure the interaction you want is what you get
-        if (!interaction.customId.startsWith('{{name}}')) return this.none();
+	public override async parse(interaction: ModalSubmitInteraction) {
+		// Make sure the interaction you want is what you get
+		if (!interaction.customId.startsWith('{{name}}')) return this.none();
 		await interaction.deferReply();
-        return this.some();
-    }
+		return this.some();
+	}
 }

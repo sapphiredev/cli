@@ -3,22 +3,23 @@
 }
 ---
 import { ApplyOptions } from '@sapphire/decorators';
-import { InteractionHandler, InteractionHandlerTypes} from '@sapphire/framework';
+import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
 import type { ButtonInteraction } from 'discord.js';
 
 @ApplyOptions<InteractionHandler.Options>({
-	type: InteractionHandlerTypes.Button,
+	type: InteractionHandlerTypes.Button
 })
 export default class extends InteractionHandler {
-    public override async run(interaction: ButtonInteraction) {
+	public override async run(interaction: ButtonInteraction) {
 		// Do Whatever
-        await interaction.editReply({content: "Hello World"})
-    }
+		await interaction.editReply({ content: 'Hello World' });
+	}
 
 	public override async parse(interaction: ButtonInteraction) {
 		// Make sure the interaction you want is what you get
-        if (!interaction.customId.startsWith('{{name}}')) return this.none();
+		if (!interaction.customId.startsWith('{{name}}')) return this.none();
 		await interaction.deferReply();
-        return this.some();
-    }
+		return this.some();
+	}
 }
+
