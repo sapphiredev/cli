@@ -105,6 +105,13 @@
 			"avatar_url": "https://avatars.githubusercontent.com/u/76058130?v=4",
 			"profile": "https://github.com/boingtheboeing",
 			"contributions": ["content"]
+		},
+		{
+			"login": "BashGuy10",
+			"name": "bash",
+			"avatar_url": "https://avatars.githubusercontent.com/u/63826227?v=4",
+			"profile": "https://github.com/BashGuy10",
+			"contributions": ["code"]
 		}
 	],
 	"contributorsPerLine": 7,
