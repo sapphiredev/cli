@@ -27,7 +27,7 @@ class UserCommand extends Command {
 	}
 
 	/**
-	 * @param {Command.ChatInputInteraction} interaction
+	 * @param {Command.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
 		return await interaction.reply({ content: 'Hello world!' });

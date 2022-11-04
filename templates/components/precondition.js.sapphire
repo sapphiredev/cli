@@ -18,7 +18,7 @@ class UserPrecondition extends Precondition {
 	}
 
 	/**
-	 * @param {import('discord.js').ContextMenuInteraction} interaction
+	 * @param {import('discord.js').ContextMenuCommandInteraction} interaction
 	 */
 	contextMenuRun(interaction) {
 		return this.ok();
