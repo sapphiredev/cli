@@ -11,7 +11,7 @@ class UserPrecondition extends Precondition {
 	}
 
 	/**
-	 * @param {import('discord.js').CommandInteraction} interaction
+	 * @param {import('discord.js').ChatInputCommandInteraction} interaction
 	 */
 	chatInputRun(interaction) {
 		return this.ok();
