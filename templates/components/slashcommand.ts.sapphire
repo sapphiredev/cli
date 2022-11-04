@@ -16,6 +16,6 @@ export class UserCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-		return await interaction.reply({ content: 'Hello world!' });
+		return interaction.reply({ content: 'Hello world!' });
 	}
 }

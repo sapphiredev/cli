@@ -29,7 +29,7 @@ class UserCommand extends Command {
 	 * @param {Command.ContextMenuCommandInteraction} interaction
 	 */
 	async contextMenuRun(interaction) {
-		return await interaction.reply({ content: 'Hello world!' });
+		return interaction.reply({ content: 'Hello world!' });
 	}
 }
 
