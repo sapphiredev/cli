@@ -12,12 +12,17 @@ const jsTemplates: Choice[] = [
 	{ title: 'with CommonJS', value: 'with-javascript' }
 ];
 
-export const PromptNew = (projectName: string, yarn: boolean): PromptObject<PromptNewObjectKeys>[] => {
+export const PromptNew = (projectName: string, yarn: boolean, pnpm: boolean): PromptObject<PromptNewObjectKeys>[] => {
 	const pmChoices = [
 		{
 			title: `Yarn (Recommended) ${yarn ? '' : '(Not installed)'}`,
 			value: 'Yarn',
 			disabled: !yarn
+		},
+		{
+			title: `pnpm ${pnpm ? '' : '(Not Installed)'}`,
+			value: 'pnpm',
+			disabled: !pnpm
 		},
 		{ title: 'npm', value: 'npm' }
 	];
