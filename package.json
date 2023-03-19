@@ -42,7 +42,7 @@
 		"@sapphire/result": "^2.6.0",
 		"colorette": "^2.0.19",
 		"commander": "^10.0.0",
-		"execa": "^7.1.0",
+		"execa": "^7.1.1",
 		"find-up": "^5.0.0",
 		"js-yaml": "^4.1.0",
 		"prompts": "^2.4.2",
@@ -57,10 +57,10 @@
 		"@sapphire/prettier-config": "^1.4.5",
 		"@sapphire/ts-config": "^3.3.4",
 		"@types/js-yaml": "^4.0.5",
-		"@types/node": "^18.15.0",
+		"@types/node": "^18.15.3",
 		"@types/prompts": "^2.4.3",
-		"@typescript-eslint/eslint-plugin": "^5.54.1",
-		"@typescript-eslint/parser": "^5.54.1",
+		"@typescript-eslint/eslint-plugin": "^5.55.0",
+		"@typescript-eslint/parser": "^5.55.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.36.0",
 		"eslint-config-prettier": "^8.7.0",
@@ -117,5 +117,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@3.4.1"
+	"packageManager": "yarn@3.5.0"
 }
