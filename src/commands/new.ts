@@ -2,7 +2,7 @@ import { repoUrl } from '#constants';
 import { CommandExists } from '#functions/CommandExists';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
-import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
+import { PromptNew, type PromptNewObjectKeys } from '#prompts/PromptNew';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';

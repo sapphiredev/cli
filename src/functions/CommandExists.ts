@@ -24,7 +24,7 @@
 
 import { fileExists } from '#functions/FileExists';
 import { Result } from '@sapphire/result';
-import { execa, ExecaReturnValue } from 'execa';
+import { execa, type ExecaReturnValue } from 'execa';
 import { constants } from 'node:fs';
 import { access } from 'node:fs/promises';
 
