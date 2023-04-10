@@ -4,7 +4,7 @@
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
-import { ApplicationCommandOptionChoiceData, AutocompleteInteraction } from 'discord.js';
+import { AutocompleteInteraction, type ApplicationCommandOptionChoiceData } from 'discord.js';
 
 @ApplyOptions<InteractionHandler.Options>({
 	interactionHandlerType: InteractionHandlerTypes.Autocomplete
