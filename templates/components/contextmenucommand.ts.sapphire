@@ -2,7 +2,7 @@
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { ApplicationCommandType } from 'discord-api-types/v10';
+import { ApplicationCommandType } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
 	description: 'A basic contextMenu command'
@@ -16,7 +16,7 @@ export class UserCommand extends Command {
 		);
 	}
 
-	public async contextMenuRun(interaction: Command.ContextMenuInteraction) {
-		return await interaction.reply({ content: 'Hello world!' });
+	public async contextMenuRun(interaction: Command.ContextMenuCommandInteraction) {
+		return interaction.reply({ content: 'Hello world!' });
 	}
 }

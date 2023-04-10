@@ -27,6 +27,9 @@
 				"preconditions": {
 					"type": "string"
 				},
+				"routes": {
+					"type": "string"
+				},
 				"interaction-handlers": {
 					"type": "string"
 				}

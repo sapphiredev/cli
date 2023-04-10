@@ -1,7 +1,8 @@
 import type { Choice, PromptObject } from 'prompts';
 
 const tsTemplates: Choice[] = [
-	{ title: 'Default template (Recommended)', value: 'with-typescript-recommended' },
+	{ title: 'Starter template (Recommended)', value: 'with-typescript-starter' },
+	{ title: 'Complete template', value: 'with-typescript-complete' },
 	{ title: 'with Docker', value: 'with-docker' },
 	{ title: 'with tsup', value: 'with-tsup' },
 	{ title: 'with SWC', value: 'with-swc' }
@@ -12,12 +13,17 @@ const jsTemplates: Choice[] = [
 	{ title: 'with CommonJS', value: 'with-javascript' }
 ];
 
-export const PromptNew = (projectName: string, yarn: boolean): PromptObject<PromptNewObjectKeys>[] => {
+export const PromptNew = (projectName: string, yarn: boolean, pnpm: boolean): PromptObject<PromptNewObjectKeys>[] => {
 	const pmChoices = [
 		{
 			title: `Yarn (Recommended) ${yarn ? '' : '(Not installed)'}`,
 			value: 'Yarn',
 			disabled: !yarn
+		},
+		{
+			title: `pnpm ${pnpm ? '' : '(Not Installed)'}`,
+			value: 'pnpm',
+			disabled: !pnpm
 		},
 		{ title: 'npm', value: 'npm' }
 	];

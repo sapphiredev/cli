@@ -12,5 +12,11 @@
 		"**/.yarn": true,
 		"**/dist/": true,
 		"**/.git/": true
+	},
+	"files.associations": {
+		"*.js.sapphire": "javascript",
+		"*.ts.sapphire": "typescript",
+		"*.json.sapphire": "json",
+		"*.yml.sapphire": "yaml"
 	}
 }

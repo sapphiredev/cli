@@ -1,7 +1,7 @@
 { "category": "commands" }
 ---
 const { Command } = require('@sapphire/framework');
-const { ApplicationCommandType } = require('discord-api-types/v10');
+const { ApplicationCommandType } = require('discord.js');
 
 class UserCommand extends Command {
 	/**
@@ -26,10 +26,10 @@ class UserCommand extends Command {
 	}
 
 	/**
-	 * @param {Command.ContextMenuInteraction} interaction
+	 * @param {Command.ContextMenuCommandInteraction} interaction
 	 */
 	async contextMenuRun(interaction) {
-		return await interaction.reply({ content: 'Hello world!' });
+		return interaction.reply({ content: 'Hello world!' });
 	}
 }
 

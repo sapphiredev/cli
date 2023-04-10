@@ -2,7 +2,7 @@ import { repoUrl } from '#constants';
 import { CommandExists } from '#functions/CommandExists';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
-import { PromptNew, PromptNewObjectKeys } from '#prompts/PromptNew';
+import { PromptNew, type PromptNewObjectKeys } from '#prompts/PromptNew';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
@@ -23,7 +23,7 @@ async function editPackageJson(location: string, name: string) {
 	return result.isOk();
 }
 
-async function installDeps(location: string, pm: string, verbose: boolean) {
+async function installDeps(location: string, pm: 'npm' | 'Yarn' | 'pnpm', verbose: boolean) {
 	const value = await execa(pm.toLowerCase(), ['install'], {
 		stdio: verbose ? 'inherit' : undefined,
 		cwd: `./${location}/`
@@ -33,10 +33,18 @@ async function installDeps(location: string, pm: string, verbose: boolean) {
 		throw new Error('An unknown error occurred while installing the dependencies. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
-	const oppositeLockfile = `./${location}/${pm === 'npm' ? 'yarn.lock' : 'package-lock.json'}`;
+	const oppositeLockfiles = {
+		npm: ['yarn.lock', 'pnpm-lock.yaml'],
+		yarn: ['package-lock.json', 'pnpm-lock.yaml'],
+		pnpm: ['package-lock.json', 'yarn.lock']
+	} as const;
 
-	if (await fileExists(oppositeLockfile)) {
-		await rm(oppositeLockfile);
+	const lockfiles = pm === 'npm' ? oppositeLockfiles.npm : pm === 'Yarn' ? oppositeLockfiles.yarn : oppositeLockfiles.pnpm;
+
+	for (const lockfile of lockfiles) {
+		if (await fileExists(lockfile)) {
+			await rm(lockfile);
+		}
 	}
 
 	return true;
@@ -103,7 +111,7 @@ async function cloneRepo(location: string, verbose: boolean) {
 }
 
 export default async (name: string, flags: Record<string, boolean>) => {
-	const response = await prompts<PromptNewObjectKeys>(PromptNew(name, await CommandExists('yarn')));
+	const response = await prompts<PromptNewObjectKeys>(PromptNew(name, await CommandExists('yarn'), await CommandExists('pnpm')));
 
 	if (!response.projectName || !response.projectLang || !response.projectTemplate || !response.packageManager) {
 		process.exit(1);
@@ -130,6 +138,10 @@ export default async (name: string, flags: Record<string, boolean>) => {
 		);
 
 		await editPackageJson(response.projectName, projectName);
+
+		if (response.packageManager === 'pnpm') {
+			await writeFile(`./${response.projectName}/.npmrc`, '# pnpm only\nshamefully-hoist=true\npublic-hoist-pattern[]=@sapphire/*');
+		}
 	};
 
 	const jobs: [() => any, string][] = [

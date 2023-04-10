@@ -1,4 +1,4 @@
-import { PromptInit, PromptInitObjectKeys } from '#prompts/PromptInit';
+import { PromptInit, type PromptInitObjectKeys } from '#prompts/PromptInit';
 import { red } from 'colorette';
 import findUp from 'find-up';
 import { dump } from 'js-yaml';
