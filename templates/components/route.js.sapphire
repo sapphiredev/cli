@@ -1,0 +1,32 @@
+{ "category": "routes" }
+---
+const { methods, Route } = require('@sapphire/plugin-api');
+class UserRoute extends Route {
+	/**
+	 * @param {Route.Context} context
+	 * @param {Route.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
+			...options,
+			route: 'hello-world'
+		});
+	}
+	/**
+	 * @param {import('@sapphire/plugin-api').ApiRequest} request
+	 * @param {import('@sapphire/plugin-api').ApiResponse} response
+	 */
+	[methods.GET](request, response) {
+		response.json({ message: 'Hello World' });
+	}
+	/**
+	 * @param {import('@sapphire/plugin-api').ApiRequest} request
+	 * @param {import('@sapphire/plugin-api').ApiResponse} response
+	 */
+	[methods.POST](request, response) {
+		response.json({ message: 'Hello World' });
+	}
+}
+module.exports = {
+	UserRoute
+};
