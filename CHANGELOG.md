@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.5.0](https://github.com/sapphiredev/cli/compare/v1.4.0...v1.5.0) - (2023-04-10)
+
+## 🐛 Bug Fixes
+
+- **deps:** Update dependency execa to v7 (#203) ([dd78817](https://github.com/sapphiredev/cli/commit/dd78817e287246ae17c5e0ca947a04adf49fb86c))
+
+## 🚀 Features
+
+- **templates:** Add route component (#215) ([2945f09](https://github.com/sapphiredev/cli/commit/2945f09a663421362ea3f34f28900fd193acf5d7))
+
 # [1.4.0](https://github.com/sapphiredev/cli/compare/v1.3.1...v1.4.0) - (2023-01-29)
 
 ## 🏠 Refactor
