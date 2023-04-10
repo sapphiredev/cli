@@ -4,21 +4,22 @@
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
-import type { SelectMenuInteraction } from 'discord.js';
+import type { StringSelectMenuInteraction } from 'discord.js';
 
 @ApplyOptions<InteractionHandler.Options>({
-	type: InteractionHandlerTypes.SelectMenu
+	interactionHandlerType: InteractionHandlerTypes.SelectMenu
 })
-export default class extends InteractionHandler {
-	public override async run(interaction: SelectMenuInteraction) {
-		// Do Whatever
-		await interaction.editReply({ content: 'Hello World' });
+export class MenuHandler extends InteractionHandler {
+	public override async run(interaction: StringSelectMenuInteraction) {
+		await interaction.reply({
+			// Remember how we can have multiple values? Let's get the first one!
+			content: `You selected: ${interaction.values[0]}`
+		});
 	}
 
-	public override async parse(interaction: SelectMenuInteraction) {
-		// Make sure the interaction you want is what you get
-		if (!interaction.customId.startsWith('{{name}}')) return this.none();
-		await interaction.deferReply();
+	public override parse(interaction: StringSelectMenuInteraction) {
+		if (interaction.customId !== 'my-echo-select') return this.none();
+
 		return this.some();
 	}
 }

@@ -3,27 +3,36 @@
 }
 ---
 const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+
 class MenuHandler extends InteractionHandler {
 	/**
-		* @param {InteractionHandler.Context} context
-	*/
-	constructor(ctx, options) {
-		super(ctx, {
+	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
 			...options,
 			interactionHandlerType: InteractionHandlerTypes.SelectMenu
 		});
 	}
 
-	parse(interaction) {
-		if (interaction.customId !== 'my-echo-select') return this.none();
-		return this.some();
-	}
-
+	/**
+	 * @param {import('discord.js').StringSelectMenuInteraction} interaction
+	 */
 	async run(interaction) {
 		await interaction.reply({
 			// Remember how we can have multiple values? Let's get the first one!
 			content: `You selected: ${interaction.values[0]}`
 		});
+	}
+
+	/**
+	 * @param {import('discord.js').StringSelectMenuInteraction} interaction
+	 */
+	parse(interaction) {
+		if (interaction.customId !== 'my-echo-select') return this.none();
+
+    	return this.some();
 	}
 }
 

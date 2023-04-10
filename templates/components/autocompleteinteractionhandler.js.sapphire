@@ -3,21 +3,31 @@
 }
 ---
 const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+
 class AutocompleteHandler extends InteractionHandler {
 	/**
-		* @param {InteractionHandler.Context} context
-	*/
-	constructor(ctx, options) {
-		super(ctx, {
+	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
 			...options,
 			interactionHandlerType: InteractionHandlerTypes.Autocomplete
 		});
 	}
 
+	/**
+	 * @param {import('discord.js').AutocompleteInteraction} interaction
+	 * @param {import('discord.js').ApplicationCommandOptionChoiceData[]} result
+	 */
 	async run(interaction, result) {
 		return interaction.respond(result);
 	}
 
+	/**
+	 * @param {import('discord.js').AutocompleteInteraction} interaction
+	 */
 	async parse(interaction) {
 		// Only run this interaction for the command with ID '1000802763292020737'
 		if (interaction.commandId !== '1000802763292020737') return this.none();
@@ -40,4 +50,3 @@ class AutocompleteHandler extends InteractionHandler {
 module.exports = {
 	AutocompleteHandler
 };
-

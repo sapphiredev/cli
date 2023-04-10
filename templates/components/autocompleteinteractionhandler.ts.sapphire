@@ -4,21 +4,31 @@
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
-import type { AutocompleteInteraction } from 'discord.js';
+import { ApplicationCommandOptionChoiceData, AutocompleteInteraction } from 'discord.js';
 
 @ApplyOptions<InteractionHandler.Options>({
-	type: InteractionHandlerTypes.Autocomplete
+	interactionHandlerType: InteractionHandlerTypes.Autocomplete
 })
-export default class extends InteractionHandler {
-	public override async run(interaction: AutocompleteInteraction) {
-		// Do Whatever
-		await interaction.editReply({ content: 'Hello World' });
+export class AutocompleteHandler extends InteractionHandler {
+	public override async run(interaction: AutocompleteInteraction, result: ApplicationCommandOptionChoiceData[]) {
+		return interaction.respond(result);
 	}
 
 	public override async parse(interaction: AutocompleteInteraction) {
-		// Make sure the interaction you want is what you get
-		if (!interaction.customId.startsWith('{{name}}')) return this.none();
-		await interaction.deferReply();
-		return this.some();
+		// Only run this interaction for the command with ID '1000802763292020737'
+		if (interaction.commandId !== '1000802763292020737') return this.none();
+		// Get the focussed (current) option
+		const focusedOption = interaction.options.getFocused(true);
+		// Ensure that the option name is one that can be autocompleted, or return none if not.
+		switch (focusedOption.name) {
+			case 'search': {
+				// Search your API or similar. This is example code!
+				const searchResult = await myApi.searchForSomething(focusedOption.value);
+				// Map the search results to the structure required for Autocomplete
+				return this.some(searchResult.map((match) => ({ name: match.name, value: match.key })));
+			}
+			default:
+				return this.none();
+		}
 	}
 }

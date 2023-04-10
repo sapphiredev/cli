@@ -3,27 +3,36 @@
 }
 ---
 const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+
 class ModalHandler extends InteractionHandler {
 	/**
-		* @param {InteractionHandler.Context} context
-	*/
-	constructor(ctx, options) {
-		super(ctx, {
+	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
 			...options,
 			interactionHandlerType: InteractionHandlerTypes.ModalSubmit
 		});
 	}
 
-	parse(interaction) {
-		if (interaction.customId !== 'hello-popup') return this.none();
-		return this.some();
-	}
-
+	/**
+	 * @param {import('discord.js').ModalSubmitInteraction} interaction
+	 */
 	async run(interaction) {
 		await interaction.reply({
 			content: 'Thank you for submitting the form!',
 			ephemeral: true
 		});
+	  }
+
+	/**
+	 * @param {import('discord.js').ModalSubmitInteraction} interaction
+	 */
+	parse(interaction) {
+		if (interaction.customId !== 'hello-popup') return this.none();
+	
+		return this.some();
 	}
 }
 
