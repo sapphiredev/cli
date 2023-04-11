@@ -1,6 +1,4 @@
-{
-	"category": "interaction-handlers",
-}
+{ "category": "interaction-handlers" }
 ---
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
