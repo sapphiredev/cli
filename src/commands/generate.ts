@@ -50,8 +50,20 @@ async function fetchConfig() {
  * @returns A string with a hint for the user
  */
 function parseCommonHints(component: string): string {
-	if (component.toLowerCase() === 'command' || component.toLowerCase() === 'commands') {
-		return `\nHint: You wrote "${component}", instead of "messagecommand", "slashcommand", or "contextmenucommand"`;
+	const newLine = '\n';
+	const lowerCaseComponent = component.toLowerCase();
+
+	if (lowerCaseComponent === 'command' || lowerCaseComponent === 'commands') {
+		return `${newLine}Hint: You wrote "${component}", instead of "messagecommand", "slashcommand", or "contextmenucommand"`;
+	}
+
+	if (
+		lowerCaseComponent === 'interaction-handler' ||
+		lowerCaseComponent === 'interaction-handlers' ||
+		lowerCaseComponent === 'interactionhandler' ||
+		lowerCaseComponent === 'interactionhandlers'
+	) {
+		return `${newLine}Hint: You wrote "${component}", instead of "buttoninteractionhandler", "autocompleteinteractionhandler", "modalinteractionhandler", or "selectmenuinteractionhandler"`;
 	}
 
 	return '';

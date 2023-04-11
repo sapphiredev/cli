@@ -23,7 +23,8 @@ export default async () => {
 			arguments: response.arguments,
 			commands: response.commands,
 			listeners: response.listeners,
-			preconditions: response.preconditions
+			preconditions: response.preconditions,
+			'interaction-handlers': response['interaction-handlers']
 		},
 		customFileTemplates: {
 			enabled: response.cftEnabled,

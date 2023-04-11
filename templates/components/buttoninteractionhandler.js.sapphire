@@ -1,0 +1,39 @@
+{ "category": "interaction-handlers" }
+---
+const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/framework');
+
+class ButtonHandler extends InteractionHandler {
+	/**
+	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
+			...options,
+			interactionHandlerType: InteractionHandlerTypes.Button
+		});
+	}
+
+	/**
+	 * @param {import('discord.js').ButtonInteraction} interaction
+	 */
+	async run(interaction) {
+		await interaction.reply({
+			content: 'Hello from a button interaction handler!',
+			// Let's make it so only the person who pressed the button can see this message!
+			ephemeral: true
+		});
+	}
+
+	/**
+	 * @param {import('discord.js').ButtonInteraction} interaction
+	 */
+	parse(interaction) {
+		if (interaction.customId !== 'my-awesome-button') return this.none();
+		return this.some();
+	}
+}
+
+module.exports = {
+	ButtonHandler
+};
