@@ -5,8 +5,8 @@
 		"arguments": "arguments",
 		"commands": "commands",
 		"listeners": "listeners",
-		"preconditions": "preconditions"
-		"routes": "routes",
+		"preconditions": "preconditions",
+		"routes": "routes"
 	},
 	"customFileTemplates": {
 		"enabled": false,
