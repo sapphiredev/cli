@@ -57,6 +57,17 @@ export const PromptInit = [
 	},
 	{
 		type: 'confirm',
+		name: 'rEnabled',
+		message: 'Would you use the api plugin?'
+	},
+	{
+		type: (prev) => (prev ? 'text' : null),
+		name: 'rLocation',
+		message: 'Where do you store your routes? (do not include the base)',
+		initial: 'routes'
+	},
+	{
+		type: 'confirm',
 		name: 'cftEnabled',
 		message: 'Do you want to enable custom file templates?'
 	},
@@ -77,5 +88,6 @@ export type PromptInitObjectKeys =
 	| 'arguments'
 	| 'preconditions'
 	| 'interaction-handlers'
+	| 'routes'
 	| 'cftEnabled'
 	| 'cftLocation';

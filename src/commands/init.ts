@@ -24,7 +24,8 @@ export default async () => {
 			commands: response.commands,
 			listeners: response.listeners,
 			preconditions: response.preconditions,
-			'interaction-handlers': response['interaction-handlers']
+			'interaction-handlers': response['interaction-handlers'],
+			routes: response.routes ?? ''
 		},
 		customFileTemplates: {
 			enabled: response.cftEnabled,
