@@ -68,7 +68,8 @@ export const PromptNew = (projectName: string, yarn: boolean, pnpm: boolean): Pr
 		{
 			type: (prev) => (prev === 'Yarn' ? 'confirm' : false),
 			name: 'yarnV3',
-			message: 'Do you want to use Yarn v3?'
+			message: 'Do you want to use Yarn v3?',
+			initial: true
 		},
 		{
 			type: 'confirm',
