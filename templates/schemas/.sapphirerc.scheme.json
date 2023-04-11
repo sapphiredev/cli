@@ -27,14 +27,14 @@
 				"preconditions": {
 					"type": "string"
 				},
-				"routes": {
+				"interaction-handlers": {
 					"type": "string"
 				},
-				"interaction-handlers": {
+				"routes": {
 					"type": "string"
 				}
 			},
-			"required": ["base", "arguments", "commands", "listeners", "preconditions"]
+			"required": ["base", "arguments", "commands", "listeners", "preconditions", "interaction-handlers"]
 		},
 		"customFileTemplates": {
 			"description": "Settings about custom component (piece) templates",

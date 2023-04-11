@@ -6,8 +6,8 @@
 		"commands": "commands",
 		"listeners": "listeners",
 		"preconditions": "preconditions",
-		"routes": "routes",
-		"interaction-handlers": "interaction-handlers"
+		"interaction-handlers": "interaction-handlers",
+		"routes": "routes"
 	},
 	"customFileTemplates": {
 		"enabled": false,

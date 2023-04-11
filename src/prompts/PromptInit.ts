@@ -50,6 +50,12 @@ export const PromptInit = [
 		initial: 'preconditions'
 	},
 	{
+		type: 'text',
+		name: 'interaction-handlers',
+		message: 'Where do you store your interaction handlers? (do not include the base)',
+		initial: 'interaction-handlers'
+	},
+	{
 		type: 'confirm',
 		name: 'cftEnabled',
 		message: 'Do you want to enable custom file templates?'
@@ -70,5 +76,6 @@ export type PromptInitObjectKeys =
 	| 'listeners'
 	| 'arguments'
 	| 'preconditions'
+	| 'interaction-handlers'
 	| 'cftEnabled'
 	| 'cftLocation';
