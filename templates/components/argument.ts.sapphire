@@ -1,11 +1,11 @@
 { "category": "arguments" }
 ---
 import { ApplyOptions } from '@sapphire/decorators';
-import { Argument, ArgumentOptions } from '@sapphire/framework';
+import { Argument } from '@sapphire/framework';
 
-@ApplyOptions<ArgumentOptions>({})
+@ApplyOptions<Argument.Options>({})
 export class UserArgument extends Argument<string> {
-	async run(parameter: string) {
+	public override run(parameter: string) {
 		return this.ok(parameter);
 	}
 }

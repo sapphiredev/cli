@@ -16,7 +16,7 @@ export class UserCommand extends Command {
 		);
 	}
 
-	public async contextMenuRun(interaction: Command.ContextMenuCommandInteraction) {
+	public override async contextMenuRun(interaction: Command.ContextMenuCommandInteraction) {
 		return interaction.reply({ content: 'Hello world!' });
 	}
 }
