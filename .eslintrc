@@ -1,3 +1,6 @@
 {
-	"extends": "@sapphire"
+	"extends": "@sapphire",
+	"parserOptions": {
+		"extraFileExtensions": [".sapphire"]
+	}
 }
