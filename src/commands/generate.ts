@@ -9,8 +9,9 @@ import { load } from 'js-yaml';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
+import type { Config } from 'src/lib/types';
 
-async function createComponent(component: string, name: string, config: any, configLoc: string) {
+async function createComponent(component: string, name: string, config: Config, configLoc: string) {
 	const { projectLanguage } = config;
 
 	if (!projectLanguage) {
@@ -30,17 +31,30 @@ async function createComponent(component: string, name: string, config: any, con
 		return CreateFileFromTemplate(`components/${template}`, target, config, params, false, true);
 	}
 
-	throw new Error("Can't find the template.");
+	throw new Error(`Couldn't find a template file for that component type.${parseCommonHints(component)}`);
 }
 
 async function fetchConfig() {
-	const a = await Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), sleep(5000)]);
+	const configFileAsJson = await Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), sleep(5000)]);
 
-	if (a) {
-		return a;
+	if (configFileAsJson) {
+		return configFileAsJson;
 	}
 
 	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
+}
+
+/**
+ * Parses common hints for the user
+ * @param component Component name
+ * @returns A string with a hint for the user
+ */
+function parseCommonHints(component: string): string {
+	if (component.toLowerCase() === 'command' || component.toLowerCase() === 'commands') {
+		return `\nHint: You wrote "${component}", instead of "messagecommand", "slashcommand", or "contextmenucommand"`;
+	}
+
+	return '';
 }
 
 export default async (component: string, name: string) => {
@@ -58,7 +72,7 @@ export default async (component: string, name: string) => {
 		return fail("Can't find the Sapphire CLI config.");
 	}
 
-	const config = configLoc.endsWith('json') ? JSON.parse(await readFile(configLoc, 'utf8')) : load(await readFile(configLoc, 'utf8'));
+	const config: Config = configLoc.endsWith('json') ? JSON.parse(await readFile(configLoc, 'utf8')) : load(await readFile(configLoc, 'utf8'));
 
 	if (!config) {
 		return fail("Can't parse the Sapphire CLI config.");
