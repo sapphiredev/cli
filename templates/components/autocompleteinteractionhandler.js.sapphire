@@ -27,8 +27,8 @@ class AutocompleteHandler extends InteractionHandler {
 	 * @param {import('discord.js').AutocompleteInteraction} interaction
 	 */
 	async parse(interaction) {
-		// Only run this interaction for the command with ID '1000802763292020737'
-		if (interaction.commandId !== '1000802763292020737') return this.none();
+		// Only run this interaction for the command with ID '1000000000000000000'
+		if (interaction.commandId !== '1000000000000000000') return this.none();
 		// Get the focussed (current) option
 		const focusedOption = interaction.options.getFocused(true);
 		// Ensure that the option name is one that can be autocompleted, or return none if not.
