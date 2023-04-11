@@ -56,12 +56,17 @@ async function configureYarnRc(location: string, name: string, value: string) {
 }
 
 async function installYarnV3(location: string, verbose: boolean) {
-	const value = await execa('yarn', ['set', 'version', 'berry'], {
+	const valueSetVersion = await execa('yarn', ['set', 'version', 'berry'], {
 		stdio: verbose ? 'inherit' : undefined,
 		cwd: `./${location}/`
 	});
 
-	if (value.exitCode !== 0) {
+	const valueInstallPlugins = await execa('yarn', ['plugin', 'import', 'interactive-tools'], {
+		stdio: verbose ? 'inherit' : undefined,
+		cwd: `./${location}/`
+	});
+
+	if (valueSetVersion.exitCode !== 0 || valueInstallPlugins.exitCode !== 0) {
 		throw new Error('An unknown error occurred while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
