@@ -2,11 +2,12 @@ import { templatesFolder } from '#constants';
 import { fileExists } from '#functions/FileExists';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+import type { Config } from 'src/lib/types';
 
 export async function CreateFileFromTemplate(
 	template: string,
 	target: string,
-	config: any,
+	config: Config | null,
 	params?: Record<string, string>,
 	custom = false,
 	component = false
@@ -25,7 +26,7 @@ export async function CreateFileFromTemplate(
 	output.templateContent ??= await readFile(location, 'utf8');
 
 	if (!output.templateContent) {
-		throw new Error(`Couldn't read the template file. Are you sure it exists, the name is correct, and the content is valid?`);
+		throw new Error("Couldn't read the template file. Are you sure it exists, the name is correct, and the content is valid?");
 	}
 
 	if (params) {
@@ -38,14 +39,14 @@ export async function CreateFileFromTemplate(
 		throw new Error('Invalid template.');
 	}
 
-	const dir = component ? config.locations[output.config!.category] : null;
-	const ta = component ? target.replace('%L%', dir) : target;
+	const directoryForOutput = component ? config?.locations[output.config!.category] : null;
+	const targetPath = component ? target.replace('%L%', directoryForOutput) : target;
 
-	if (await fileExists(ta)) {
+	if (await fileExists(targetPath)) {
 		throw new Error('Component already exists');
 	}
 
-	await writeFileRecursive(ta, output.templateContent);
+	await writeFileRecursive(targetPath, output.templateContent);
 
 	return true;
 }
