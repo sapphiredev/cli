@@ -30,7 +30,7 @@ async function createComponent(component: string, name: string, config: any, con
 		return CreateFileFromTemplate(`components/${template}`, target, config, params, false, true);
 	}
 
-	throw new Error("Can't find the template.");
+	throw new Error(`Couldn't find a template file for that component type.${parseCommonHints(component)}`);
 }
 
 async function fetchConfig() {
@@ -41,6 +41,19 @@ async function fetchConfig() {
 	}
 
 	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
+}
+
+/**
+ * Parses common hints for the user
+ * @param component Component name
+ * @returns A string with a hint for the user
+ */
+function parseCommonHints(component: string): string {
+	if (component.toLowerCase() === 'command' || component.toLowerCase() === 'commands') {
+		return `\nHint: You wrote "${component}", instead of "messagecommand", "slashcommand", or "contextmenucommand"`;
+	}
+
+	return '';
 }
 
 export default async (component: string, name: string) => {
