@@ -36,14 +36,14 @@ export async function CreateFileFromTemplate(
 	}
 
 	if (!output || (component && (!output.config || !output.config.category))) {
-		throw new Error('Invalid template.');
+		throw new Error('The template is invalid. Please create a valid template structure.');
 	}
 
 	const directoryForOutput = component ? config?.locations[output.config!.category] : null;
 	const targetPath = component ? target.replace('%L%', directoryForOutput) : target;
 
 	if (await fileExists(targetPath)) {
-		throw new Error('Component already exists');
+		throw new Error('A component with the provided name already exists. Please provide a unique name.');
 	}
 
 	await writeFileRecursive(targetPath, output.templateContent);
