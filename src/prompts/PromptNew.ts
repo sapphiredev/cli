@@ -3,7 +3,6 @@ import type { Choice, PromptObject } from 'prompts';
 const tsTemplates: Choice[] = [
 	{ title: 'Starter template (Recommended)', value: 'with-typescript-starter' },
 	{ title: 'Complete template', value: 'with-typescript-complete' },
-	{ title: 'with Docker', value: 'with-docker' },
 	{ title: 'with tsup', value: 'with-tsup' },
 	{ title: 'with SWC', value: 'with-swc' }
 ];
