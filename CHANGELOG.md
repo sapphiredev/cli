@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.6.0](https://github.com/sapphiredev/cli/compare/v1.5.0...v1.6.0) - (2023-04-12)
+
+## 🏠 Refactor
+
+- Remove `with-docker` template ([1b485f8](https://github.com/sapphiredev/cli/commit/1b485f836d656022dd761cc13862fa9a970142a7))
+- Stricter typing for config parsing ([ab0efb3](https://github.com/sapphiredev/cli/commit/ab0efb3c602843b76bf64e135c0a448288227462))
+- **new:** Make yarn v3 the default ([30499ea](https://github.com/sapphiredev/cli/commit/30499ea72a52c31220794f41da695494145c9b08))
+- **CreateFileFromTemplate:** Better internal code naming ([3189772](https://github.com/sapphiredev/cli/commit/3189772a1b85ecc2bad2949ed8d339ff0541cebf))
+- Better error messages for `generate` when template doesn't exist ([dc34e1e](https://github.com/sapphiredev/cli/commit/dc34e1ecda585eeb7024d716fbf401e8e18a9b93))
+
+## 🐛 Bug Fixes
+
+- Better error messages when creating file ([afa4afb](https://github.com/sapphiredev/cli/commit/afa4afba579f4877eecbe447a9728b71b4042b0c))
+- Fixed JSON config file ([6fe3d0c](https://github.com/sapphiredev/cli/commit/6fe3d0c87a0ba70a802d73c73028832b77c0077b))
+- **templates:** Adhere to strict type checking rules ([b455738](https://github.com/sapphiredev/cli/commit/b455738705d475d99357f758d9eeea505d43c2f2))
+
+## 🚀 Features
+
+- Add route in prompt (#220) ([60451d6](https://github.com/sapphiredev/cli/commit/60451d6e2c92ef42c07f592d2923177aa9386595))
+- **templates:** Add interaction handler templates (#216) ([650ec76](https://github.com/sapphiredev/cli/commit/650ec76c3c17e2ae5d480994daac4b42bacbfc34))
+- Add `interactive-tools` plugin for yarn v3 installs ([c417d97](https://github.com/sapphiredev/cli/commit/c417d970f139da1827fe914f69903f90df436907))
+
+## 🪞 Styling
+
+- Add prettierignore file ([2d24595](https://github.com/sapphiredev/cli/commit/2d24595e347a9e4d24ca6926e35fb60945e11725))
+
 # [1.5.0](https://github.com/sapphiredev/cli/compare/v1.4.0...v1.5.0) - (2023-04-10)
 
 ## 🐛 Bug Fixes
