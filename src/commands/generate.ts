@@ -9,6 +9,7 @@ import { load } from 'js-yaml';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
+import { commandNames, componentCommandNames, componentInteractionHandlerNames, interactionHandlerNames } from 'src/lib/aliases';
 import type { Config } from 'src/lib/types';
 
 async function createComponent(component: string, name: string, config: Config, configLoc: string) {
@@ -44,6 +45,11 @@ async function fetchConfig() {
 	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
 }
 
+function joinComponentNames(components: string[]): string {
+	const lastComponent = components.pop();
+	return `"${components.join('", "')}" or "${lastComponent}"`;
+}
+
 /**
  * Parses common hints for the user
  * @param component Component name
@@ -52,18 +58,14 @@ async function fetchConfig() {
 function parseCommonHints(component: string): string {
 	const newLine = '\n';
 	const lowerCaseComponent = component.toLowerCase();
+	const commonHints = `${newLine}Hint: You wrote "${component}", instead of `;
 
-	if (lowerCaseComponent === 'command' || lowerCaseComponent === 'commands') {
-		return `${newLine}Hint: You wrote "${component}", instead of "messagecommand", "slashcommand", or "contextmenucommand"`;
+	if (commandNames.includes(lowerCaseComponent)) {
+		return `${commonHints}"${joinComponentNames(componentCommandNames)}".`;
 	}
 
-	if (
-		lowerCaseComponent === 'interaction-handler' ||
-		lowerCaseComponent === 'interaction-handlers' ||
-		lowerCaseComponent === 'interactionhandler' ||
-		lowerCaseComponent === 'interactionhandlers'
-	) {
-		return `${newLine}Hint: You wrote "${component}", instead of "buttoninteractionhandler", "autocompleteinteractionhandler", "modalinteractionhandler", or "selectmenuinteractionhandler"`;
+	if (interactionHandlerNames.includes(lowerCaseComponent)) {
+		return `${commonHints} ${joinComponentNames(componentInteractionHandlerNames)}.`;
 	}
 
 	return '';
