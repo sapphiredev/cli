@@ -47,7 +47,7 @@ async function fetchConfig() {
 
 function joinComponentNames(components: string[]): string {
 	const lastComponent = components.pop();
-	return `${components.join('", "')}" or "${lastComponent}"`;
+	return `"${components.join('", "')}" or "${lastComponent}"`;
 }
 
 /**
@@ -65,7 +65,7 @@ function parseCommonHints(component: string): string {
 	}
 
 	if (interactionHandlerNames.includes(lowerCaseComponent)) {
-		return `${commonHints}"${joinComponentNames(componentInteractionHandlerNames)}".`;
+		return `${commonHints} ${joinComponentNames(componentInteractionHandlerNames)}.`;
 	}
 
 	return '';
