@@ -70,12 +70,6 @@ async function installYarnV3(location: string, verbose: boolean) {
 		throw new Error('An unknown error occurred while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
-	await Promise.all([
-		//
-		configureYarnRc(location, 'enableGlobalCache', 'true'),
-		configureYarnRc(location, 'nodeLinker', 'node-modules')
-	]);
-
 	return true;
 }
 
@@ -161,6 +155,8 @@ export default async (name: string, flags: Record<string, boolean>) => {
 	if (response.yarnV3) {
 		jobs.push([() => installYarnV3(response.projectName, flags.verbose), 'Installing Yarn v3']);
 		if (response.projectLang === 'ts') jobs.push([() => installYarnTypescriptPlugin(response.projectName), 'Installing Yarn Typescript Plugin']);
+		jobs.push([() => configureYarnRc(response.projectName, 'enableGlobalCache', 'true'), 'Enabling Yarn v3 global cache']);
+		jobs.push([() => configureYarnRc(response.projectName, 'nodeLinker', 'node-modules'), 'Configuring Yarn v3 to use node-modules']);
 	}
 
 	jobs.push([
