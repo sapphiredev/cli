@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.6.1](https://github.com/sapphiredev/cli/compare/v1.6.0...v1.6.1) - (2023-05-02)
+
+## 🏃 Performance
+
+- Optimize the logic of "parseCommonHints" (#221) ([13260f0](https://github.com/sapphiredev/cli/commit/13260f02456f13e87c9257b97dcd03199e6bf57d))
+
+## 🐛 Bug Fixes
+
+- Output proper esm code ([353a861](https://github.com/sapphiredev/cli/commit/353a861455caed0a5762f6a6d9661bc5419000dc))
+- Use proper imports ([7c7b54b](https://github.com/sapphiredev/cli/commit/7c7b54b700faf3f21a8cab16d2ce493ab2a8ff31))
+- Ensure yarn v3 is configured properly ([f53d59a](https://github.com/sapphiredev/cli/commit/f53d59a77a59c8c2f2639bd5c0ad92759ff42d10))
+- **deps:** Update all non-major dependencies ([60e7410](https://github.com/sapphiredev/cli/commit/60e7410eba394745477f8707c705c9444f02dff4))
+
 # [1.6.0](https://github.com/sapphiredev/cli/compare/v1.5.0...v1.6.0) - (2023-04-12)
 
 ## 🏠 Refactor
