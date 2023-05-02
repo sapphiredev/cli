@@ -11,6 +11,7 @@
 	},
 	"imports": {
 		"#prompts/*": "./dist/prompts/*.js",
+		"#lib/*": "./dist/lib/*.js",
 		"#functions/*": "./dist/functions/*.js",
 		"#commands/*": "./dist/commands/*.js",
 		"#constants": "./dist/constants.js"

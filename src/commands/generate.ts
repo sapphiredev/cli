@@ -1,6 +1,8 @@
 import { componentsFolder } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
+import { commandNames, componentCommandNames, componentInteractionHandlerNames, interactionHandlerNames } from '#lib/aliases';
+import type { Config } from '#lib/types';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { blueBright, red } from 'colorette';
@@ -9,8 +11,6 @@ import { load } from 'js-yaml';
 import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { commandNames, componentCommandNames, componentInteractionHandlerNames, interactionHandlerNames } from 'src/lib/aliases';
-import type { Config } from 'src/lib/types';
 
 async function createComponent(component: string, name: string, config: Config, configLoc: string) {
 	const { projectLanguage } = config;
