@@ -35,7 +35,7 @@
 	},
 	"dependencies": {
 		"@favware/colorette-spinner": "^1.0.1",
-		"@sapphire/result": "^2.6.2",
+		"@sapphire/result": "^2.6.3",
 		"colorette": "^2.0.20",
 		"commander": "^10.0.1",
 		"execa": "^7.1.1",
@@ -50,7 +50,7 @@
 		"@favware/cliff-jumper": "^2.0.0",
 		"@favware/npm-deprecate": "^1.0.7",
 		"@sapphire/decorators": "*",
-		"@sapphire/eslint-config": "^4.4.1",
+		"@sapphire/eslint-config": "^4.4.2",
 		"@sapphire/framework": "*",
 		"@sapphire/plugin-api": "*",
 		"@sapphire/prettier-config": "^1.4.5",
