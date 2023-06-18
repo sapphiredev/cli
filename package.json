@@ -37,7 +37,7 @@
 		"@favware/colorette-spinner": "^1.0.1",
 		"@sapphire/result": "^2.6.4",
 		"colorette": "^2.0.20",
-		"commander": "^10.0.1",
+		"commander": "^11.0.0",
 		"execa": "^7.1.1",
 		"find-up": "^5.0.0",
 		"js-yaml": "^4.1.0",
