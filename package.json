@@ -50,7 +50,7 @@
 		"@favware/cliff-jumper": "^2.1.1",
 		"@favware/npm-deprecate": "^1.0.7",
 		"@sapphire/decorators": "*",
-		"@sapphire/eslint-config": "^4.4.3",
+		"@sapphire/eslint-config": "^5.0.0",
 		"@sapphire/framework": "*",
 		"@sapphire/plugin-api": "*",
 		"@sapphire/prettier-config": "^1.4.5",
