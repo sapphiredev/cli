@@ -79,7 +79,7 @@
 		"minimist": "^1.2.8"
 	},
 	"engines": {
-		"node": ">=v16.6.0",
+		"node": ">=v16.7.0",
 		"npm": ">=7"
 	},
 	"keywords": [
