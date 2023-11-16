@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.8.0](https://github.com/sapphiredev/cli/compare/v1.8.0...v1.8.0) - (2023-11-16)
+
+## 🚀 Features
+
+- Bump minimum nodejs version to >= 18 ([3343626](https://github.com/sapphiredev/cli/commit/334362647a45bc99e5763028d5b848ce514cdda2))
+
 # [1.7.0](https://github.com/sapphiredev/cli/compare/v1.7.0...v1.7.0) - (2023-11-16)
 
 ## 🐛 Bug Fixes
