@@ -4,7 +4,7 @@ const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/frame
 
 class ModalHandler extends InteractionHandler {
 	/**
-	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.LoaderContext} context
 	 * @param {InteractionHandler.Options} options
 	 */
 	constructor(context, options) {
@@ -29,7 +29,7 @@ class ModalHandler extends InteractionHandler {
 	 */
 	parse(interaction) {
 		if (interaction.customId !== 'hello-popup') return this.none();
-	
+
 		return this.some();
 	}
 }

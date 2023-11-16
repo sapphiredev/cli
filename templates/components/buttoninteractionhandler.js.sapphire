@@ -4,7 +4,7 @@ const { InteractionHandler, InteractionHandlerTypes } = require('@sapphire/frame
 
 class ButtonHandler extends InteractionHandler {
 	/**
-	 * @param {InteractionHandler.Context} context
+	 * @param {InteractionHandler.LoaderContext} context
 	 * @param {InteractionHandler.Options} options
 	 */
 	constructor(context, options) {

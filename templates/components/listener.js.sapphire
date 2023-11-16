@@ -4,7 +4,7 @@ const { Listener } = require('@sapphire/framework');
 
 class UserEvent extends Listener {
 	/**
-	 * @param {Listener.Context} context
+	 * @param {Listener.LoaderContext} context
 	 */
 	constructor(context) {
 		super(context, {

@@ -4,7 +4,7 @@ const { Argument } = require('@sapphire/framework');
 
 class UserArgument extends Argument {
 	/**
-	 * @param {Argument.Context} context
+	 * @param {Argument.LoaderContext} context
 	 */
 	constructor(context) {
 		super(context, {

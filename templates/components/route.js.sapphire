@@ -4,7 +4,7 @@ const { methods, Route } = require('@sapphire/plugin-api');
 
 class UserRoute extends Route {
 	/**
-	 * @param {Route.Context} context
+	 * @param {Route.LoaderContext} context
 	 * @param {Route.Options} options
 	 */
 	constructor(context, options) {
