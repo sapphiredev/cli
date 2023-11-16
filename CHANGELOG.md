@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.7.0](https://github.com/sapphiredev/cli/compare/v1.7.0...v1.7.0) - (2023-11-16)
+
+## 🐛 Bug Fixes
+
+- Update default JS templates to use new `LoaderContext` in doc comments ([47d5911](https://github.com/sapphiredev/cli/commit/47d5911bc0114161b951561ee6aa86043587804c))
+- **deps:** Update dependency execa to v8 (#254) ([88880b2](https://github.com/sapphiredev/cli/commit/88880b29595236ef552573c54a718a6e262f820b))
+- **deps:** Update dependency commander to v11 (#235) ([76d0719](https://github.com/sapphiredev/cli/commit/76d0719ed55e2e7ae43aba5c21c4843bd7660af7))
+- **deps:** Update all non-major dependencies ([d647d3f](https://github.com/sapphiredev/cli/commit/d647d3f9fbefa118348543bba2c098ed84604071))
+
+## 🚀 Features
+
+- Bump minimum nodejs version to 16.17.0 ([28a4cc8](https://github.com/sapphiredev/cli/commit/28a4cc806aeb993a924ee52fc448655a6db157a0))
+
 # [1.6.1](https://github.com/sapphiredev/cli/compare/v1.6.0...v1.6.1) - (2023-05-02)
 
 ## 🏃 Performance
