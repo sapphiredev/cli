@@ -1,0 +1,3 @@
+{ "category": "_load" }
+---
+// import this file in your entry point (index.js) to load respective pieces
