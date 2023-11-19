@@ -15,7 +15,7 @@ import { dirname, join, relative, resolve } from 'node:path';
  * - `.mts`
  * - `.cts`
  */
-const regexForFilesEndingWithJavaScriptLikeExtensions = /\.(m|c)?(?:j|c|t)s$/;
+const regexForFilesEndingWithJavaScriptLikeExtensions = /\.(m|c)?(?:j|t)s$/;
 
 /**
  * Regular expression used to match loader files.
