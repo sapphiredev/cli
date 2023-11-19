@@ -3,7 +3,7 @@ import type { Config } from '#lib/types';
 import { findFilesRecursivelyRegex } from '@sapphire/node-utilities';
 import { Result } from '@sapphire/result';
 import { accessSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
 
 /**
@@ -47,13 +47,12 @@ async function generateVirtualPieceLoader(dir: string, targetDir: string) {
  * We wrap the bulk of this function in a {@link Result.fromAsync} so that if any of the file writing fails
  * that will bubble up as a failure overall.
  *
- * @param templateLocation The location of the template
  * @param targetDir The directory that the `_load.<ext>` file will be written to
  * @param config The config
  * @returns Whether the loaders were created successfully
  */
-export async function CreateComponentLoaders(templateLocation: string, targetDir: string, config: Config) {
-	const [, templateContent] = await getComponentTemplateWithConfig(templateLocation);
+export async function CreateComponentLoaders(targetDir: string, config: Config) {
+	const templateHeader = `// import this file in your entry point (index.${config.projectLanguage}) to load respective pieces`;
 
 	return (
 		await Result.fromAsync(async () => {
@@ -66,7 +65,7 @@ export async function CreateComponentLoaders(templateLocation: string, targetDir
 				const dirInjectedTarget = injectDirIntoTargetDir(dir, targetDir);
 				const target = join(targetDir, `_load.${config.projectLanguage}`);
 
-				const content = `${templateContent}\n${await generateVirtualPieceLoader(dir, dirInjectedTarget)}`;
+				const content = `${templateHeader}\n${await generateVirtualPieceLoader(dir, dirInjectedTarget)}`;
 				await writeFileRecursive(target, content);
 			}
 		})
@@ -82,17 +81,6 @@ export async function CreateComponentLoaders(templateLocation: string, targetDir
  */
 function injectDirIntoTargetDir(dir: string, targetDir: string) {
 	return targetDir.replace(locationReplacement, dir);
-}
-
-/**
- * Gets the template and the config from a component template
- * @param path Path to the template
- * @returns [config, template] The config and the template
- */
-async function getComponentTemplateWithConfig(path: string): Promise<[config: Record<string, string>, template: string]> {
-	const file = await readFile(path, 'utf8');
-	const fa = file.split(/---(\r\n|\r|\n|)/gm);
-	return [JSON.parse(fa[0]), fa[2]];
 }
 
 /**

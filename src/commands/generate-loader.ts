@@ -1,6 +1,5 @@
-import { componentsFolder, locationReplacement } from '#constants';
+import { locationReplacement } from '#constants';
 import { CreateComponentLoaders } from '#functions/CreateComponentLoader';
-import { fileExists } from '#functions/FileExists';
 import { fetchConfig } from '#functions/fetchConfig';
 import type { Config } from '#lib/types';
 import { Spinner } from '@favware/colorette-spinner';
@@ -56,20 +55,13 @@ export default async (): Promise<void> => {
  * @throws An error if the 'projectLanguage' field is missing in the configuration file or if a template file for the loader component cannot be found.
  */
 async function createLoader(config: Config, configLoc: string) {
-	const component = '_load';
 	const { projectLanguage } = config;
 
 	if (!projectLanguage) {
 		throw new Error("There is no 'projectLanguage' field in .sapphirerc.json");
 	}
 
-	const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
-	const templateLocation = `${componentsFolder}${template}`;
 	const targetDir = join(configLoc, config.locations.base, locationReplacement);
 
-	if (await fileExists(templateLocation)) {
-		return CreateComponentLoaders(templateLocation, targetDir, config);
-	}
-
-	throw new Error(`Couldn't find a template file for loader component.`);
+	return CreateComponentLoaders(targetDir, config);
 }
