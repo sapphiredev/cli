@@ -1,14 +1,9 @@
 import { componentsFolder, locationReplacement } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
-import { fetchConfig } from '#functions/fetchConfig';
+import { generateCommandFlow } from '#functions/generateCommandFlow';
 import { commandNames, componentCommandNames, componentInteractionHandlerNames, interactionHandlerNames } from '#lib/aliases';
 import type { Config } from '#lib/types';
-import { Spinner } from '@favware/colorette-spinner';
-import { Result } from '@sapphire/result';
-import { blueBright, red } from 'colorette';
-import { load } from 'js-yaml';
-import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 
 /**
@@ -18,39 +13,7 @@ import { basename, join } from 'node:path';
  * @returns A Promise that resolves when the component generation is complete.
  */
 export default async (component: string, name: string): Promise<void> => {
-	const spinner = new Spinner(`Creating a ${component.toLowerCase()}`).start();
-
-	const fail = (error: string, additionalExecution?: () => void) => {
-		spinner.error({ text: error });
-		additionalExecution?.();
-		process.exit(1);
-	};
-
-	const configLoc = await fetchConfig();
-
-	if (!configLoc) {
-		return fail("Can't find the Sapphire CLI config.");
-	}
-
-	const config: Config = configLoc.endsWith('json') ? JSON.parse(await readFile(configLoc, 'utf8')) : load(await readFile(configLoc, 'utf8'));
-
-	if (!config) {
-		return fail("Can't parse the Sapphire CLI config.");
-	}
-
-	const result = await Result.fromAsync<boolean, Error>(() =>
-		createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, ''))
-	);
-
-	return result.match({
-		ok: () => {
-			spinner.success();
-
-			console.log(blueBright('Done!'));
-			process.exit(0);
-		},
-		err: (error) => fail(error.message, () => console.log(red(error.message)))
-	});
+	return generateCommandFlow('Creating loaders...', (config, configLocation) => createComponent(component, name, config, configLocation));
 };
 
 /**
