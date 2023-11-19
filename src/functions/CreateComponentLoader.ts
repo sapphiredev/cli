@@ -6,7 +6,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
 
 /**
- * A regex that checks if the file ends in one of the following extensions:
+ * Regular expression pattern for matching files ending with JavaScript-like extensions.
  * - `.js`
  * - `.ts`
  * - `.mjs`
@@ -17,7 +17,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 const regexForFilesEndingWithJavaScriptLikeExtensions = /\.(m|c)?(?:j|c|t)s$/;
 
 /**
- * A regex that checks if the file is a loader file
+ * Regular expression used to match loader files.
  */
 const regexForLoaderFiles = new RegExp(`_load${regexForFilesEndingWithJavaScriptLikeExtensions.source}`);
 
@@ -59,10 +59,10 @@ export async function CreateComponentLoaders(templateLocation: string, targetDir
 			const dirs = Object.entries<string>(config.locations)
 				.filter(([key]) => key !== 'base')
 				.map(([, value]) => value)
-				.filter((dir) => Result.from(() => accessSync(targetDir.replace('%L%', dir))).isOk());
+				.filter((dir) => Result.from(() => accessSync(injectDirIntoTargetDir(dir, targetDir))).isOk());
 
 			for (const dir of dirs) {
-				const dirInjectedTarget = targetDir.replace('%L%', dir);
+				const dirInjectedTarget = injectDirIntoTargetDir(dir, targetDir);
 				const target = join(targetDir, `_load.${config.projectLanguage}`);
 
 				const content = `${templateContent}\n${await generateVirtualPieceLoader(dir, dirInjectedTarget)}`;
@@ -70,6 +70,17 @@ export async function CreateComponentLoaders(templateLocation: string, targetDir
 			}
 		})
 	).isOk();
+}
+
+/**
+ * Replaces the placeholder '%L%' in the target directory with the specified directory.
+ *
+ * @param dir The directory to be injected into the target directory.
+ * @param targetDir The target directory containing the placeholder '%L%'.
+ * @returns The target directory with the placeholder replaced by the specified directory.
+ */
+function injectDirIntoTargetDir(dir: string, targetDir: string) {
+	return targetDir.replace('%L%', dir);
 }
 
 /**
@@ -84,9 +95,11 @@ async function getComponentTemplateWithConfig(path: string): Promise<[config: Re
 }
 
 /**
- * Writes a file recursively
- * @param target Target path
- * @param data Data to write
+ * Writes data to a file recursively.
+ *
+ * @param target - The target file path.
+ * @param data - The data to write to the file.
+ * @returns A promise that resolves when the file is written.
  */
 async function writeFileRecursive(target: string, data: string) {
 	const resolvedTarget = resolve(target);
