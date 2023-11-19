@@ -55,26 +55,16 @@ async function configureYarnRc(location: string, name: string, value: string) {
 	return true;
 }
 
-async function installYarnV3(location: string, verbose: boolean) {
+async function installYarnV4(location: string, verbose: boolean) {
 	const valueSetVersion = await execa('yarn', ['set', 'version', 'berry'], {
 		stdio: verbose ? 'inherit' : undefined,
 		cwd: `./${location}/`
 	});
 
-	const valueInstallPlugins = await execa('yarn', ['plugin', 'import', 'interactive-tools'], {
-		stdio: verbose ? 'inherit' : undefined,
-		cwd: `./${location}/`
-	});
-
-	if (valueSetVersion.exitCode !== 0 || valueInstallPlugins.exitCode !== 0) {
-		throw new Error('An unknown error occurred while installing Yarn v3. Try running Sapphire CLI with "--verbose" flag.');
+	if (valueSetVersion.exitCode !== 0) {
+		throw new Error('An unknown error occurred while installing Yarn v4. Try running Sapphire CLI with "--verbose" flag.');
 	}
 
-	return true;
-}
-
-async function installYarnTypescriptPlugin(location: string) {
-	await execa('yarn', ['plugin', 'import', 'typescript'], { cwd: `./${location}/` });
 	return true;
 }
 
@@ -152,11 +142,10 @@ export default async (name: string, flags: Record<string, boolean>) => {
 		jobs.push([() => initializeGitRepo(response.projectName), 'Initializing git repo']);
 	}
 
-	if (response.yarnV3) {
-		jobs.push([() => installYarnV3(response.projectName, flags.verbose), 'Installing Yarn v3']);
-		if (response.projectLang === 'ts') jobs.push([() => installYarnTypescriptPlugin(response.projectName), 'Installing Yarn Typescript Plugin']);
-		jobs.push([() => configureYarnRc(response.projectName, 'enableGlobalCache', 'true'), 'Enabling Yarn v3 global cache']);
-		jobs.push([() => configureYarnRc(response.projectName, 'nodeLinker', 'node-modules'), 'Configuring Yarn v3 to use node-modules']);
+	if (response.yarnV4) {
+		jobs.push([() => installYarnV4(response.projectName, flags.verbose), 'Installing Yarn v4']);
+		jobs.push([() => configureYarnRc(response.projectName, 'enableGlobalCache', 'true'), 'Enabling Yarn v4 global cache']);
+		jobs.push([() => configureYarnRc(response.projectName, 'nodeLinker', 'node-modules'), 'Configuring Yarn v4 to use node-modules']);
 	}
 
 	jobs.push([

@@ -66,8 +66,8 @@ export const PromptNew = (projectName: string, yarn: boolean, pnpm: boolean): Pr
 		},
 		{
 			type: (prev) => (prev === 'Yarn' ? 'confirm' : false),
-			name: 'yarnV3',
-			message: 'Do you want to use Yarn v3?',
+			name: 'yarnV4',
+			message: 'Do you want to use Yarn v4?',
 			initial: true
 		},
 		{
@@ -78,4 +78,4 @@ export const PromptNew = (projectName: string, yarn: boolean, pnpm: boolean): Pr
 	] as PromptObject<PromptNewObjectKeys>[];
 };
 
-export type PromptNewObjectKeys = 'projectName' | 'projectLang' | 'projectTemplate' | 'packageManager' | 'configFormat' | 'git' | 'yarnV3';
+export type PromptNewObjectKeys = 'projectName' | 'projectLang' | 'projectTemplate' | 'packageManager' | 'configFormat' | 'git' | 'yarnV4';
