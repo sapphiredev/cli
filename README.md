@@ -17,6 +17,7 @@
 -   Generate Sapphire projects easily
 -   Generate components (commands, listeners, etc.)
 -   Create your own templates for components
+-   Generate loaders for [virtual components](https://www.sapphirejs.dev/docs/Guide/additional-information/registering-virtual-pieces)
 
 ## [Get Started with the CLI](https://www.sapphirejs.dev/docs/Guide/CLI/introduction)
 

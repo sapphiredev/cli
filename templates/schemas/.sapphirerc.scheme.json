@@ -1,12 +1,13 @@
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$schema": "https://json-schema.org/draft-04/schema#",
 	"title": "Sapphire CLI Config",
 	"description": "Scheme for Sapphire CLI Config (@sapphire/cli)",
 	"type": "object",
 	"properties": {
 		"projectLanguage": {
 			"description": "Project language (ts | js)",
-			"type": "string"
+			"type": "string",
+			"enum": ["ts", "js"]
 		},
 		"locations": {
 			"description": "Categories and their locations",
