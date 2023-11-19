@@ -1,4 +1,5 @@
 import { componentsFolder, locationReplacement } from '#constants';
+import { CreateComponentLoaders } from '#functions/CreateComponentLoader';
 import { fileExists } from '#functions/FileExists';
 import { fetchConfig } from '#functions/fetchConfig';
 import type { Config } from '#lib/types';
@@ -8,7 +9,6 @@ import { blueBright, red } from 'colorette';
 import { load } from 'js-yaml';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { CreateComponentLoaders } from '../functions/CreateComponentLoader.js';
 
 /**
  * Generates loaders based on the Sapphire CLI config.
