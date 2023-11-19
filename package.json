@@ -34,6 +34,7 @@
 	},
 	"dependencies": {
 		"@favware/colorette-spinner": "^1.0.1",
+		"@sapphire/node-utilities": "^1.0.0",
 		"@sapphire/result": "^2.6.4",
 		"colorette": "^2.0.20",
 		"commander": "^11.1.0",

@@ -559,6 +559,7 @@ __metadata:
     "@sapphire/decorators": "npm:*"
     "@sapphire/eslint-config": "npm:^5.0.2"
     "@sapphire/framework": "npm:*"
+    "@sapphire/node-utilities": "npm:^1.0.0"
     "@sapphire/plugin-api": "npm:*"
     "@sapphire/prettier-config": "npm:^2.0.0"
     "@sapphire/result": "npm:^2.6.4"
@@ -674,6 +675,13 @@ __metadata:
   dependencies:
     "@sapphire/result": "npm:^2.6.4"
   checksum: 898d31fb54fa8106e8ee97f59f0866f0b421a6a055fb09622cd569312303dffaca689ec862fbacfd6848a4b65798a8cdbd9b4332b4107e44b39f8800bb4e87b6
+  languageName: node
+  linkType: hard
+
+"@sapphire/node-utilities@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sapphire/node-utilities@npm:1.0.0"
+  checksum: eb919c92e8b230dbfb57a38d631788c28c00512c587b2c37cbb4d2c0968ea35c48439a065a10ab4bce929c04e8b1523dfa12a1f655ae5988866428118c11ac20
   languageName: node
   linkType: hard
 

@@ -1,60 +1,75 @@
 import type { Config } from '#lib/types';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { lstatSync } from 'fs';
-import { join, relative } from 'path';
-import { templatesFolder } from '../constants.js';
+import { findFilesRecursivelyRegex } from '@sapphire/node-utilities';
+import { Result } from '@sapphire/result';
+import { accessSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, join, relative, resolve } from 'node:path';
 
 /**
- * Returns an array of JS/TS files in a folder
- * @param {string} dir
- * @returns {string[]}
+ * A regex that checks if the file ends in one of the following extensions:
+ * - `.js`
+ * - `.ts`
+ * - `.mjs`
+ * - `.cjs`
+ * - `.mts`
+ * - `.cts`
  */
-async function getJSTSfiles(dir: string, baseDir = dir): Promise<string[]> {
-	const files = await readdir(dir);
-	const tsFiles = files.flatMap((file) => {
-		const fullPath = join(dir, file);
-		if (lstatSync(fullPath).isDirectory()) {
-			return getJSTSfiles(fullPath, baseDir);
-		}
-		if (file.endsWith('.ts') || file.endsWith('.js')) {
-			return relative(baseDir, fullPath);
-		}
-		return [];
-	});
-	return (await Promise.all(tsFiles).then((files) => files.flat()))
-		.filter((file) => !file.includes('_load'))
-		.map((file) => file.replace(/.ts|.js/gimu, ''))
-		.sort();
-}
+const regexForFilesEndingWithJavaScriptLikeExtensions = /\.(m|c)?(?:j|c|t)s$/;
+
+/**
+ * A regex that checks if the file is a loader file
+ */
+const regexForLoaderFiles = new RegExp(`_load${regexForFilesEndingWithJavaScriptLikeExtensions.source}`);
 
 /**
  * Generates loader file content
- * @param {string} dir
+ * @param dir The directory to generate the loader for
+ * @param targetDir The directory that the `_load.<ext>` file will be written to
  */
-async function generateVirtualPieceLoader(dir: string) {
-	console.info(`Generating virtual piece loader for ${dir}`);
-	const files = await getJSTSfiles(dir);
-	console.info(`Found ${files.length} files`);
+async function generateVirtualPieceLoader(dir: string, targetDir: string) {
+	console.log(`Generating virtual piece loader for ${targetDir}`);
+
+	const files: string[] = [];
+	for await (const file of findFilesRecursivelyRegex(targetDir, regexForFilesEndingWithJavaScriptLikeExtensions)) {
+		if (regexForLoaderFiles.test(file)) continue;
+		files.push(relative(targetDir, file).replace(regexForFilesEndingWithJavaScriptLikeExtensions, '.$1js'));
+	}
+
+	console.log(`Found ${files.length} ${dir} files`);
+
 	return `${files.map((file) => `import './${file}';`).join('\n')}\n`;
 }
 
-export async function CreateComponentLoaders(target: string, config: Config | null) {
-	if (!config) {
-		throw new Error('There is no sapphire config. Please run `sapphire init` to create one.');
-	}
-	const location = `${templatesFolder}/_load`;
-	const [, templateContent] = await getComponentTemplateWithConfig(location);
+/**
+ * Creates component loaders
+ *
+ * We wrap the bulk of this function in a {@link Result.fromAsync} so that if any of the file writing fails
+ * that will bubble up as a failure overall.
+ *
+ * @param templateLocation The location of the template
+ * @param targetDir The directory that the `_load.<ext>` file will be written to
+ * @param config The config
+ * @returns Whether the loaders were created successfully
+ */
+export async function CreateComponentLoaders(templateLocation: string, targetDir: string, config: Config) {
+	const [, templateContent] = await getComponentTemplateWithConfig(templateLocation);
 
-	const dirs = Object.values<string>(config.locations);
-	dirs.map(async (dir) => {
-		const content = `${templateContent}\n${await generateVirtualPieceLoader(dir)}`;
-		return writeFileRecursive(target, content);
-	});
+	return (
+		await Result.fromAsync(async () => {
+			const dirs = Object.entries<string>(config.locations)
+				.filter(([key]) => key !== 'base')
+				.map(([, value]) => value)
+				.filter((dir) => Result.from(() => accessSync(targetDir.replace('%L%', dir))).isOk());
 
-	await Promise.all(dirs);
+			for (const dir of dirs) {
+				const dirInjectedTarget = targetDir.replace('%L%', dir);
+				const target = join(targetDir, `_load.${config.projectLanguage}`);
 
-	return true;
+				const content = `${templateContent}\n${await generateVirtualPieceLoader(dir, dirInjectedTarget)}`;
+				await writeFileRecursive(target, content);
+			}
+		})
+	).isOk();
 }
 
 /**

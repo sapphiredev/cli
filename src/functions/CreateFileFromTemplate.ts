@@ -2,7 +2,7 @@ import { templatesFolder } from '#constants';
 import { fileExists } from '#functions/FileExists';
 import type { Config } from '#lib/types';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 export async function CreateFileFromTemplate(
 	template: string,
@@ -12,7 +12,7 @@ export async function CreateFileFromTemplate(
 	custom = false,
 	component = false
 ) {
-	const location = custom ? template : `${templatesFolder}${template}`;
+	const location = custom ? template : join(templatesFolder, template);
 
 	const output = {} as FileOutput;
 

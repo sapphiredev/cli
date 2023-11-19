@@ -11,37 +11,6 @@ import { join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { CreateComponentLoaders } from '../functions/CreateComponentLoader.js';
 
-async function createLoader(config: Config, configLoc: string) {
-	const component = '_load';
-	const name = '_load';
-	const { projectLanguage } = config;
-
-	if (!projectLanguage) {
-		throw new Error("There is no 'projectLanguage' field in .sapphirerc.json");
-	}
-
-	const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
-
-	const corePath = `${componentsFolder}${template}`;
-	const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
-
-	if (await fileExists(corePath)) {
-		return CreateComponentLoaders(target, config);
-	}
-
-	throw new Error(`Couldn't find a template file for loader component.`);
-}
-
-async function fetchConfig() {
-	const configFileAsJson = await Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), sleep(5000)]);
-
-	if (configFileAsJson) {
-		return configFileAsJson;
-	}
-
-	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
-}
-
 export default async () => {
 	const spinner = new Spinner(`Creating loaders...`).start();
 
@@ -75,3 +44,32 @@ export default async () => {
 		err: (error) => fail(error.message, () => console.log(red(error.message)))
 	});
 };
+
+async function fetchConfig() {
+	const configFileAsJson = await Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), sleep(5000)]);
+
+	if (configFileAsJson) {
+		return configFileAsJson;
+	}
+
+	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
+}
+
+async function createLoader(config: Config, configLoc: string) {
+	const component = '_load';
+	const { projectLanguage } = config;
+
+	if (!projectLanguage) {
+		throw new Error("There is no 'projectLanguage' field in .sapphirerc.json");
+	}
+
+	const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
+	const templateLocation = `${componentsFolder}${template}`;
+	const targetDir = join(configLoc, config.locations.base, '%L%');
+
+	if (await fileExists(templateLocation)) {
+		return CreateComponentLoaders(templateLocation, targetDir, config);
+	}
+
+	throw new Error(`Couldn't find a template file for loader component.`);
+}
