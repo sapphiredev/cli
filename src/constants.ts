@@ -8,3 +8,4 @@ export const rootFolder = fileURLToPath(rootURL);
 export const templatesFolder = fileURLToPath(templatesURL);
 export const componentsFolder = fileURLToPath(componentsURL);
 export const repoUrl = 'https://github.com/sapphiredev/examples.git';
+export const locationReplacement = '{{LOCATION_REPLACEMENT}}';

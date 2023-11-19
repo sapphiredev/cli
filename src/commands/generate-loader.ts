@@ -1,4 +1,4 @@
-import { componentsFolder } from '#constants';
+import { componentsFolder, locationReplacement } from '#constants';
 import { fileExists } from '#functions/FileExists';
 import { fetchConfig } from '#functions/fetchConfig';
 import type { Config } from '#lib/types';
@@ -65,7 +65,7 @@ async function createLoader(config: Config, configLoc: string) {
 
 	const template = `${component.toLowerCase()}.${projectLanguage}.sapphire`;
 	const templateLocation = `${componentsFolder}${template}`;
-	const targetDir = join(configLoc, config.locations.base, '%L%');
+	const targetDir = join(configLoc, config.locations.base, locationReplacement);
 
 	if (await fileExists(templateLocation)) {
 		return CreateComponentLoaders(templateLocation, targetDir, config);

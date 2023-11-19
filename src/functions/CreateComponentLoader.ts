@@ -1,3 +1,4 @@
+import { locationReplacement } from '#constants';
 import type { Config } from '#lib/types';
 import { findFilesRecursivelyRegex } from '@sapphire/node-utilities';
 import { Result } from '@sapphire/result';
@@ -73,14 +74,14 @@ export async function CreateComponentLoaders(templateLocation: string, targetDir
 }
 
 /**
- * Replaces the placeholder '%L%' in the target directory with the specified directory.
+ * Replaces the placeholder {@link locationReplacement} in the target directory with the specified directory.
  *
  * @param dir The directory to be injected into the target directory.
- * @param targetDir The target directory containing the placeholder '%L%'.
+ * @param targetDir The target directory containing the placeholder {@link locationReplacement}.
  * @returns The target directory with the placeholder replaced by the specified directory.
  */
 function injectDirIntoTargetDir(dir: string, targetDir: string) {
-	return targetDir.replace('%L%', dir);
+	return targetDir.replace(locationReplacement, dir);
 }
 
 /**

@@ -1,4 +1,4 @@
-import { componentsFolder } from '#constants';
+import { componentsFolder, locationReplacement } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
 import { fetchConfig } from '#functions/fetchConfig';
@@ -86,7 +86,7 @@ async function createComponent(component: string, name: string, config: Config, 
 
 	const corePath = `${componentsFolder}${template}`;
 	const userPath = config.customFileTemplates.enabled ? join(configLoc, config.customFileTemplates.location, template) : null;
-	const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
+	const target = join(configLoc, config.locations.base, locationReplacement, `${name}.${projectLanguage}`);
 	const params = { name: basename(name) };
 
 	if (userPath && (await fileExists(userPath))) {

@@ -1,4 +1,4 @@
-import { templatesFolder } from '#constants';
+import { locationReplacement, templatesFolder } from '#constants';
 import { fileExists } from '#functions/FileExists';
 import type { Config } from '#lib/types';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -40,7 +40,7 @@ export async function CreateFileFromTemplate(
 	}
 
 	const directoryForOutput = component ? config?.locations[output.config!.category] : null;
-	const targetPath = component ? target.replace('%L%', directoryForOutput) : target;
+	const targetPath = component ? target.replace(locationReplacement, directoryForOutput) : target;
 
 	if (await fileExists(targetPath)) {
 		throw new Error('A component with the provided name already exists. Please provide a unique name.');
