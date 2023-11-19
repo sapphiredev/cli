@@ -1,3 +1,4 @@
+$schema: "./node_modules/@sapphire/cli/templates/schemas/.sapphirerc.scheme.json"
 projectLanguage: "{{language}}"
 locations:
   base: src
