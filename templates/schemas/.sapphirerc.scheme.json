@@ -6,7 +6,8 @@
 	"properties": {
 		"projectLanguage": {
 			"description": "Project language (ts | js)",
-			"type": "string"
+			"type": "string",
+			"enum": ["ts", "js"]
 		},
 		"locations": {
 			"description": "Categories and their locations",
