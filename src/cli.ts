@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import generateCmd from '#commands/generate';
+import generateLoaderCmd from '#commands/generate-loader';
 import initCmd from '#commands/init';
 import newCmd from '#commands/new';
 import { createColors } from 'colorette';
@@ -34,6 +35,12 @@ sapphire
 	.argument('<component>', 'component/piece name')
 	.argument('<name>', 'file name')
 	.action(generateCmd);
+
+sapphire //
+	.command('generate-loader')
+	.description('generates a piece loader')
+	.alias('gl')
+	.action(generateLoaderCmd);
 
 sapphire //
 	.command('init')

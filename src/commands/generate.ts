@@ -1,17 +1,43 @@
-import { componentsFolder } from '#constants';
+import { componentsFolder, locationReplacement } from '#constants';
 import { CreateFileFromTemplate } from '#functions/CreateFileFromTemplate';
 import { fileExists } from '#functions/FileExists';
+import { generateCommandFlow } from '#functions/generateCommandFlow';
 import { commandNames, componentCommandNames, componentInteractionHandlerNames, interactionHandlerNames } from '#lib/aliases';
 import type { Config } from '#lib/types';
-import { Spinner } from '@favware/colorette-spinner';
-import { Result } from '@sapphire/result';
-import { blueBright, red } from 'colorette';
-import findUp from 'find-up';
-import { load } from 'js-yaml';
-import { readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
-import { setTimeout as sleep } from 'node:timers/promises';
 
+/**
+ * Generates a component based on the given component type and name.
+ * @param component The type of component to generate.
+ * @param name The name of the component.
+ * @returns A Promise that resolves when the component generation is complete.
+ */
+export default async (component: string, name: string): Promise<void> => {
+	return generateCommandFlow('Creating loaders...', (config, configLocation) => createComponent(component, name, config, configLocation));
+};
+
+/**
+ * Joins an array of component names into a single string.
+ *
+ * @param components - An array of component names.
+ * @returns The joined string with component names.
+ */
+function joinComponentNames(components: string[]): string {
+	const lastComponent = components.pop();
+	return `"${components.join('", "')}" or "${lastComponent}"`;
+}
+
+/**
+ * Creates a component based on the specified parameters.
+ *
+ * @param component - The type of component to create.
+ * @param name - The name of the component.
+ * @param config - The configuration object.
+ * @param configLoc - The location of the configuration file.
+ * @returns A Promise that resolves when the component is created.
+ * @throws An error if the 'projectLanguage' field is missing in the configuration file,
+ * or if a template file for the component type cannot be found.
+ */
 async function createComponent(component: string, name: string, config: Config, configLoc: string) {
 	const { projectLanguage } = config;
 
@@ -23,7 +49,7 @@ async function createComponent(component: string, name: string, config: Config, 
 
 	const corePath = `${componentsFolder}${template}`;
 	const userPath = config.customFileTemplates.enabled ? join(configLoc, config.customFileTemplates.location, template) : null;
-	const target = join(configLoc, config.locations.base, '%L%', `${name}.${projectLanguage}`);
+	const target = join(configLoc, config.locations.base, locationReplacement, `${name}.${projectLanguage}`);
 	const params = { name: basename(name) };
 
 	if (userPath && (await fileExists(userPath))) {
@@ -33,21 +59,6 @@ async function createComponent(component: string, name: string, config: Config, 
 	}
 
 	throw new Error(`Couldn't find a template file for that component type.${parseCommonHints(component)}`);
-}
-
-async function fetchConfig() {
-	const configFileAsJson = await Promise.race([findUp('.sapphirerc.json', { cwd: '.' }), sleep(5000)]);
-
-	if (configFileAsJson) {
-		return configFileAsJson;
-	}
-
-	return Promise.race([findUp('.sapphirerc.yml', { cwd: '.' }), sleep(5000)]);
-}
-
-function joinComponentNames(components: string[]): string {
-	const lastComponent = components.pop();
-	return `"${components.join('", "')}" or "${lastComponent}"`;
 }
 
 /**
@@ -70,39 +81,3 @@ function parseCommonHints(component: string): string {
 
 	return '';
 }
-
-export default async (component: string, name: string) => {
-	const spinner = new Spinner(`Creating a ${component.toLowerCase()}`).start();
-
-	const fail = (error: string, additionalExecution?: () => void) => {
-		spinner.error({ text: error });
-		additionalExecution?.();
-		process.exit(1);
-	};
-
-	const configLoc = await fetchConfig();
-
-	if (!configLoc) {
-		return fail("Can't find the Sapphire CLI config.");
-	}
-
-	const config: Config = configLoc.endsWith('json') ? JSON.parse(await readFile(configLoc, 'utf8')) : load(await readFile(configLoc, 'utf8'));
-
-	if (!config) {
-		return fail("Can't parse the Sapphire CLI config.");
-	}
-
-	const result = await Result.fromAsync<boolean, Error>(() =>
-		createComponent(component, name, config, configLoc.replace(/.sapphirerc.(json|yml)/g, ''))
-	);
-
-	return result.match({
-		ok: () => {
-			spinner.success();
-
-			console.log(blueBright('Done!'));
-			process.exit(0);
-		},
-		err: (error) => fail(error.message, () => console.log(red(error.message)))
-	});
-};

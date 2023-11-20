@@ -5,7 +5,11 @@ import { dump } from 'js-yaml';
 import { writeFile } from 'node:fs/promises';
 import prompts from 'prompts';
 
-export default async () => {
+/**
+ * Initializes the project by prompting the user for configuration options and generating a configuration file.
+ * @returns A promise that resolves when the initialization is complete.
+ */
+export default async (): Promise<void> => {
 	const packageJson = await findUp('package.json');
 
 	if (!packageJson) {
