@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.9.0](https://github.com/sapphiredev/cli/compare/v1.9.0...v1.9.0) - (2023-12-03)
+
+## 🐛 Bug Fixes
+
+- Specify schema for both template schema files ([30a80bb](https://github.com/sapphiredev/cli/commit/30a80bb561f61b8fba78c8cfc4157ca579e73f7c))
+- **json schema:** Specify enum for projectLanguage ([2f1ba0d](https://github.com/sapphiredev/cli/commit/2f1ba0d7fb4597c82581601ee60391898a3b100f))
+- **json schema:** Fixed base schema url ([bd37a6c](https://github.com/sapphiredev/cli/commit/bd37a6c5b590de90c2a1efa7cb19f16f38403273))
+- Install yarn v4, not v3 ([938ca99](https://github.com/sapphiredev/cli/commit/938ca99fe6dedea04978ca1ac38ac9a4505f0651))
+
+## 📝 Documentation
+
+- **readme:** Update readme to mention virtual components ([23aa8c5](https://github.com/sapphiredev/cli/commit/23aa8c5e6b0f07e4b8028c21ecb243e81d845e03))
+
+## 🚀 Features
+
+- Add generator for virtual piece loader (#274) ([f9fa2a3](https://github.com/sapphiredev/cli/commit/f9fa2a359c9a1bdb3b512a7484e0da12e20f6c8b))
+
 # [1.8.0](https://github.com/sapphiredev/cli/compare/v1.8.0...v1.8.0) - (2023-11-16)
 
 ## 🚀 Features
