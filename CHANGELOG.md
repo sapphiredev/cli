@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.9.1](https://github.com/sapphiredev/cli/compare/v1.9.1...v1.9.1) - (2023-12-04)
+
+## 🐛 Bug Fixes
+
+- Update transitive dependencies ([5fc2d29](https://github.com/sapphiredev/cli/commit/5fc2d297229caa6396aafcc796d5bf50a92241e8))
+
 # [1.9.0](https://github.com/sapphiredev/cli/compare/v1.9.0...v1.9.0) - (2023-12-03)
 
 ## 🐛 Bug Fixes
