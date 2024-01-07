@@ -45,8 +45,8 @@
 		"tslib": "^2.6.2"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^18.4.3",
-		"@commitlint/config-conventional": "^18.4.3",
+		"@commitlint/cli": "^18.4.4",
+		"@commitlint/config-conventional": "^18.4.4",
 		"@favware/cliff-jumper": "^2.2.3",
 		"@favware/npm-deprecate": "^1.0.7",
 		"@sapphire/decorators": "*",
@@ -58,8 +58,8 @@
 		"@types/js-yaml": "^4.0.9",
 		"@types/node": "^20.10.6",
 		"@types/prompts": "^2.4.9",
-		"@typescript-eslint/eslint-plugin": "^6.16.0",
-		"@typescript-eslint/parser": "^6.16.0",
+		"@typescript-eslint/eslint-plugin": "^6.18.0",
+		"@typescript-eslint/parser": "^6.18.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"discord.js": "*",
 		"eslint": "^8.56.0",
