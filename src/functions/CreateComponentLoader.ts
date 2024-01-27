@@ -63,7 +63,7 @@ export async function CreateComponentLoaders(targetDir: string, config: Config) 
 
 			for (const dir of dirs) {
 				const dirInjectedTarget = injectDirIntoTargetDir(dir, targetDir);
-				const target = join(targetDir, `_load.${config.projectLanguage}`);
+				const target = join(dirInjectedTarget, `_load.${config.projectLanguage}`);
 
 				const content = `${templateHeader}\n${await generateVirtualPieceLoader(dir, dirInjectedTarget)}`;
 				await writeFileRecursive(target, content);
