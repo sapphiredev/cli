@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.9.3](https://github.com/sapphiredev/cli/compare/v1.9.3...v1.9.3) - (2024-01-27)
+
+## 🐛 Bug Fixes
+
+- Fixed generate-loader generating invalid paths ([90c6b2d](https://github.com/sapphiredev/cli/commit/90c6b2d02c642b9d7aa8d3c3ed296f8c65df898e))
+
 # [1.9.2](https://github.com/sapphiredev/cli/compare/v1.9.2...v1.9.2) - (2024-01-19)
 
 ## 🐛 Bug Fixes
