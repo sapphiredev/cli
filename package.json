@@ -37,7 +37,7 @@
 		"@sapphire/node-utilities": "^1.0.2",
 		"@sapphire/result": "^2.6.6",
 		"colorette": "^2.0.20",
-		"commander": "^11.1.0",
+		"commander": "^12.0.0",
 		"execa": "^8.0.1",
 		"find-up": "^5.0.0",
 		"js-yaml": "^4.1.0",
