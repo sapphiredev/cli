@@ -6,19 +6,13 @@ node_modules/
 coverage/
 docs/
 
-# Yarn files
-.yarn/install-state.gz
-.yarn/build-state.yml
-
-# Ignore generated files
-dist/
-
 # Ignore heapsnapshot and log files
 *.heapsnapshot
 *.log
 
-# Ignore package locks
-package-lock.json
-
 # Ignore the GH cli downloaded by workflows
 gh
+
+# Added by cargo
+
+/target
