@@ -1,9 +1,16 @@
-use dialoguer::{Input, MultiSelect, Select};
-use spinners::{Spinner, Spinners};
-use crate::task_runner::run_tasks;
-use crate::task_runner::tasks::{CloneTask, CopyTask, MkdirTask, RmTask, SetupPackageJsonTask, Tasks};
+use std::collections::HashMap;
+use std::fs;
+use std::time::Duration;
+use anyhow::Result;
+use dialoguer::{Input, Select};
+use git2::Repository;
+use indicatif::{ProgressBar, ProgressStyle};
+use regex::Regex;
+use serde_json::Value;
+use crate::config::{Config, Project};
+use crate::utils::{console_box, copy};
 
-pub fn run(name_s: &Option<String>) {
+pub fn run(name_s: &Option<String>) -> Result<()> {
     let cwd = std::env::current_dir().unwrap();
 
     let name = if let Some(name) = name_s {
@@ -28,16 +35,16 @@ pub fn run(name_s: &Option<String>) {
     let module_system = Select::new()
         .with_prompt("Which module system do you want to use?")
         .items(&[
-            "CommonJS (a.k.a. CJS; easy for beginners, a lot of online resources will reference CommonJS, but will need migration in the long term)",
+            "CommonJS (a.k.a. CJS; Legacy NodeJS, easy for beginners, a lot of online resources will reference CJS)",
             "ES Modules (ak.a. ESM; Modern JavaScript and the future of NodeJS)"
         ])
         .default(0)
         .interact()
         .unwrap();
 
-    let pdir = cwd.join(&name);
-    let temp = pdir.join("temp");
-    let template_files = temp.join("examples").join(
+    let project_dir = cwd.join(&name);
+    let temp = project_dir.join("temp");
+    let template_files = &temp.join("examples").join(
         match project_language {
             0 => "with-typescript-complete",
             1 => match module_system {
@@ -49,31 +56,8 @@ pub fn run(name_s: &Option<String>) {
         }
     );
 
-    let mut tasks = vec![
-        Tasks::Mkdir(MkdirTask {
-            path: &pdir,
-        }),
-        Tasks::Clone(CloneTask {
-            repo_url: "https://github.com/enxg/sapphire-examples.git",
-            clone_into: &temp,
-        }),
-        Tasks::Copy(CopyTask {
-            from: &template_files,
-            to: &pdir,
-        }),
-    ];
-
-    let tsup_config = temp.join("examples/with-tsup/tsup.config.ts");
-    let tsup_config_target = pdir.join("tsup.config.ts");
-    let swc_config = temp.join("examples/with-swc/.swcrc");
-    let swc_config_target = pdir.join(".swcrc");
-    
-    let package_json = pdir.join("package.json");
-
-    if project_language == 0 /* TypeScript */ {
-        // TODO: Need to do needed modifications in config files for ESM/CJS choice
-        
-        let compiler = Select::new()
+    let compiler = if project_language == 0 {
+        Select::new()
             .with_prompt("Which compiler do you want to use?")
             .items(&[
                 "TypeScript Compiler",
@@ -82,48 +66,141 @@ pub fn run(name_s: &Option<String>) {
             ])
             .default(0)
             .interact()
-            .unwrap();
+            .unwrap()
+    } else {
+        0
+    };
 
-        tasks.push(Tasks::SetupPackageJson(SetupPackageJsonTask {
-            path: &package_json,
-            project_name: &name,
-            setup_for_tsup: compiler == 1,
-            setup_for_swc: compiler == 2,
-            esm: module_system == 1,
-        }));
+    let progress_style = ProgressStyle::default_spinner()
+        .tick_strings(&[
+            "▰▱▱▱▱",
+            "▰▰▱▱▱",
+            "▰▰▰▱▱",
+            "▰▰▰▰▱",
+            "▰▰▰▰▰",
+            "▰▰▰▰▰",
+        ]);
 
+    let pb = ProgressBar::new_spinner().with_style(progress_style);
+
+    pb.set_message("Creating project...");
+    pb.enable_steady_tick(Duration::new(0, 100000000));
+
+    fs::create_dir_all(&project_dir)?;
+
+    let examples_url = "https://github.com/enxg/sapphire-examples.git";
+    Repository::clone(examples_url, &temp)?;
+
+    copy(template_files, &project_dir)?;
+
+    let package_json_path = project_dir.join("package.json");
+    let package_json = fs::read_to_string(&package_json_path)?;
+    let mut package_json: Value = serde_json::from_str(package_json.as_str())?;
+
+    package_json["name"] = Value::String(name.clone());
+    package_json["type"] = Value::String(match module_system {
+        0 => "commonjs".to_string(),
+        1 => "module".to_string(),
+        _ => unreachable!(),
+    });
+
+    if project_language == 0 /* TypeScript */ {
         match compiler {
             0 => {}
             1 => {
-                tasks.push(Tasks::Copy(CopyTask {
-                    from: &tsup_config,
-                    to: &tsup_config_target,
-                }));
+                package_json["devDependencies"]["tsup"] = Value::String("latest".to_string());
+
+                package_json["scripts"]["build"] = Value::String("tsup".to_string());
+                package_json["scripts"]["watch"] = Value::String("tsup --watch".to_string());
+                package_json["scripts"]["dev"] = Value::String("tsup --watch --onSuccess \"node ./dist/index.js\"".to_string());
             }
             2 => {
-                tasks.push(Tasks::Copy(CopyTask {
-                    from: &swc_config,
-                    to: &swc_config_target,
-                }));
-            }
-            _ => { unreachable!() }
-        }
-    } else /* JavaScript */ {
-        tasks.push(Tasks::SetupPackageJson(SetupPackageJsonTask {
-            path: &package_json,
-            project_name: &name,
-            setup_for_tsup: false,
-            setup_for_swc: false,
-            esm: module_system == 1,
-        }));
-    }
-    
-    tasks.push(Tasks::Rm(RmTask {
-        path: &temp,
-        dir: true,
-    }));
-    
-    // TODO: Create a config file
+                package_json["devDependencies"]["@swc/cli"] = Value::String("latest".to_string());
+                package_json["devDependencies"]["@swc/core"] = Value::String("latest".to_string());
+                package_json["devDependencies"]["npm-run-all2"] = Value::String("latest".to_string());
+                package_json["devDependencies"]["tsc-watch"] = Value::String("latest".to_string());
 
-    run_tasks(&tasks);
+                package_json["scripts"]["build"] = Value::String("swc src -d dist --strip-leading-paths".to_string());
+                package_json["scripts"]["watch"] = Value::String("swc src -d dist -w --strip-leading-paths".to_string());
+                package_json["scripts"]["dev"] = Value::String("run-s build start".to_string());
+                package_json["scripts"]["watch:start"] = Value::String("tsc-watch --onSuccess \"node ./dist/index.js\"".to_string());
+            }
+            _ => unreachable!()
+        }
+
+        let tsconfig_path = project_dir.join("tsconfig.json");
+        let tsconfig = fs::read_to_string(&tsconfig_path)?;
+        let mut tsconfig: Value = serde_json::from_str(tsconfig.as_str())?;
+
+        let mut extends_array = vec![
+            "@sapphire/ts-config",
+            "@sapphire/ts-config/extra-strict",
+            "@sapphire/ts-config/decorators",
+        ];
+
+        if module_system == 1 {
+            extends_array.push("@sapphire/ts-config/verbatim");
+        }
+
+        tsconfig["extends"] = Value::Array(extends_array.into_iter().map(|v| Value::String(v.to_string())).collect());
+
+        fs::write(&tsconfig_path, serde_json::to_string_pretty(&tsconfig).unwrap())?;
+    }
+
+    fs::write(&package_json_path, serde_json::to_string_pretty(&package_json).unwrap())?;
+
+    fs::create_dir(project_dir.join(".sapphire"))?;
+    copy(&temp.join(
+        match project_language {
+            0 => "examples/pieces/ts",
+            1 => match module_system {
+                0 => "examples/pieces/js/cjs",
+                1 => "examples/pieces/js/esm",
+                _ => unreachable!(),
+            },
+            _ => unreachable!(),
+        }
+    ), &project_dir.join(".sapphire/templates"))?;
+
+    let template_config_path = &project_dir.join(".sapphire/templates/cli.toml");
+    let template_config = fs::read_to_string(template_config_path)?;
+
+    let config = Config {
+        project: Project {
+            language: match project_language {
+                0 => "ts".to_string(),
+                1 => "js".to_string(),
+                _ => unreachable!(),
+            },
+            module_system: match module_system {
+                0 => "cjs".to_string(),
+                1 => "esm".to_string(),
+                _ => unreachable!(),
+            },
+            base: "src".to_string(),
+        },
+        variables: HashMap::new(),
+        categories: HashMap::new(),
+        templates: HashMap::new(),
+    };
+
+    let config_string = toml::to_string_pretty(&config)?;
+    let replace_regex = Regex::new(r"\[categories]\n\n\[templates]")?;
+    let config_string = replace_regex.replace(&config_string, &template_config).to_string();
+
+    fs::write(project_dir.join("sapphire.toml"), config_string)?;
+    fs::remove_dir_all(&temp)?;
+    fs::remove_file(template_config_path)?;
+
+    pb.finish_and_clear();
+
+    console_box(&[
+        "To get started, run the following commands:",
+        "",
+        &format!("cd {}", name),
+        "npm install",
+        "npm run dev",
+    ], Some("Project created successfully!"));
+
+    Ok(())
 }
