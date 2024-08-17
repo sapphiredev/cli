@@ -1,0 +1,15 @@
+name: NPM Deprecate PR versions On Merge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  deprecate-on-merge:
+    name: NPM Deprecate PR versions On Merge
+    uses: sapphiredev/.github/.github/workflows/reusable-yarn-job.yml@main
+    with:
+      script-name: npm-deprecate --name "*pr-${{ github.event.number }}*" -d -v
+    secrets:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
