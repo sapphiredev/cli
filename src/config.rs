@@ -1,3 +1,4 @@
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -6,7 +7,14 @@ pub struct Config {
     pub project: Project,
     pub variables: HashMap<String, String>,
     pub categories: HashMap<String, Category>,
-    pub templates: HashMap<String, Template>,
+    pub templates: HashMap<String, HashMap<String, Template>>,
+}
+
+impl Config {
+    pub fn load() -> Result<Self> {
+        let config = std::fs::read_to_string("sapphire.toml")?;
+        Ok(toml::from_str(&config)?)
+    }
 }
 
 #[derive(Default, Debug, Serialize, Deserialize)]
@@ -18,11 +26,11 @@ pub struct Project {
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct Category {
-    pub path: String,
+    pub source_path: String,
+    pub target_path: String,
 }
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct Template {
-    pub category: String,
-    pub aliases: Vec<String>,
+    pub aliases: Option<Vec<String>>,
 }
