@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::Duration;
 use std::{fs, process};
-use crate::EXAMPLES_REPO_URL;
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -147,7 +146,13 @@ pub fn run() -> Result<()> {
             ".sapphirerc.yml"
         })?;
 
-        println!("Project migrated!");
+        console_box(
+            &[
+                "Project migrated!",
+                "https://sapphirejs.dev for documentation",
+            ],
+            None,
+        );
         return Ok(());
     }
 
@@ -159,7 +164,13 @@ pub fn run() -> Result<()> {
         .unwrap();
 
     if ch == 1 {
-        println!("Project migrated!");
+        console_box(
+            &[
+                "Project migrated!",
+                "https://sapphirejs.dev for documentation",
+            ],
+            None,
+        );
         return Ok(());
     }
 
@@ -256,7 +267,13 @@ pub fn run() -> Result<()> {
     })?;
     fs::remove_dir_all(template_dir)?;
 
-    println!("Project migrated!");
+    console_box(
+        &[
+            "Project migrated!",
+            "https://sapphirejs.dev for documentation",
+        ],
+        None,
+    );
 
     Ok(())
 }
