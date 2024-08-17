@@ -15,7 +15,7 @@
 		"*.yml.sapphire": "yaml"
 	},
 	"sonarlint.connectedMode.project": {
-		"connectionId": "https-sonarqube-sapphirejs-dev",
-		"projectKey": "sapphiredev_cli_3f02e75d-9123-4094-a35c-70aac6350330"
+		"connectionId": "sapphiredev",
+		"projectKey": "sapphiredev_cli"
 	}
 }
