@@ -14,16 +14,16 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    New {
-        name: Option<String>
-    }
+    New { name: Option<String> },
+    Generate { template: String, name: String },
 }
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    
+
     match &cli.command {
         Some(Commands::New { name }) => commands::new::run(name),
-        None => Ok(())
+        Some(Commands::Generate { template, name }) => commands::generate::run(template, name),
+        None => Ok(()),
     }
 }
