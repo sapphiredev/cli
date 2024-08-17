@@ -1,5 +1,6 @@
 use crate::config::{Config, Project};
-use crate::utils::copy;
+use crate::utils::{console_box, copy};
+use crate::EXAMPLES_REPO_URL;
 use anyhow::Result;
 use console::Style;
 use dialoguer::{Confirm, Input, MultiSelect, Select};

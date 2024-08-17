@@ -1,5 +1,6 @@
 use crate::config::{Config, Project};
 use crate::utils::{console_box, copy};
+use crate::EXAMPLES_REPO_URL;
 use anyhow::Result;
 use dialoguer::{Input, Select};
 use git2::Repository;
@@ -9,7 +10,6 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::fs;
 use std::time::Duration;
-use crate::EXAMPLES_REPO_URL;
 
 pub fn run(name_s: &Option<String>) -> Result<()> {
     let cwd = std::env::current_dir().unwrap();
