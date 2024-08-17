@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::Duration;
 use std::{fs, process};
+use crate::EXAMPLES_REPO_URL;
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -95,8 +96,7 @@ pub fn run() -> Result<()> {
     fs::create_dir("temp")?;
     let temp = cwd.join("temp");
 
-    let examples_url = "https://github.com/enxg/sapphire-examples.git";
-    Repository::clone(examples_url, &temp)?;
+    Repository::clone(EXAMPLES_REPO_URL, &temp)?;
 
     fs::create_dir(cwd.join(".sapphire"))?;
     copy(

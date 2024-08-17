@@ -19,6 +19,8 @@ enum Commands {
     Migrate,
 }
 
+pub const EXAMPLES_REPO_URL: &str = "https://github.com/enxg/sapphire-examples.git";
+
 fn main() -> Result<()> {
     let cli = Cli::parse();
 

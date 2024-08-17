@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::fs;
 use std::time::Duration;
+use crate::EXAMPLES_REPO_URL;
 
 pub fn run(name_s: &Option<String>) -> Result<()> {
     let cwd = std::env::current_dir().unwrap();
@@ -82,8 +83,7 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
     fs::create_dir_all(&project_dir)?;
 
-    let examples_url = "https://github.com/enxg/sapphire-examples.git";
-    Repository::clone(examples_url, &temp)?;
+    Repository::clone(EXAMPLES_REPO_URL, &temp)?;
 
     copy(template_files, &project_dir, None)?;
 
