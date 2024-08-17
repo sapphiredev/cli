@@ -2,12 +2,24 @@ use std::fs;
 use std::path::PathBuf;
 use console::Style;
 
-pub fn copy(from: &PathBuf, to: &PathBuf) -> std::io::Result<u64> {
+pub fn copy(from: &PathBuf, to: &PathBuf, extensions: Option<&Vec<&str>>) -> std::io::Result<u64> {
     if from.is_file() {
+        if extensions.is_some()
+            && from.extension().is_some()
+            && !extensions
+                .unwrap()
+                .contains(&from.extension().unwrap().to_str().unwrap())
+        {
+            return Ok(0);
+        }
+
         fs::copy(from, to)
     } else if from.is_dir() {
         if to.exists() && !to.is_dir() {
-            return Err(std::io::Error::new(std::io::ErrorKind::Other, "Cannot copy directory to file"));
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Cannot copy directory to file",
+            ));
         } else if !to.exists() {
             fs::create_dir(to)?;
         }
@@ -17,12 +29,15 @@ pub fn copy(from: &PathBuf, to: &PathBuf) -> std::io::Result<u64> {
             let path = entry.path();
             let new_path = to.join(path.file_name().unwrap());
 
-            copy(&path, &new_path)?;
+            copy(&path, &new_path, extensions)?;
         }
 
         Ok(0)
     } else {
-        return Err(std::io::Error::new(std::io::ErrorKind::Other, "Cannot read file, missing permissions?"));
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::Other,
+            "Cannot read file, missing permissions?",
+        ));
     }
 }
 
