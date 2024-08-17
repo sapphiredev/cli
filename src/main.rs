@@ -16,6 +16,7 @@ struct Cli {
 enum Commands {
     New { name: Option<String> },
     Generate { template: String, name: String },
+    Migrate,
 }
 
 fn main() -> Result<()> {
@@ -24,6 +25,7 @@ fn main() -> Result<()> {
     match &cli.command {
         Some(Commands::New { name }) => commands::new::run(name),
         Some(Commands::Generate { template, name }) => commands::generate::run(template, name),
+        Some(Commands::Migrate) => commands::migrate::run(),
         None => Ok(()),
     }
 }
