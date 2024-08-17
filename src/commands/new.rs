@@ -1,14 +1,14 @@
-use std::collections::HashMap;
-use std::fs;
-use std::time::Duration;
+use crate::config::{Config, Project};
+use crate::utils::{console_box, copy};
 use anyhow::Result;
 use dialoguer::{Input, Select};
 use git2::Repository;
 use indicatif::{ProgressBar, ProgressStyle};
 use regex::Regex;
 use serde_json::Value;
-use crate::config::{Config, Project};
-use crate::utils::{console_box, copy};
+use std::collections::HashMap;
+use std::fs;
+use std::time::Duration;
 
 pub fn run(name_s: &Option<String>) -> Result<()> {
     let cwd = std::env::current_dir().unwrap();
@@ -24,10 +24,7 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
     let project_language = Select::new()
         .with_prompt("Which language do you want to use?")
-        .items(&[
-            "TypeScript (Recommended)",
-            "JavaScript"
-        ])
+        .items(&["TypeScript (Recommended)", "JavaScript"])
         .default(0)
         .interact()
         .unwrap();
@@ -44,17 +41,15 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
     let project_dir = cwd.join(&name);
     let temp = project_dir.join("temp");
-    let template_files = &temp.join("examples").join(
-        match project_language {
-            0 => "with-typescript-complete",
-            1 => match module_system {
-                0 => "with-javascript-cjs",
-                1 => "with-esm",
-                _ => unreachable!(),
-            }
+    let template_files = &temp.join("examples").join(match project_language {
+        0 => "with-typescript-complete",
+        1 => match module_system {
+            0 => "with-javascript-cjs",
+            1 => "with-esm",
             _ => unreachable!(),
-        }
-    );
+        },
+        _ => unreachable!(),
+    });
 
     let compiler = if project_language == 0 {
         Select::new()
@@ -62,7 +57,7 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
             .items(&[
                 "TypeScript Compiler",
                 "tsup (Faster, no type checking) (https://tsup.egoist.dev)",
-                "SWC (Faster, no type checking) (https://swc.rs)"
+                "SWC (Faster, no type checking) (https://swc.rs)",
             ])
             .default(0)
             .interact()
@@ -71,15 +66,14 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
         0
     };
 
-    let progress_style = ProgressStyle::default_spinner()
-        .tick_strings(&[
-            "▰▱▱▱▱",
-            "▰▰▱▱▱",
-            "▰▰▰▱▱",
-            "▰▰▰▰▱",
-            "▰▰▰▰▰",
-            "▰▰▰▰▰",
-        ]);
+    let progress_style = ProgressStyle::default_spinner().tick_strings(&[
+        "▰▱▱▱▱",
+        "▰▰▱▱▱",
+        "▰▰▰▱▱",
+        "▰▰▰▰▱",
+        "▰▰▰▰▰",
+        "▰▰▰▰▰",
+    ]);
 
     let pb = ProgressBar::new_spinner().with_style(progress_style);
 
@@ -91,7 +85,7 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
     let examples_url = "https://github.com/enxg/sapphire-examples.git";
     Repository::clone(examples_url, &temp)?;
 
-    copy(template_files, &project_dir)?;
+    copy(template_files, &project_dir, None)?;
 
     let package_json_path = project_dir.join("package.json");
     let package_json = fs::read_to_string(&package_json_path)?;
@@ -104,7 +98,9 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
         _ => unreachable!(),
     });
 
-    if project_language == 0 /* TypeScript */ {
+    if project_language == 0
+    /* TypeScript */
+    {
         match compiler {
             0 => {}
             1 => {
@@ -112,20 +108,25 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
                 package_json["scripts"]["build"] = Value::String("tsup".to_string());
                 package_json["scripts"]["watch"] = Value::String("tsup --watch".to_string());
-                package_json["scripts"]["dev"] = Value::String("tsup --watch --onSuccess \"node ./dist/index.js\"".to_string());
+                package_json["scripts"]["dev"] =
+                    Value::String("tsup --watch --onSuccess \"node ./dist/index.js\"".to_string());
             }
             2 => {
                 package_json["devDependencies"]["@swc/cli"] = Value::String("latest".to_string());
                 package_json["devDependencies"]["@swc/core"] = Value::String("latest".to_string());
-                package_json["devDependencies"]["npm-run-all2"] = Value::String("latest".to_string());
+                package_json["devDependencies"]["npm-run-all2"] =
+                    Value::String("latest".to_string());
                 package_json["devDependencies"]["tsc-watch"] = Value::String("latest".to_string());
 
-                package_json["scripts"]["build"] = Value::String("swc src -d dist --strip-leading-paths".to_string());
-                package_json["scripts"]["watch"] = Value::String("swc src -d dist -w --strip-leading-paths".to_string());
+                package_json["scripts"]["build"] =
+                    Value::String("swc src -d dist --strip-leading-paths".to_string());
+                package_json["scripts"]["watch"] =
+                    Value::String("swc src -d dist -w --strip-leading-paths".to_string());
                 package_json["scripts"]["dev"] = Value::String("run-s build start".to_string());
-                package_json["scripts"]["watch:start"] = Value::String("tsc-watch --onSuccess \"node ./dist/index.js\"".to_string());
+                package_json["scripts"]["watch:start"] =
+                    Value::String("tsc-watch --onSuccess \"node ./dist/index.js\"".to_string());
             }
-            _ => unreachable!()
+            _ => unreachable!(),
         }
 
         let tsconfig_path = project_dir.join("tsconfig.json");
@@ -142,25 +143,41 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
             extends_array.push("@sapphire/ts-config/verbatim");
         }
 
-        tsconfig["extends"] = Value::Array(extends_array.into_iter().map(|v| Value::String(v.to_string())).collect());
+        tsconfig["extends"] = Value::Array(
+            extends_array
+                .into_iter()
+                .map(|v| Value::String(v.to_string()))
+                .collect(),
+        );
 
-        fs::write(&tsconfig_path, serde_json::to_string_pretty(&tsconfig).unwrap())?;
+        fs::write(
+            &tsconfig_path,
+            serde_json::to_string_pretty(&tsconfig).unwrap(),
+        )?;
     }
 
-    fs::write(&package_json_path, serde_json::to_string_pretty(&package_json).unwrap())?;
+    fs::write(
+        &package_json_path,
+        serde_json::to_string_pretty(&package_json).unwrap(),
+    )?;
 
     fs::create_dir(project_dir.join(".sapphire"))?;
-    copy(&temp.join(
-        match project_language {
-            0 => "examples/pieces/ts",
-            1 => match module_system {
-                0 => "examples/pieces/js/cjs",
-                1 => "examples/pieces/js/esm",
-                _ => unreachable!(),
-            },
+
+    let template_extension = match project_language {
+        0 => "ts",
+        1 => match module_system {
+            0 => "cjs",
+            1 => "mjs",
             _ => unreachable!(),
-        }
-    ), &project_dir.join(".sapphire/templates"))?;
+        },
+        _ => unreachable!(),
+    };
+
+    copy(
+        &temp.join("examples/pieces"),
+        &project_dir.join(".sapphire/templates"),
+        Some(&vec![template_extension, "toml"]),
+    )?;
 
     let template_config_path = &project_dir.join(".sapphire/templates/cli.toml");
     let template_config = fs::read_to_string(template_config_path)?;
@@ -186,7 +203,9 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
     let config_string = toml::to_string_pretty(&config)?;
     let replace_regex = Regex::new(r"\[categories]\n\n\[templates]")?;
-    let config_string = replace_regex.replace(&config_string, &template_config).to_string();
+    let config_string = replace_regex
+        .replace(&config_string, &template_config)
+        .to_string();
 
     fs::write(project_dir.join("sapphire.toml"), config_string)?;
     fs::remove_dir_all(&temp)?;
@@ -194,13 +213,16 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
 
     pb.finish_and_clear();
 
-    console_box(&[
-        "To get started, run the following commands:",
-        "",
-        &format!("cd {}", name),
-        "npm install",
-        "npm run dev",
-    ], Some("Project created successfully!"));
+    console_box(
+        &[
+            "To get started, run the following commands:",
+            "",
+            &format!("cd {}", name),
+            "npm install",
+            "npm run dev",
+        ],
+        Some("Project created successfully!"),
+    );
 
     Ok(())
 }
