@@ -4,6 +4,9 @@ on:
   release:
     types: [created]
 
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Release - ${{ matrix.platform.release_for }}
@@ -85,3 +88,5 @@ jobs:
           cd target/${{ matrix.platform.target }}/release
           tar -czf ${{ matrix.platform.name }} ${{ matrix.platform.bin }}
           gh release upload ${{ github.event.release.tag_name }} ${{ matrix.platform.name }}
+        env:
+          GH_TOKEN: ${{ github.token }}
