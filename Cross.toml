@@ -1,0 +1,26 @@
+[target.x86_64-apple-darwin]
+pre-build = [
+    "brew install openssl"
+]
+
+[target.aarch64-apple-darwin]
+pre-build = [
+    "brew install openssl"
+]
+
+[target.x86_64-unknown-linux-gnu]
+pre-build = [
+    "dpkg --add-architecture amd64",
+    "apt-get update && apt-get install --assume-yes libssl-dev"
+]
+
+[target.aarch64-unknown-linux-gnu]
+pre-build = [
+    "dpkg --add-architecture arm64",
+    "apt-get update && apt-get install --assume-yes libssl-dev:arm64"
+]
+
+[target.x86_64-unknown-freebsd]
+pre-build = [
+    "pkg install -y openssl"
+]
