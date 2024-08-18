@@ -1,7 +1,8 @@
 name: CI
 
 on:
-  release
+  release:
+    types: [created]
 
 jobs:
   release:
