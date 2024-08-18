@@ -11,6 +11,7 @@ jobs:
   release:
     name: Release - ${{ matrix.platform.release_for }}
     strategy:
+      fail-fast: false
       matrix:
         platform:
           - release_for: Windows-x86_64
