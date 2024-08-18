@@ -18,56 +18,56 @@ jobs:
             os: windows-latest
             target: x86_64-pc-windows-msvc
             bin: sapphire.exe
-            name: sapphire-Windows-x86_64.zip
+            name: sapphire-Windows-x86_64
             command: build
 
           - release_for: Windows-aarch64
             os: windows-latest
             target: aarch64-pc-windows-msvc
             bin: sapphire.exe
-            name: sapphire-Windows-aarch64.zip
+            name: sapphire-Windows-aarch64
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
             bin: sapphire
-            name: sapphire-Darwin-x86_64.tar.gz
+            name: sapphire-Darwin-x86_64
             command: build
 
           - release_for: macOS-aarch64
             os: macOS-latest
             target: aarch64-apple-darwin
             bin: sapphire
-            name: sapphire-Darwin-aarch64.tar.gz
+            name: sapphire-Darwin-aarch64
             command: build
 
           - release_for: Linux-x86_64
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             bin: sapphire
-            name: sapphire-Linux-x86_64.tar.gz
+            name: sapphire-Linux-x86_64
             command: build
 
           - release_for: Linux-aarch64-gnu
             os: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             bin: sapphire
-            name: sapphire-Linux-aarch64.tar.gz
+            name: sapphire-Linux-aarch64
             command: build
 
-          - release_for: Linux-aarch64-musl
-            os: ubuntu-latest
-            target: aarch64-unknown-linux-musl
-            bin: sapphire
-            name: sapphire-Linux-aarch64-musl.tar.gz
-            command: build
+#          - release_for: Linux-aarch64-musl
+#            os: ubuntu-latest
+#            target: aarch64-unknown-linux-musl
+#            bin: sapphire
+#            name: sapphire-Linux-aarch64-musl
+#            command: build
 
 #          - release_for: FreeBSD-x86_64
 #            os: ubuntu-latest
 #            target: x86_64-unknown-freebsd
 #            bin: sapphire
-#            name: sapphire-FreeBSD-x86_64.tar.gz
+#            name: sapphire-FreeBSD-x86_64
 #            command: build
 
 
@@ -86,8 +86,9 @@ jobs:
       - name: Upload binary
         # cd, create a tar archive with and upload it
         run: |
-          cd target/${{ matrix.platform.target }}/release
-          tar -czf ${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+          mkdir -p ${{ matrix.platform.name }}
+          cp target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ${{ matrix.platform.name }}
+          tar -czf ${{ matrix.platform.name }}.tar.gz ${{ matrix.platform.name }}
           gh release upload ${{ github.event.release.tag_name }} ${{ matrix.platform.name }}
         env:
           GH_TOKEN: ${{ github.token }}
