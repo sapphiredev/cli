@@ -1,0 +1,45 @@
+{
+  "name": "@sapphire/cli",
+  "version": "2.0.0",
+  "description": "CLI for Sapphire Framework",
+  "author": "@sapphire",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": "false",
+  "files": [
+    "npm/**/*.js"
+  ],
+  "bin": {
+    "sapphire": "npm/run.mjs"
+  },
+  "scripts": {
+    "postinstall": "node npm/install.mjs"
+  },
+  "dependencies": {
+    "binary-install": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.4.0"
+  },
+  "keywords": [
+    "@sapphire/cli",
+    "bot",
+    "typescript",
+    "ts",
+    "yarn",
+    "discord",
+    "sapphire",
+    "discordjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapphiredev/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sapphiredev/cli/issues"
+  },
+  "homepage": "https://www.sapphirejs.dev",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -16,3 +16,11 @@ gh
 # Added by cargo
 
 /target
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
