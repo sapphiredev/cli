@@ -17,7 +17,12 @@ pre-build = [
 [target.aarch64-unknown-linux-gnu]
 pre-build = [
     "dpkg --add-architecture arm64",
-    "apt-get update && apt-get install --assume-yes libssl-dev:arm64"
+    "apt-get update && apt-get install --assume-yes libssl-dev:arm64 zlib1g-dev:arm64"
+]
+
+[target.aarch64-unknown-linux-gnu.env]
+passthrough = [
+    "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C target-feature=+crt-static -C relocation-model=pic"
 ]
 
 [target.x86_64-unknown-freebsd]
