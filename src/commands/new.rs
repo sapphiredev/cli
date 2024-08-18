@@ -9,7 +9,9 @@ use regex::Regex;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fs;
+use std::process::Command;
 use std::time::Duration;
+use serde::Serialize;
 
 pub fn run(name_s: &Option<String>) -> Result<()> {
     let cwd = std::env::current_dir().unwrap();
@@ -39,6 +41,32 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
         .default(0)
         .interact()
         .unwrap();
+
+    let package_manager = Select::new()
+        .with_prompt("Which package manager do you want to use to install dependencies?")
+        .items(&[
+            "npm",
+            "yarn",
+            "pnpm",
+            "bun",
+            "Skip, I will install dependencies myself"
+        ])
+        .default(0)
+        .interact()
+        .unwrap();
+
+    let yarn_v4 = if package_manager == 1 {
+        let s = Select::new()
+            .with_prompt("Do you want to use Yarn v4?")
+            .items(&["Yes", "No"])
+            .default(0)
+            .interact()
+            .unwrap();
+
+        s == 0
+    } else {
+        false
+    };
 
     let project_dir = cwd.join(&name);
     let temp = project_dir.join("temp");
@@ -211,18 +239,97 @@ pub fn run(name_s: &Option<String>) -> Result<()> {
     fs::remove_dir_all(&temp)?;
     fs::remove_file(template_config_path)?;
 
-    pb.finish_and_clear();
+    if package_manager != 4 { pb.set_message("Installing dependencies"); }
 
+    let cd_line = format!("cd {}", name);
+    let mut box_lines = vec![
+        "To get started, run the following commands:",
+        "",
+        &cd_line,
+    ];
+    
+    match package_manager {
+        0 => {
+            box_lines.push("npm run dev");
+            
+            Command::new("npm")
+                .arg("install")
+                .current_dir(&project_dir)
+                .output()?;
+        }
+        1 => {
+            box_lines.push("yarn run dev");
+            
+            if yarn_v4 {
+                Command::new("yarn")
+                    .arg("set")
+                    .arg("version")
+                    .arg("berry")
+                    .current_dir(&project_dir)
+                    .output()?;
+                
+                let cfg = YarnV4Config {
+                    node_linker: "node-modules".to_string(),
+                    enable_global_cache: true,
+                };
+                
+                fs::write(
+                    project_dir.join(".yarnrc.yml"),
+                    serde_yaml::to_string(&cfg).unwrap(),
+                )?;
+            }
+            
+            Command::new("yarn")
+                .arg("install")
+                .current_dir(&project_dir)
+                .output()?;
+        }
+        2 => {
+            box_lines.push("pnpm run dev");
+            
+            fs::write(
+                project_dir.join(".npmrc"),
+                [
+                    "# pnpm only",
+                    "shamefully-hoist=true",
+                    "public-hoist-pattern[]=@sapphire/*",
+                ].join("\n"),
+            )?;
+            
+            Command::new("pnpm")
+                .arg("install")
+                .current_dir(&project_dir)
+                .output()?;
+        }
+        3 => {
+            box_lines.push("bun run dev");
+            
+            Command::new("bun")
+                .arg("install")
+                .current_dir(&project_dir)
+                .output()?;
+        }
+        _ => {
+            box_lines.push("npm install");
+            box_lines.push("npm run dev");
+        }
+    }
+
+    pb.finish_and_clear();
+    
+    Repository::init(&project_dir)?;
+    
     console_box(
-        &[
-            "To get started, run the following commands:",
-            "",
-            &format!("cd {}", name),
-            "npm install",
-            "npm run dev",
-        ],
+        &box_lines,
         Some("Project created successfully!"),
     );
 
     Ok(())
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct YarnV4Config {
+    node_linker: String,
+    enable_global_cache: bool,
 }
