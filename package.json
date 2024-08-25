@@ -42,12 +42,12 @@
 		"find-up": "^5.0.0",
 		"js-yaml": "^4.1.0",
 		"prompts": "^2.4.2",
-		"tslib": "^2.6.3"
+		"tslib": "^2.7.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.4.0",
 		"@commitlint/config-conventional": "^19.2.2",
-		"@favware/cliff-jumper": "^4.0.3",
+		"@favware/cliff-jumper": "^4.1.0",
 		"@favware/npm-deprecate": "^1.0.7",
 		"@sapphire/decorators": "*",
 		"@sapphire/eslint-config": "^5.0.5",
@@ -56,7 +56,7 @@
 		"@sapphire/prettier-config": "^2.0.0",
 		"@sapphire/ts-config": "^5.0.1",
 		"@types/js-yaml": "^4.0.9",
-		"@types/node": "^20.16.0",
+		"@types/node": "^20.16.1",
 		"@types/prompts": "^2.4.9",
 		"@typescript-eslint/eslint-plugin": "^7.13.0",
 		"@typescript-eslint/parser": "^7.13.0",
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.4.0"
+	"packageManager": "yarn@4.4.1"
 }
