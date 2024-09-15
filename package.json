@@ -45,8 +45,8 @@
 		"tslib": "^2.7.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.4.1",
-		"@commitlint/config-conventional": "^19.4.1",
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
 		"@favware/cliff-jumper": "^4.1.0",
 		"@favware/npm-deprecate": "^1.0.7",
 		"@sapphire/decorators": "*",
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.4.1"
+	"packageManager": "yarn@4.5.0"
 }
