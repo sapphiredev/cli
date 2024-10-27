@@ -38,7 +38,7 @@
 		"@sapphire/result": "^2.6.6",
 		"colorette": "^2.0.20",
 		"commander": "^12.1.0",
-		"execa": "^9.4.1",
+		"execa": "^9.5.0",
 		"find-up": "^5.0.0",
 		"js-yaml": "^4.1.0",
 		"prompts": "^2.4.2",
