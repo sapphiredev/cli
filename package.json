@@ -56,14 +56,14 @@
 		"@sapphire/prettier-config": "^2.0.0",
 		"@sapphire/ts-config": "^5.0.1",
 		"@types/js-yaml": "^4.0.9",
-		"@types/node": "^22.13.5",
+		"@types/node": "^22.13.8",
 		"@types/prompts": "^2.4.9",
 		"@typescript-eslint/eslint-plugin": "^7.13.0",
 		"@typescript-eslint/parser": "^7.13.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"discord.js": "*",
 		"eslint": "^8.57.1",
-		"eslint-config-prettier": "^10.0.1",
+		"eslint-config-prettier": "^10.0.2",
 		"eslint-plugin-prettier": "^5.2.3",
 		"globby": "^14.1.0",
 		"lint-staged": "^15.4.3",
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.6.0"
+	"packageManager": "yarn@4.7.0"
 }
