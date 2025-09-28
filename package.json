@@ -35,7 +35,7 @@
 	"dependencies": {
 		"@favware/colorette-spinner": "^1.0.1",
 		"@sapphire/node-utilities": "^1.0.2",
-		"@sapphire/result": "^2.7.2",
+		"@sapphire/result": "^2.7.3",
 		"colorette": "^2.0.20",
 		"commander": "^14.0.1",
 		"execa": "^9.6.0",
@@ -66,7 +66,7 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.4",
 		"globby": "^14.1.0",
-		"lint-staged": "^16.1.6",
+		"lint-staged": "^16.2.1",
 		"prettier": "^3.6.2",
 		"ts-node": "^10.9.2",
 		"typescript": "~5.4.5"
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.10.0"
+	"packageManager": "yarn@4.10.3"
 }
