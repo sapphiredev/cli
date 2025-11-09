@@ -35,7 +35,7 @@
 	"dependencies": {
 		"@favware/colorette-spinner": "^1.0.1",
 		"@sapphire/node-utilities": "^1.0.2",
-		"@sapphire/result": "^2.7.3",
+		"@sapphire/result": "^2.8.0",
 		"colorette": "^2.0.20",
 		"commander": "^14.0.2",
 		"execa": "^9.6.0",
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.10.3"
+	"packageManager": "yarn@4.11.0"
 }
