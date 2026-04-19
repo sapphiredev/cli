@@ -47,7 +47,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^20.5.0",
 		"@commitlint/config-conventional": "^20.5.0",
-		"@favware/cliff-jumper": "^6.0.0",
+		"@favware/cliff-jumper": "^6.1.0",
 		"@favware/npm-deprecate": "^2.0.0",
 		"@sapphire/decorators": "*",
 		"@sapphire/eslint-config": "^5.0.6",
@@ -67,7 +67,7 @@
 		"eslint-plugin-prettier": "^5.5.5",
 		"globby": "^16.2.0",
 		"lint-staged": "^16.4.0",
-		"prettier": "^3.8.2",
+		"prettier": "^3.8.3",
 		"ts-node": "^10.9.2",
 		"typescript": "~5.4.5"
 	},
@@ -114,5 +114,5 @@
 		"access": "public"
 	},
 	"prettier": "@sapphire/prettier-config",
-	"packageManager": "yarn@4.13.0"
+	"packageManager": "yarn@4.14.1"
 }
