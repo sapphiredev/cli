@@ -67,7 +67,7 @@
 		"eslint-plugin-prettier": "^5.5.7",
 		"globby": "^16.2.4",
 		"lint-staged": "^16.4.0",
-		"prettier": "^3.9.10",
+		"prettier": "^3.10.1",
 		"ts-node": "^10.9.2",
 		"typescript": "~5.4.5"
 	},
