@@ -53,7 +53,7 @@
 		"@sapphire/eslint-config": "^5.0.6",
 		"@sapphire/framework": "*",
 		"@sapphire/plugin-api": "*",
-		"@sapphire/prettier-config": "^2.0.0",
+		"@sapphire/prettier-config": "^3.0.0",
 		"@sapphire/ts-config": "^5.0.3",
 		"@types/js-yaml": "^4.0.9",
 		"@types/node": "^24.19.2",
